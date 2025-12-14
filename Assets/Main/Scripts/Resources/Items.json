@@ -1,0 +1,39 @@
+{
+  "items": {
+    "test-hoe": {
+      "name": "Test Hoe",
+      "description": "Test hoe for tilling ground.",
+      "itemType": "TOOL",
+      "maxStack": 1,
+      "icon": "hoe"
+    },
+    "potato-seed": {
+      "name": "Potato Seed",
+      "description": "Budding sprout to grow the potato root vegetable.",
+      "itemType": "SEED",
+      "maxStack": 64,
+      "icon": "potato_seed"
+    },
+    "potato": {
+      "name": "Potato",
+      "description": "Starchy root vegetable. Best when mashed with gravy.",
+      "itemType": "PRODUCT",
+      "maxStack": 64,
+      "icon": "Potato"
+    },
+    "apple-seed": {
+      "name": "Apple Seed",
+      "description": "",
+      "itemType": "SEED",
+      "maxStack": 64,
+      "icon": "apple_seed"
+    },
+    "apple": {
+      "name": "Apple",
+      "description": "The fresh ripe red fruit that comes from a tree.",
+      "itemType": "PRODUCT",
+      "maxStack": 64,
+      "icon": "Apple"
+    }
+  }
+}
