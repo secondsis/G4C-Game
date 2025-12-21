@@ -1,40 +1,69 @@
+using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class FarmPlot : MonoBehaviour
 {
-    public FarmInfo farmInfo;
-    private int currentPlantStage;
-    private bool plotWatered;
+    public FarmLogic FarmLogic = new FarmLogic();
+    private int _currentPlantStage;
+    private bool _plotWatered;
+    private Transform _cropParent;
+    private Hover3DTooltip _tooltip;
+    private static readonly String _defaultLeftInfo = "Unfertilized Plot\nAn empty area of farmable land.";
+    private static readonly String _defaultRightInfo = "(EMPTY)";
+    private static readonly String _fertilizedLeftInfo = "Fertilized Plot\nAn empty area of farmable land.";
 
-    public FarmPlot(FarmInfo info)
+    private void Awake()
     {
-        farmInfo = info;
+        _cropParent = transform.Find("Crop");
+        _tooltip = transform.Find("Plot").Find("PlotObject").GetComponent<Hover3DTooltip>();
+        _tooltip.infoLeft = _defaultLeftInfo;
+        _tooltip.infoRight = _defaultRightInfo;
     }
 
     public bool PlantCrop(SeedEnum seed)
     {
-        if (!farmInfo.plantCrop(seed)) return false;
-        Transform cropParent = gameObject.transform.Find("Crop");
-        foreach (Transform child in cropParent)
+        if (!FarmLogic.PlantCrop(seed)) return false;
+        
+        foreach (Transform child in _cropParent)
         {
-            Object.Destroy(child.gameObject);
+            Destroy(child.gameObject);
         }
         // Baby stage crop
-        Object.Instantiate(PlantDictionaries.PlantPrefabs[seed].Item1, cropParent.position, cropParent.rotation);
-        currentPlantStage = 0;
+        Instantiate(PlantDictionaries.PlantPrefabs[seed].Item1, _cropParent);
+        _currentPlantStage = 0;
+        // Update Hover UI
+        _tooltip.infoLeft = $"{seed.ToString()}\nThere is a plant here.";
+        _tooltip.infoRight = "(GROWING)";
+        return true;
+    }
+
+    public bool HarvestCrop()
+    {
+        SeedEnum harvestedSeed = FarmLogic.HarvestCrop();
+        if (harvestedSeed == SeedEnum.NONE) return false;
+        foreach (Transform child in _cropParent)
+        {
+            Destroy(child.gameObject);
+        }
+        
+        
+        
+        InventoryFetcher.Manager.AddItem(harvestedSeed.ToString().ToLower(), 1);
+        _currentPlantStage = 0;
         return true;
     }
 
     public bool AddFertilizer(FertilizerTypeEnum fert)
     {
-        if (!farmInfo.addFertilizer(fert)) return false;
+        if (!FarmLogic.AddFertilizer(fert)) return false;
         Transform fertParent = gameObject.transform.Find("Fertilizer");
         foreach (Transform child in fertParent)
         {
             Object.Destroy(child.gameObject);
         }
         // Fertilizer Texture
-        Object.Instantiate(PlantDictionaries.FertilizerPrefabs[fert], fertParent.position, fertParent.rotation);
+        Instantiate(PlantDictionaries.FertilizerPrefabs[fert], fertParent);
         return true;
     }
 
@@ -43,46 +72,45 @@ public class FarmPlot : MonoBehaviour
         Transform plotParent = gameObject.transform.Find("Plot");
         foreach (Transform child in plotParent)
         {
-            Object.Destroy(child.gameObject);
+            Destroy(child.gameObject);
         }
 
-        // Watered Texture
-        GameObject newObj = Object.Instantiate(PlantDictionaries.WateredPlotObject, plotParent.position, plotParent.rotation);
-        plotWatered = true;
+        // Watered Texture -- MIGHT BE UNFINISHED???
+        GameObject newObj = Instantiate(PlantDictionaries.WateredPlotObject, plotParent);
+        _plotWatered = true;
     }
 
     private void SetPlantStage(int stage)
     {
-        Transform cropParent = gameObject.transform.Find("Crop");
-        foreach (Transform child in cropParent)
+        foreach (Transform child in _cropParent)
         {
             Destroy(child.gameObject);
         }
 
-        GameObject obj = null;
-        switch(stage)
+        GameObject obj = stage switch
         {
-            case 0:
-                obj = PlantDictionaries.PlantPrefabs[farmInfo.seedType].Item1;
-                break;
-            case 1: 
-                obj = PlantDictionaries.PlantPrefabs[farmInfo.seedType].Item2;
-                break;
-            case 2: 
-                obj = PlantDictionaries.PlantPrefabs[farmInfo.seedType].Item3;
-                break;
-            case 3: 
-                obj = PlantDictionaries.PlantPrefabs[farmInfo.seedType].Item4;
-                break;
+            0 => PlantDictionaries.PlantPrefabs[FarmLogic.SeedType].Item1,
+            1 => PlantDictionaries.PlantPrefabs[FarmLogic.SeedType].Item2,
+            2 => PlantDictionaries.PlantPrefabs[FarmLogic.SeedType].Item3,
+            3 => PlantDictionaries.PlantPrefabs[FarmLogic.SeedType].Item4,
+            _ => null
+        };
+
+        if (stage == 3)
+        {
+            _tooltip.infoRight = "(READY)";
         }
 
-        Instantiate(obj, cropParent.position, cropParent.rotation);
-        currentPlantStage = stage;
+        if (obj != null)
+        {
+            Instantiate(obj, _cropParent);
+            _currentPlantStage = stage;
+        }
     }
 
     private void DryPlot()
     {
-        plotWatered = false;
+        _plotWatered = false;
         // WIP
     }
 
@@ -90,72 +118,91 @@ public class FarmPlot : MonoBehaviour
     // Is this efficient?
     private void Update()
     {
-        if (!farmInfo.isWatered() && plotWatered)
+        if (!FarmLogic.IsWatered() && _plotWatered)
         {
             DryPlot();
         }
 
-        if (farmInfo.getPlantStage() != currentPlantStage)
+        if (FarmLogic.GetPlantStage() != _currentPlantStage)
         {
-            SetPlantStage(farmInfo.getPlantStage());
+            SetPlantStage(FarmLogic.GetPlantStage());
+        }
+        
+        // Check if player is hovering over plot, if so then check for E to harvest
+        if (_tooltip.showing)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                HarvestCrop();
+            }
         }
     }
 }
 
-public class FarmInfo
+public class FarmLogic
 {
-    public FertilizerTypeEnum fertilizer { get; private set; }
-    public SeedEnum seedType { get; private set; }
-    public long unixTimePlanted { get; private set; }
+    public FertilizerTypeEnum Fertilizer { get; private set; }
+    public SeedEnum SeedType { get; private set; }
+    public long UnixTimePlanted { get; private set; }
 
-    public long unixTimeLastWatered { get; private set; }
+    public long UnixTimeLastWatered { get; private set; }
 
-    public FarmInfo(GameObject obj)
+    public FarmLogic()
     {
-        fertilizer = FertilizerTypeEnum.NONE;
-        seedType = SeedEnum.NONE;
-        unixTimeLastWatered = 0L;
+        Fertilizer = FertilizerTypeEnum.NONE;
+        SeedType = SeedEnum.NONE;
+        UnixTimeLastWatered = 0L;
     }
 
-    public bool plantCrop(SeedEnum seed)
+    public bool PlantCrop(SeedEnum seed)
     {
-        if (seedType == SeedEnum.NONE) return false;
-        seedType = seed;
-        unixTimePlanted = GlobalTime.UnixTime;
+        if (SeedType != SeedEnum.NONE) return false;
+        SeedType = seed;
+        UnixTimePlanted = GlobalTime.UnixTime;
         return true;
     }
 
-    public bool addFertilizer(FertilizerTypeEnum fert)
+    public SeedEnum HarvestCrop()
     {
-        if (fertilizer != FertilizerTypeEnum.NONE) return false;
-        fertilizer = fert;
+        if (SeedType == SeedEnum.NONE || GetPlantStage() != 3) return SeedEnum.NONE;
+        SeedEnum oldSeed = SeedType;
+        SeedType = SeedEnum.NONE;
+        Fertilizer = FertilizerTypeEnum.NONE;
+        UnixTimePlanted = 0;
+        return oldSeed;
+    }
+
+    public bool AddFertilizer(FertilizerTypeEnum fert)
+    {
+        if (Fertilizer != FertilizerTypeEnum.NONE) return false;
+        Fertilizer = fert;
         return true;
     }
 
-    public void waterCrop()
+    public void WaterCrop()
     {
-        unixTimeLastWatered = GlobalTime.UnixTime;
+        UnixTimeLastWatered = GlobalTime.UnixTime;
     }
 
-    public bool isWatered()
+    public bool IsWatered()
     {
         // If seconds past from last time watered is greater than the plant's water duration, then it is not watered
-        if (GlobalTime.UnixTime - unixTimeLastWatered >= PlantDictionaries.DefaultWaterDuration * PlantDictionaries.DefaultPlantThirst[seedType])
+        if (GlobalTime.UnixTime - UnixTimeLastWatered >= PlantDictionaries.DefaultWaterDuration * PlantDictionaries.DefaultPlantThirst[SeedType])
         {
             return false;
         }
         return true;
     }
 
-    public int getPlantStage()
+    public int GetPlantStage()
     {
-        if (seedType == SeedEnum.NONE)
+        if (SeedType == SeedEnum.NONE)
         {
             return 0;
         }
 
-        long timeGrown = GlobalTime.UnixTime - unixTimePlanted;
-        float plantGrowthTime = PlantDictionaries.DefaultPlantGrowthTimes[seedType];
+        long timeGrown = GlobalTime.UnixTime - UnixTimePlanted;
+        float plantGrowthTime = PlantDictionaries.DefaultPlantGrowthTimes[SeedType];
 
         if (timeGrown <= 0.25f * plantGrowthTime)
         {

@@ -4,7 +4,14 @@ using System.Collections.Generic;
 [System.Serializable]
 public class ItemDatabase
 {
-    public Dictionary<string, ItemData> items;
+    public List<ItemEntry> items;
+}
+
+[System.Serializable]
+public class ItemEntry
+{
+    public string id;
+    public ItemData itemData;
 }
 
 [System.Serializable]

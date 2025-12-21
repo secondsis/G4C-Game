@@ -7,7 +7,7 @@ public class Hover3DTooltip : MonoBehaviour
     [TextArea] public string infoRight = "";
     private STController tooltipController;
     private Outline outline;
-    private bool showing = false;
+    public bool showing = false;
 
     private void Awake()
     {
@@ -28,6 +28,7 @@ public class Hover3DTooltip : MonoBehaviour
     public void OnHoverOver()
     {
         ShowTooltip();
+        // While hovering, (for crops) check for pressing E
     }
     public void OnHoverExit()
     {

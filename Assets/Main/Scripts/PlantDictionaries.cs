@@ -7,7 +7,7 @@ public static class PlantDictionaries
     public static readonly GameObject WateredPlotObject = null;
     public static readonly Dictionary<SeedEnum, float> DefaultPlantGrowthTimes = new()
     {
-        { SeedEnum.APPLE, 300f},
+        { SeedEnum.APPLE, 10f},
         { SeedEnum.GRAPE, 500f},
         { SeedEnum.STRAWBERRY, 100f},
         { SeedEnum.WATERMELON, 500f}
@@ -25,7 +25,7 @@ public static class PlantDictionaries
     public static readonly Dictionary<SeedEnum, (GameObject, GameObject, GameObject, GameObject)> PlantPrefabs = new()
     {
         { SeedEnum.NONE, (null, null, null, null)},
-        { SeedEnum.APPLE, (null, null, null, null)},
+        { SeedEnum.APPLE, (Resources.Load<GameObject>("Prefabs/ApplePlant").transform.Find("Stage0").gameObject, Resources.Load<GameObject>("Prefabs/ApplePlant").transform.Find("Stage1").gameObject, Resources.Load<GameObject>("Prefabs/ApplePlant").transform.Find("Stage2").gameObject, Resources.Load<GameObject>("Prefabs/ApplePlant").transform.Find("Stage3").gameObject)},
         { SeedEnum.GRAPE, (null, null, null, null)},
         { SeedEnum.STRAWBERRY, (null, null, null, null)},
         { SeedEnum.WATERMELON, (null, null, null, null)}

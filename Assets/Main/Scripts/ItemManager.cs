@@ -12,13 +12,18 @@ public class ItemManager
         TextAsset json = Resources.Load<TextAsset>("Items");
         ItemDatabase db = JsonUtility.FromJson<ItemDatabase>(json.text);
 
-        Items = db.items;
-    }
+        Items = new Dictionary<string, ItemData>();
+        foreach (ItemEntry entry in db.items)
+        {
+            Items.Add(entry.id, entry.itemData);
+            Debug.Log(entry.id);
+        }
+        Debug.Log(Items);
+    }   
 
-    private static Sprite GetItemIcon(string id)
+    private static Sprite GetItemIcon(string icon)
     {
-        var data = Items[id];
-        Sprite spr = Resources.Load<Sprite>("Icons/" + data.icon);
+        Sprite spr = Resources.Load<Sprite>("Icons/" + icon);
         if(spr == null)
         {
             spr = Resources.Load<Sprite>("Icons/debug");
@@ -26,6 +31,9 @@ public class ItemManager
         return spr;
     }
 
+    /*
+     * Returns the Name, Description, MaxStack, Icon
+     */
     public static (string, string, ItemTypeEnum, int, Sprite) GetItemData(string itemCodeName)
     {
         ItemData data = Items[itemCodeName];

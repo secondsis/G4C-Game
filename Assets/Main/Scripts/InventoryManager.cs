@@ -1,27 +1,32 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    private InventoryBackendManager inventoryBackendManager = new InventoryBackendManager();
+    private InventoryBackendManager _inventoryBackendManager = new InventoryBackendManager();
     [SerializeField] private GameObject inventorySlotsParent;
-    private List<GameObject> slots = new List<GameObject>();
-    private GameObject slotPrefab;
+    private List<GameObject> _slots = new List<GameObject>();
+    private GameObject _slotPrefab;
 
     private void Awake()
     {
-        slotPrefab = Resources.Load<GameObject>("Prefabs/InventorySlot");
+        _slotPrefab = Resources.Load<GameObject>("Prefabs/InventorySlot");
+        InventoryFetcher.Manager = this;
+    }
+
+    public void AddApple()
+    {
+        AddItem("apple", 1);
     }
 
     public void AddItem(string itemCodeName, int quantity)
     {
         (string, string, ItemTypeEnum, int, Sprite) itemData = ItemManager.GetItemData(itemCodeName);
         Item item = new Item(itemData.Item1, itemData.Item2, itemData.Item3, itemData.Item4, itemData.Item5);
-        inventoryBackendManager.addItem(item, quantity);
+        _inventoryBackendManager.AddItem(item, quantity);
         UpdateInventory();
     }
 
@@ -29,48 +34,47 @@ public class InventoryManager : MonoBehaviour
     {
         (string, string, ItemTypeEnum, int, Sprite) itemData = ItemManager.GetItemData(itemCodeName);
         Item item = new Item(itemData.Item1, itemData.Item2, itemData.Item3, itemData.Item4, itemData.Item5);
-        inventoryBackendManager.RemoveItem(item, quantity);
+        _inventoryBackendManager.RemoveItem(item, quantity);
         UpdateInventory();
     }
 
     public void UpdateInventory()
     {
-        List<InventoryItem> inventory = inventoryBackendManager.inventory;
-        while (slots.Count > inventory.Count)
+        List<InventoryItem> inventory = _inventoryBackendManager.Inventory;
+        while (_slots.Count > inventory.Count)
         {
-            Destroy(slots[slots.Count - 1]);
-            slots.RemoveAt(slots.Count - 1);
+            Destroy(_slots[_slots.Count - 1]);
+            _slots.RemoveAt(_slots.Count - 1);
         }
 
         for (int i = 0; i < inventory.Count; i++)
         {
             InventoryItem ii = inventory[i];
 
-            Item item = ii.item;
-            int quantity = ii.quantity;
+            Item item = ii.Item;
+            int quantity = ii.Quantity;
 
             // Item properties
-            string itemName = item.itemName;
-            string desc = item.description;
-            string itemType = item.itemType.ToString();
-            // Figure out stacking with maxStack and slot management
-            int maxStack = item.maxStack;
-            Sprite sprite = item.sprite;
+            string itemName = item.ItemName;
+            string desc = item.Description;
+            string itemType = item.ItemType.ToString();
+            Sprite sprite = item.Sprite;
 
             GameObject thisSlot;
-            if (i < slots.Count)
+            if (i < _slots.Count)
             {
-                thisSlot = slots[i];
+                thisSlot = _slots[i];
             }
             else
             {
-                thisSlot = Instantiate(slotPrefab, inventorySlotsParent.transform);
-                slots.Add(thisSlot);
+                thisSlot = Instantiate(_slotPrefab, inventorySlotsParent.transform);
+                thisSlot.name = "InventorySlot" + (i + 1);
+                _slots.Add(thisSlot);
             }
 
             Transform quantityObj = thisSlot.transform.Find("Quantity");
             Transform imageObj = thisSlot.transform.Find("Image");
-            TextMeshPro quantityTxt = quantityObj.GetComponent<TextMeshPro>();
+            TextMeshProUGUI quantityTxt = quantityObj.GetComponent<TextMeshProUGUI>();
             Image image = imageObj.GetComponent<Image>();
 
             quantityTxt.text = "x" + quantity;
@@ -84,52 +88,67 @@ public class InventoryManager : MonoBehaviour
             }
 
             image.sprite = sprite;
+            image.enabled = true;
 
             // Set up the hover info
             Hover2DTooltip hoverTooltip = thisSlot.GetComponent<Hover2DTooltip>();
-            hoverTooltip.enabled = true;
             hoverTooltip.infoLeft = itemName + "\n" + desc;
             hoverTooltip.infoRight = itemType;
+            hoverTooltip.enableTooltip();
         }
     }
 }
 
+public static class InventoryFetcher
+{
+    public static InventoryManager Manager = null;
+}
+
 public class InventoryBackendManager
 {
-    public List<InventoryItem> inventory = new List<InventoryItem>();
-    public int capacity = int.MaxValue;
+    public List<InventoryItem> Inventory = new List<InventoryItem>();
+    public int Capacity = int.MaxValue;
 
-    public bool addItem(Item item, int quantity = 1)
+    public bool AddItem(Item item, int quantity = 1)
     {
-        if (inventory.Count >= capacity)
+        if (Inventory.Count >= Capacity)
         {
             return false;
         }
 
-        foreach (InventoryItem invItem in inventory)
+        foreach (InventoryItem invItem in Inventory)
         {
-            if (invItem.item.Equals(item))
+            if (invItem.Item.Equals(item) && invItem.Quantity < invItem.Item.MaxStack)
             {
-                invItem.quantity += quantity;
+                Debug.Log("same item, stacking");
+                invItem.Quantity += quantity;
+                if (invItem.Quantity > item.MaxStack)
+                {
+                    int newStackAmount = invItem.Quantity - item.MaxStack;
+                    invItem.Quantity = item.MaxStack;
+                    InventoryItem newStack = new InventoryItem(item, newStackAmount);
+                    Inventory.Add(newStack);
+                }
                 return true;
             }
         }
 
         InventoryItem ii = new InventoryItem(item, quantity);
-        inventory.Add(ii);
+        Inventory.Add(ii);
         return true;
     }
 
     public void RemoveItem(Item item, int quantity = 1)
     {
-        foreach (InventoryItem invItem in inventory)
+        for (int i = Inventory.Count - 1; i >= 0; i--)
         {
-            if (invItem.item.Equals(item))
+            InventoryItem invItem = Inventory[i];
+            if (invItem.Item.Equals(item))
             {
-                invItem.quantity -= quantity;
-                if (invItem.quantity <= 0)
+                invItem.Quantity -= quantity;
+                if (invItem.Quantity <= 0)
                 {
-                    inventory.Remove(invItem);
+                    Inventory.Remove(invItem);
                 }
             }
         }
@@ -138,31 +157,48 @@ public class InventoryBackendManager
 
 public class InventoryItem
 {
-    public Item item { get; private set; }
-    public int quantity;
+    public Item Item { get; private set; }
+    public int Quantity;
 
     public InventoryItem(Item item, int quantity = 1)
     {
-        this.item = item;
-        this.quantity = quantity;
+        this.Item = item;
+        this.Quantity = quantity;
     }
 }
 
 public class Item
 {
-    public String itemName { get; private set; }
-    public String description { get; private set; }
-    public ItemTypeEnum itemType { get; private set; }
-    public int maxStack { get; private set; }
-    public Sprite sprite { get; private set; }
+    public String ItemName { get; private set; }
+    public String Description { get; private set; }
+    public ItemTypeEnum ItemType { get; private set; }
+    public int MaxStack { get; private set; }
+    public Sprite Sprite { get; private set; }
 
     // only reason default for sprite is null is because of the warning
     public Item(String name, String desc, ItemTypeEnum type, int maxStack = 64, Sprite sprite = null)
     {
-        itemName = name;
-        description = desc;
-        itemType = type;
-        this.maxStack = maxStack;
-        this.sprite = sprite;
+        ItemName = name;
+        Description = desc;
+        ItemType = type;
+        this.MaxStack = maxStack;
+        this.Sprite = sprite;
+    }
+
+    // override object.Equals
+    public override bool Equals(object obj)
+    {
+
+        if (obj == null || GetType() != obj.GetType())
+        {
+            return false;
+        }
+
+        Item other = (Item)obj;
+
+        // Only requires the same item name. (If future items share names, can cause issues)
+        if (ItemName == other.ItemName) return true;
+
+        return false;
     }
 }

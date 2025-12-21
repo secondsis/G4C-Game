@@ -1,39 +1,54 @@
 {
-  "items": {
-    "test-hoe": {
-      "name": "Test Hoe",
-      "description": "Test hoe for tilling ground.",
-      "itemType": "TOOL",
-      "maxStack": 1,
-      "icon": "hoe"
+  "items": [
+    {
+      "id": "test-hoe",
+      "itemData": {
+        "name": "Test Hoe",
+        "description": "Test hoe for tilling ground.",
+        "itemType": "TOOL",
+        "maxStack": 1,
+        "icon": "hoe"
+      }
     },
-    "potato-seed": {
-      "name": "Potato Seed",
-      "description": "Budding sprout to grow the potato root vegetable.",
-      "itemType": "SEED",
-      "maxStack": 64,
-      "icon": "potato_seed"
+    {
+      "id": "apple",
+      "itemData": {
+        "name": "Apple",
+        "description": "The fresh ripe red fruit that comes from a tree.",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Apple"
+      }
     },
-    "potato": {
-      "name": "Potato",
-      "description": "Starchy root vegetable. Best when mashed with gravy.",
-      "itemType": "PRODUCT",
-      "maxStack": 64,
-      "icon": "Potato"
+    {
+      "id": "apple-seed",
+      "itemData": {
+        "name": "Apple Seed",
+        "description": "",
+        "itemType": "SEED",
+        "maxStack": 1,
+        "icon": "apple_seed"
+      }
     },
-    "apple-seed": {
-      "name": "Apple Seed",
-      "description": "",
-      "itemType": "SEED",
-      "maxStack": 64,
-      "icon": "apple_seed"
+    {
+      "id": "potato",
+      "itemData": {
+        "name": "Potato",
+        "description": "Starchy root vegetable. Best when mashed with gravy.",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Potato"
+      }
     },
-    "apple": {
-      "name": "Apple",
-      "description": "The fresh ripe red fruit that comes from a tree.",
-      "itemType": "PRODUCT",
-      "maxStack": 64,
-      "icon": "Apple"
+    {
+      "id": "potato-seed",
+      "itemData": {
+        "name": "Potato Seed",
+        "description": "Budding sprout to grow the potato root vegetable.",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "potato_seed"
+      }
     }
-  }
+  ]
 }

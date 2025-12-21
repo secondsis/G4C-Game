@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: cc20009a7a11c6c469c0c5410a9796a2
+timeCreated: 1447429093
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 56814
+  packageName: Auto Letterbox
+  packageVersion: 1.0.3
+  assetPath: Assets/Auto Letterbox/Util.cs
+  uploadId: 398580
