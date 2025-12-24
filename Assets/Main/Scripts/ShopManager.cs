@@ -9,17 +9,20 @@ public class ShopManager : MonoBehaviour
 
     [SerializeField] private Transform _itemParent;
     private GameObject _shopItemPrefab;
+    private PlayerStatManager _playerStatManager;
     
-    // Initialization Awake
-    private List<GameObject> _shopItems = new List<GameObject>();
+    // // Initialization Awake
+    // private List<GameObject> _shopItems = new List<GameObject>();
 
     private void Awake()
     {
         _shopItemPrefab = Resources.Load<GameObject>("Prefabs/ShopItem");
+        _playerStatManager = GameObject.FindGameObjectWithTag("Player").transform.Find("PlayerManagers")
+            .GetComponent<PlayerStatManager>();
         foreach (ShopItem item in stock)
         {
             GameObject newObj = Instantiate(_shopItemPrefab, _itemParent);
-            _shopItems.Add(newObj);
+            // _shopItems.Add(newObj);
             
             string itemID = item.itemID;
             int cost = item.cost;
@@ -30,13 +33,29 @@ public class ShopManager : MonoBehaviour
             var hoverTooltip = newObj.GetComponent<Hover2DTooltip>();
             hoverTooltip.infoLeft = itemData.Item1.ToUpper() + "\n" + itemData.Item2;
             hoverTooltip.infoRight = "COST: $" + cost;
+            hoverTooltip.enableTooltip();
             
-            newObj.transform.Find("Image").GetComponent<Image>().sprite = itemData.Item5;
-            newObj.transform.Find("Cost").GetComponent<TextMeshProUGUI>().text = "$" + cost;
+            var shopItemButton =  newObj.GetComponent<Button>();
+            shopItemButton.onClick.AddListener(() => BuyItem(itemID, cost));
+            
+            var image = newObj.transform.Find("Image").GetComponent<Image>();
+            image.sprite = itemData.Item5;
+            image.enabled = true;
+
+            var costText = newObj.transform.Find("Cost").GetComponent<TextMeshProUGUI>();
+            costText.text = "$" + cost;
+            costText.enabled = true;
+
         }
     }
-    
-    
+
+    public void BuyItem(string itemID, int cost)
+    {
+        // Take Money from Player's Wallet
+        if (!_playerStatManager.SpendMoney(cost)) return;
+        
+        InventoryFetcher.Manager.AddItem(itemID, 1);
+    }
 }
 
 [System.Serializable]

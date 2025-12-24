@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -17,26 +14,26 @@ public class PlayerMovement : MonoBehaviour
     public float crouchHeight = 1f;
     public float crouchSpeed = 3f;
 
-    private Vector3 moveDirection = Vector3.zero;
-    private float rotationX = 0;
-    private CharacterController characterController;
-    private Animator anim;
+    private Vector3 _moveDirection = Vector3.zero;
+    private float _rotationX = 0;
+    private CharacterController _characterController;
+    private Animator _animator;
 
-    private bool canMove = true;
-    private bool isJumping = false;
-    private bool isRunning = false;
-    private bool inShiftlock = false;
+    private bool _canMove = true;
+    private bool _isJumping = false;
+    private bool _isRunning = false;
+    private bool _inShiftlock = false;
 
 
     void SetAnim(string state, bool forceOverride = false)
     {
-        var current = anim.GetCurrentAnimatorStateInfo(0);
+        var current = _animator.GetCurrentAnimatorStateInfo(0);
 
 
         if (!current.IsName(state) || forceOverride)
         {
             // Debug.Log("Playing " + state);
-            anim.Play(state, 0, 0.0f);
+            _animator.Play(state, 0, 0.0f);
         }
 
     }
@@ -63,8 +60,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-        characterController = GetComponent<CharacterController>();
-        anim = GetComponent<Animator>();
+        _characterController = GetComponent<CharacterController>();
+        _animator = GetComponent<Animator>();
         // Cursor.lockState = CursorLockMode.Locked;
         // Cursor.visible = false;
     }
@@ -74,30 +71,30 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftAlt))
         {
-            inShiftlock = !inShiftlock;
+            _inShiftlock = !_inShiftlock;
         }
     }
 
     private void manageMovement()
     {
-        if (inShiftlock)
+        if (_inShiftlock)
         {
 
         }
         else
         {
-
+            
         }
     }
 
     private void manageAnimations()
     {
         // Animations
-        if (isJumping)
+        if (_isJumping)
         {
-
+            
         }
-        else if (isRunning)
+        else if (_isRunning)
         {
             PlayRunAnim();
         }
@@ -114,62 +111,64 @@ public class PlayerMovement : MonoBehaviour
         Vector3 right = playerCamera.transform.TransformDirection(Vector3.right);
 
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
-        float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
-        float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
-        float movementDirectionY = moveDirection.y;
-        moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+        float curSpeedX = _canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
+        float curSpeedY = _canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
+        float movementDirectionY = _moveDirection.y;
+        if(curSpeedX != 0 && curSpeedY != 0)
+            _moveDirection = (forward * curSpeedX + (right * curSpeedY)) / 1.41421356237f;
+        else _moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
         if (curSpeedX == 0 && curSpeedY == 0)
         {
-            isRunning = false;
+            this._isRunning = false;
         }
         else
         {
-            isRunning = true;
+            this._isRunning = true;
         }
 
-        if (characterController.isGrounded)
+        if (_characterController.isGrounded)
         {
-            isJumping = false;
+            _isJumping = false;
         }
 
-        if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
+        if (Input.GetButton("Jump") && _canMove && _characterController.isGrounded)
         {
-            moveDirection.y = jumpPower;
-            isJumping = true;
+            _moveDirection.y = jumpPower;
+            _isJumping = true;
             PlayJumpAnim();
         }
         else
         {
-            moveDirection.y = movementDirectionY;
+            _moveDirection.y = movementDirectionY;
         }
 
-        if (!characterController.isGrounded)
+        if (!_characterController.isGrounded)
         {
-            moveDirection.y -= gravity * Time.deltaTime;
+            _moveDirection.y -= gravity * Time.deltaTime;
         }
 
-        if (Input.GetKey(KeyCode.R) && canMove)
+        if (Input.GetKey(KeyCode.R) && _canMove)
         {
-            characterController.height = crouchHeight;
+            _characterController.height = crouchHeight;
             walkSpeed = crouchSpeed;
             runSpeed = crouchSpeed;
 
         }
         else
         {
-            characterController.height = defaultHeight;
+            _characterController.height = defaultHeight;
             walkSpeed = 6f;
             runSpeed = 12f;
         }
 
-        characterController.Move(moveDirection * Time.deltaTime);
+        _characterController.Move(_moveDirection * Time.deltaTime);
 
-        if (canMove)
+        if (_canMove)
         {
-            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
-            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+            _rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+            _rotationX = Mathf.Clamp(_rotationX, -lookXLimit, lookXLimit);
+            playerCamera.transform.localRotation = Quaternion.Euler(_rotationX, 0, 0);
             playerCamera.transform.LookAt(transform);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }

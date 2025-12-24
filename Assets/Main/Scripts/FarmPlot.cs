@@ -4,7 +4,7 @@ using Object = UnityEngine.Object;
 
 public class FarmPlot : MonoBehaviour
 {
-    public FarmLogic FarmLogic = new FarmLogic();
+    public FarmLogic Logic = new FarmLogic();
     private int _currentPlantStage;
     private bool _plotWatered;
     private Transform _cropParent;
@@ -19,11 +19,12 @@ public class FarmPlot : MonoBehaviour
         _tooltip = transform.Find("Plot").Find("PlotObject").GetComponent<Hover3DTooltip>();
         _tooltip.infoLeft = _defaultLeftInfo;
         _tooltip.infoRight = _defaultRightInfo;
+        Debug.Log(_cropParent);
     }
 
     public bool PlantCrop(SeedEnum seed)
     {
-        if (!FarmLogic.PlantCrop(seed)) return false;
+        if (!Logic.PlantCrop(seed)) return false;
         
         foreach (Transform child in _cropParent)
         {
@@ -40,14 +41,17 @@ public class FarmPlot : MonoBehaviour
 
     public bool HarvestCrop()
     {
-        SeedEnum harvestedSeed = FarmLogic.HarvestCrop();
+        SeedEnum harvestedSeed = Logic.HarvestCrop();
         if (harvestedSeed == SeedEnum.NONE) return false;
         foreach (Transform child in _cropParent)
         {
             Destroy(child.gameObject);
         }
         
+        if(Logic.Fertilizer == FertilizerTypeEnum.NONE) _tooltip.infoLeft = _defaultLeftInfo;
+        else _tooltip.infoRight = _fertilizedLeftInfo;
         
+        _tooltip.infoRight = _defaultRightInfo;
         
         InventoryFetcher.Manager.AddItem(harvestedSeed.ToString().ToLower(), 1);
         _currentPlantStage = 0;
@@ -56,7 +60,7 @@ public class FarmPlot : MonoBehaviour
 
     public bool AddFertilizer(FertilizerTypeEnum fert)
     {
-        if (!FarmLogic.AddFertilizer(fert)) return false;
+        if (!Logic.AddFertilizer(fert)) return false;
         Transform fertParent = gameObject.transform.Find("Fertilizer");
         foreach (Transform child in fertParent)
         {
@@ -89,10 +93,10 @@ public class FarmPlot : MonoBehaviour
 
         GameObject obj = stage switch
         {
-            0 => PlantDictionaries.PlantPrefabs[FarmLogic.SeedType].Item1,
-            1 => PlantDictionaries.PlantPrefabs[FarmLogic.SeedType].Item2,
-            2 => PlantDictionaries.PlantPrefabs[FarmLogic.SeedType].Item3,
-            3 => PlantDictionaries.PlantPrefabs[FarmLogic.SeedType].Item4,
+            0 => PlantDictionaries.PlantPrefabs[Logic.SeedType].Item1,
+            1 => PlantDictionaries.PlantPrefabs[Logic.SeedType].Item2,
+            2 => PlantDictionaries.PlantPrefabs[Logic.SeedType].Item3,
+            3 => PlantDictionaries.PlantPrefabs[Logic.SeedType].Item4,
             _ => null
         };
 
@@ -118,14 +122,14 @@ public class FarmPlot : MonoBehaviour
     // Is this efficient?
     private void Update()
     {
-        if (!FarmLogic.IsWatered() && _plotWatered)
+        if (!Logic.IsWatered() && _plotWatered)
         {
             DryPlot();
         }
 
-        if (FarmLogic.GetPlantStage() != _currentPlantStage)
+        if (Logic.GetPlantStage() != _currentPlantStage)
         {
-            SetPlantStage(FarmLogic.GetPlantStage());
+            SetPlantStage(Logic.GetPlantStage());
         }
         
         // Check if player is hovering over plot, if so then check for E to harvest

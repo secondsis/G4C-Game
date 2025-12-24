@@ -16,9 +16,7 @@ public class ItemManager
         foreach (ItemEntry entry in db.items)
         {
             Items.Add(entry.id, entry.itemData);
-            Debug.Log(entry.id);
         }
-        Debug.Log(Items);
     }   
 
     private static Sprite GetItemIcon(string icon)
