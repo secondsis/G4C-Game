@@ -2,7 +2,7 @@ namespace Main.Scripts
 {
     public class DialogueExecuter
     {
-        Dialogue dialogue;
+        public Dialogue dialogue;
         int index;
 
         public DialogueExecuter(Dialogue dialogue)
@@ -12,6 +12,11 @@ namespace Main.Scripts
 
         public bool HasNext => index < dialogue.lines.Count;
 
+        public DialogueLine GetCurrent()
+        {
+            return dialogue.lines[index];
+        }
+        
         public DialogueLine Next()
         {
             return dialogue.lines[index++];

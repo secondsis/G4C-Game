@@ -54,7 +54,7 @@ public class ShopManager : MonoBehaviour
         // Take Money from Player's Wallet
         if (!_playerStatManager.SpendMoney(cost)) return;
         
-        InventoryFetcher.Manager.AddItem(itemID, 1);
+        InventoryManager.Instance.AddItem(itemID, 1);
     }
 }
 

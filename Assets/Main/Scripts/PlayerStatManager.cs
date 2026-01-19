@@ -5,6 +5,7 @@ public class PlayerStatManager : MonoBehaviour
     public int Money { get; private set; }
 
     public int playTime;
+    
     // public int Level { get; private set; }
 
     private void Awake()

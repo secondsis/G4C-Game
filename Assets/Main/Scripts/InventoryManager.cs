@@ -6,23 +6,73 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    public InventoryBackendManager _inventoryBackendManager = new InventoryBackendManager();
+    public static InventoryManager Instance;
+    private readonly InventoryBackendManager _inventoryBackendManager = new InventoryBackendManager();
     [SerializeField] private GameObject inventorySlotsParent;
-    private List<GameObject> _slots = new List<GameObject>();
+    private readonly List<GameObject> _slots = new List<GameObject>();
     private GameObject _slotPrefab;
     [SerializeField] private GameObject hotbarSlotsParent;
-    private List<GameObject> _hotbarSlots = new List<GameObject>();
+    private readonly List<GameObject> _hotbarSlots = new List<GameObject>();
     private GameObject _hotbarSlotPrefab;
 
-    public InventoryItem[] Hotbar = new InventoryItem[10];
+    private readonly InventoryItem[] _hotbar = new InventoryItem[10];
+    private bool _inventoryOpened = false;
+    
+    // UI Side
+    private GameObject _uiGameObject;
+    
+    // ItemPanel
+    private GameObject _itemPanel;
+    private Image _itemPanelImage; 
+    private TextMeshProUGUI _itemPanelName;
+    private TextMeshProUGUI _itemPanelDescription;
+    private Image _itemPanelButtonImage;
+    private Button _itemPanelButton;
+    private TextMeshProUGUI _itemPanelButtonText;
 
     private void Awake()
     {
         _slotPrefab = Resources.Load<GameObject>("Prefabs/InventorySlot");
-        InventoryFetcher.Manager = this;
+        _uiGameObject = gameObject.transform.parent.gameObject.transform.Find("UI").gameObject;
+        _itemPanel = _uiGameObject.transform.Find("ItemPanel").gameObject;
+        _itemPanelImage = _itemPanel.transform.Find("IMAGE").GetComponent<Image>();
+        _itemPanelName = _itemPanel.transform.Find("NameBG").Find("NAME").GetComponent<TextMeshProUGUI>();
+        _itemPanelDescription = _itemPanel.transform.Find("DescBG").Find("DESCRIPTION").GetComponent<TextMeshProUGUI>();
+        _itemPanelButtonImage = _itemPanel.transform.Find("EquipObject").GetComponent<Image>();
+        _itemPanelButton = _itemPanel.transform.Find("EquipObject").GetComponent<Button>();
+        _itemPanelButtonText = _itemPanel.transform.Find("EquipObject").Find("EQUIPTOGGLE").GetComponent<TextMeshProUGUI>();
+        _itemPanel.SetActive(false);
+        _uiGameObject.SetActive(false);
+        _inventoryOpened = false;
+        // THIS IS A SINGLETON
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
     }
 
-    public void EnableAllTooltips()
+    public void ToggleEquipButton()
+    {
+        if (_itemPanelButtonImage.color.g.Equals(1f))
+        {
+            // EQUIP THE ITEM!
+            _itemPanelButtonImage.color = new Color(1, 0, 0);
+            _itemPanelButtonText.text = "Unequip";
+            
+        }
+        else
+        {
+            // UNEQUIP THE ITEM!
+            _itemPanelButtonImage.color = new Color(0, 1, 0);
+            _itemPanelButtonText.text = "Equip";
+            
+        }
+    }
+
+    private void EnableAllTooltips()
     {
         foreach (GameObject slot in _slots)
         {
@@ -35,7 +85,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
     
-    public void DisableAllTooltips()
+    private void DisableAllTooltips()
     {
         foreach (GameObject slot in _slots)
         {
@@ -48,31 +98,43 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void OpenInventory()
+    public void ToggleInventory()
     {
-        gameObject.transform.parent.gameObject.SetActive(true);
-        
+        if (_inventoryOpened)
+        {
+            CloseInventory();
+        }
+        else
+        {
+            OpenInventory();
+        }
+    }
+
+    private void OpenInventory()
+    {
+        gameObject.transform.parent.gameObject.transform.Find("UI").gameObject.SetActive(true);
+        _inventoryOpened = true;
         // FUTURE: ADD ANIMATIONS TO OPENING
         
         EnableAllTooltips();
     }
 
-    public void CloseInventory()
+    private void CloseInventory()
     {
-        gameObject.transform.parent.gameObject.SetActive(false);
-        
+        gameObject.transform.parent.gameObject.transform.Find("UI").gameObject.SetActive(false);
+        _inventoryOpened = false;
         // FUTURE: ADD ANIMATIONS
         
         DisableAllTooltips();
     }
-
+    
     public void EquipItem(string itemCodeName, int quantity)
     {
-        for (int i = 0; i < Hotbar.Length; i++)
+        for (int i = 0; i < _hotbar.Length; i++)
         {
-            if (Hotbar[i] == null)
+            if (_hotbar[i] == null)
             {
-                Hotbar[i] = new InventoryItem(itemCodeName, quantity);
+                _hotbar[i] = new InventoryItem(itemCodeName, quantity);
                 break;
             }
         }
@@ -80,11 +142,11 @@ public class InventoryManager : MonoBehaviour
 
     public void UnequipItem(string itemCodeName, int quantity)
     {
-        for (int i = 0; i < Hotbar.Length; i++)
+        for (int i = 0; i < _hotbar.Length; i++)
         {
-            if (Hotbar[i].Equals(new InventoryItem(itemCodeName, quantity)))
+            if (_hotbar[i].Equals(new InventoryItem(itemCodeName, quantity)))
             {
-                Hotbar[i] = null;
+                _hotbar[i] = null;
                 break;
             }
         }
@@ -92,15 +154,15 @@ public class InventoryManager : MonoBehaviour
 
     public void UpdateHotbar()
     {
-        while (_hotbarSlots.Count > Hotbar.Length)
+        while (_hotbarSlots.Count > _hotbar.Length)
         {
             Destroy(_hotbarSlots[_hotbarSlots.Count - 1]);
             _hotbarSlots.RemoveAt(_hotbarSlots.Count - 1);
         }
 
-        for (int i = 0; i < Hotbar.Length; i++)
+        for (int i = 0; i < _hotbar.Length; i++)
         {
-            InventoryItem ii = Hotbar[i];
+            InventoryItem ii = _hotbar[i];
 
             Item item = ii.Item;
             int quantity = ii.Quantity;
@@ -200,6 +262,25 @@ public class InventoryManager : MonoBehaviour
                 _slots.Add(thisSlot);
             }
 
+            thisSlot.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                Debug.Log("Clicked inventory slot");
+                // KNOWN BUG:
+                // If these are the same, don't change the itemPanel BUT MAKE SURE TO STILL UPDATE THE INDEX IF PLAYER
+                // CLICKS 'EQUIP' (ex. x64 stack of apples vs x2 stack of apples)
+                if (_itemPanel.activeSelf && _itemPanelName.text == itemName)
+                {
+                    _itemPanel.SetActive(false);
+                    return;
+                }
+                _itemPanelImage.sprite = sprite;
+                _itemPanelImage.enabled = true;
+                _itemPanelName.text = itemName;
+                _itemPanelDescription.text = desc;
+                _itemPanelDescription.enabled = true;
+                _itemPanel.SetActive(true);
+            });
+            
             Transform quantityObj = thisSlot.transform.Find("Quantity");
             Transform imageObj = thisSlot.transform.Find("Image");
             TextMeshProUGUI quantityTxt = quantityObj.GetComponent<TextMeshProUGUI>();
@@ -225,11 +306,6 @@ public class InventoryManager : MonoBehaviour
             hoverTooltip.enableTooltip();
         }
     }
-}
-
-public static class InventoryFetcher
-{
-    public static InventoryManager Manager = null;
 }
 
 public class InventoryBackendManager
@@ -317,7 +393,7 @@ public class InventoryItem
 
 public class Item
 {
-    public String ItemName { get; private set; }
+    public String ItemName { get; }
     public String Description { get; private set; }
     public ItemTypeEnum ItemType { get; private set; }
     public int MaxStack { get; private set; }
@@ -347,7 +423,6 @@ public class Item
     // override object.Equals
     public override bool Equals(object obj)
     {
-
         if (obj == null || GetType() != obj.GetType())
         {
             return false;
@@ -359,5 +434,11 @@ public class Item
         if (ItemName == other.ItemName) return true;
 
         return false;
+    }
+
+    public override int GetHashCode()
+    {
+        // Must make ItemName immutable { get; }
+        return ItemName.GetHashCode();
     }
 }

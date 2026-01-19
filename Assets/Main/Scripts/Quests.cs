@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Main.Scripts
 {
-    [CreateAssetMenu(menuName = "Dialogue/Conversation")]
+    [CreateAssetMenu(menuName = "Quests/Quest")]
     public class Quests : ScriptableObject
     {
         public List<Quest> questList;
@@ -16,7 +16,7 @@ namespace Main.Scripts
         public string title;
         [TextArea(2, 5)]
         public string description;
-
+        
         public List<Objective> objectives;
         public List<Reward> rewards;
     }

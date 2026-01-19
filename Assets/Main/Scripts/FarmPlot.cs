@@ -53,7 +53,7 @@ public class FarmPlot : MonoBehaviour
         
         _tooltip.infoRight = _defaultRightInfo;
         
-        InventoryFetcher.Manager.AddItem(harvestedSeed.ToString().ToLower(), 1);
+        InventoryManager.Instance.AddItem(harvestedSeed.ToString().ToLower(), 1);
         _currentPlantStage = 0;
         return true;
     }

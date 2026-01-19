@@ -6,6 +6,9 @@ TagManager:
   tags:
   - DEBUG
   - PlayerStatManager
+  - InteractionManager
+  - DialogueLogic
+  - ShopUI
   layers:
   - Default
   - TransparentFX

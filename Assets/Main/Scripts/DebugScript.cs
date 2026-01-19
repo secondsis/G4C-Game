@@ -8,7 +8,7 @@ public class DebugScript : MonoBehaviour
     public PlayerStatManager _playerStatManager;
     public TextMeshProUGUI _moneyText;
     private const String Symbol = "$";
-
+    
     private void Start()
     {
         farmPlot.PlantCrop(SeedEnum.APPLE);

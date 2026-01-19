@@ -1,0 +1,23 @@
+1. Make Shop Work
+    Open Shop upon dialogue choice (make sure you can customize the shop dialogue)
+    Make a hotkey for opening/closing inventory (Q) STILL NEEDS TESTING
+    
+    MAKE ITEMS EQUIPPABLE -- 3d models
+1b. Make Inventory Work
+    Make Items Equippable
+    Make Functioning Hotbar ; Users can click on hotbar items to see the itemPanel then unequip it from there. 
+    
+    
+2. Make Selling Work
+    Open up the Selling menu, which displays your inventory
+    There will be a PERSONAL shipping bin and a GLOBAL shipping bin
+3. Ensure that Planting Works (for all crops)
+    Make 3d models and make the seed images
+    
+4. Make the Map
+5. Make the NPCs
+6. Make the Quests
+7. Make the Intro/Outro
+8. Additional Polishing? Minimap, tools, gifting, friendship points? 
+    Make notification for when receiving a new item (especially for buying stuff from shops)
+    
