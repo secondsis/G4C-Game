@@ -7,43 +7,47 @@ using UnityEngine.UI;
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
+    
+    // Main Inventory
     private readonly InventoryBackendManager _inventoryBackendManager = new InventoryBackendManager();
     [SerializeField] private GameObject inventorySlotsParent;
     private readonly List<GameObject> _slots = new List<GameObject>();
     private GameObject _slotPrefab;
-    [SerializeField] private GameObject hotbarSlotsParent;
-    private readonly List<GameObject> _hotbarSlots = new List<GameObject>();
-    private GameObject _hotbarSlotPrefab;
-
-    private readonly InventoryItem[] _hotbar = new InventoryItem[10];
     private bool _inventoryOpened = false;
+
+    // Hotbar (should contain the indices of the inventory)
+    private readonly List<int> _hotbar = new List<int>(10);
+    [SerializeField] private GameObject hotbarSlotsParent; // change this to be accuratevvvggggg  gggggg bgggrrvvbfuuxdddd
+    private readonly List<GameObject> _hotbarSlots = new List<GameObject>(10);
+    private GameObject _hotbarSlotPrefab;
     
     // UI Side
     private GameObject _uiGameObject;
     
     // ItemPanel
+    private int _itemPanelHashCode = -1; // Updated when opening _itemPanel
     private GameObject _itemPanel;
     private Image _itemPanelImage; 
     private TextMeshProUGUI _itemPanelName;
     private TextMeshProUGUI _itemPanelDescription;
     private Image _itemPanelButtonImage;
-    private Button _itemPanelButton;
     private TextMeshProUGUI _itemPanelButtonText;
 
     private void Awake()
     {
         _slotPrefab = Resources.Load<GameObject>("Prefabs/InventorySlot");
+        _hotbarSlotPrefab = Resources.Load<GameObject>("Prefabs/HotbarSlot");
         _uiGameObject = gameObject.transform.parent.gameObject.transform.Find("UI").gameObject;
         _itemPanel = _uiGameObject.transform.Find("ItemPanel").gameObject;
         _itemPanelImage = _itemPanel.transform.Find("IMAGE").GetComponent<Image>();
         _itemPanelName = _itemPanel.transform.Find("NameBG").Find("NAME").GetComponent<TextMeshProUGUI>();
         _itemPanelDescription = _itemPanel.transform.Find("DescBG").Find("DESCRIPTION").GetComponent<TextMeshProUGUI>();
         _itemPanelButtonImage = _itemPanel.transform.Find("EquipObject").GetComponent<Image>();
-        _itemPanelButton = _itemPanel.transform.Find("EquipObject").GetComponent<Button>();
         _itemPanelButtonText = _itemPanel.transform.Find("EquipObject").Find("EQUIPTOGGLE").GetComponent<TextMeshProUGUI>();
         _itemPanel.SetActive(false);
         _uiGameObject.SetActive(false);
         _inventoryOpened = false;
+        
         // THIS IS A SINGLETON
         if (Instance != null && Instance != this)
         {
@@ -61,17 +65,17 @@ public class InventoryManager : MonoBehaviour
             // EQUIP THE ITEM!
             _itemPanelButtonImage.color = new Color(1, 0, 0);
             _itemPanelButtonText.text = "Unequip";
-            
+            EquipItem(_itemPanelHashCode);
         }
         else
         {
             // UNEQUIP THE ITEM!
             _itemPanelButtonImage.color = new Color(0, 1, 0);
             _itemPanelButtonText.text = "Equip";
-            
+            UnequipItem(_itemPanelHashCode);
         }
     }
-
+    
     private void EnableAllTooltips()
     {
         foreach (GameObject slot in _slots)
@@ -127,43 +131,46 @@ public class InventoryManager : MonoBehaviour
         
         DisableAllTooltips();
     }
+
+    // Should be called upon using the equip button
+    public void EquipItem(int invItemHash)
+    {
+        _hotbar.Add(invItemHash);
+
+        UpdateHotbar();
+    }
     
-    public void EquipItem(string itemCodeName, int quantity)
+    /** Unequip Item
+     * 
+     */
+    public void UnequipItem(int invItemHash)
     {
-        for (int i = 0; i < _hotbar.Length; i++)
+        if (!_hotbar.Remove(invItemHash))
         {
-            if (_hotbar[i] == null)
-            {
-                _hotbar[i] = new InventoryItem(itemCodeName, quantity);
-                break;
-            }
+            Debug.LogWarning("Couldn't remove that inventory hash.");
         }
+        UpdateHotbar();
     }
 
-    public void UnequipItem(string itemCodeName, int quantity)
-    {
-        for (int i = 0; i < _hotbar.Length; i++)
-        {
-            if (_hotbar[i].Equals(new InventoryItem(itemCodeName, quantity)))
-            {
-                _hotbar[i] = null;
-                break;
-            }
-        }
-    }
-
+    // Need to rework hotbar to be a dynamic list that has a capacity cap. 
     public void UpdateHotbar()
     {
-        while (_hotbarSlots.Count > _hotbar.Length)
+        while (_hotbarSlots.Count > _hotbar.Count)
         {
             Destroy(_hotbarSlots[_hotbarSlots.Count - 1]);
             _hotbarSlots.RemoveAt(_hotbarSlots.Count - 1);
         }
 
-        for (int i = 0; i < _hotbar.Length; i++)
+        for (int i = 0; i < _hotbar.Count; i++)
         {
-            InventoryItem ii = _hotbar[i];
-
+            int iiHash = _hotbar[i];
+            if (iiHash == -1)
+            {
+                Debug.Log("Reached end of hotbar");
+                break;
+            }
+            InventoryItem ii = _inventoryBackendManager.Inventory.Find(item => item.GetHashCode() == iiHash);
+            
             Item item = ii.Item;
             int quantity = ii.Quantity;
 
@@ -191,18 +198,11 @@ public class InventoryManager : MonoBehaviour
             Image image = imageObj.GetComponent<Image>();
 
             quantityTxt.text = "x" + quantity;
-            if (quantity > 1)
-            {
-                quantityTxt.enabled = true;
-            }
-            else
-            {
-                quantityTxt.enabled = false;
-            }
+            quantityTxt.enabled = quantity > 1;
 
             image.sprite = sprite;
             image.enabled = true;
-
+            
             // Set up the hover info
             Hover2DTooltip hoverTooltip = thisSlot.GetComponent<Hover2DTooltip>();
             hoverTooltip.infoLeft = itemName + "\n" + desc;
@@ -261,18 +261,20 @@ public class InventoryManager : MonoBehaviour
                 thisSlot.name = "InventorySlot" + (i + 1);
                 _slots.Add(thisSlot);
             }
-
+            
+            // This is clicking the inventory slot to open/close the itemPanel
             thisSlot.GetComponent<Button>().onClick.AddListener(() =>
             {
                 Debug.Log("Clicked inventory slot");
-                // KNOWN BUG:
-                // If these are the same, don't change the itemPanel BUT MAKE SURE TO STILL UPDATE THE INDEX IF PLAYER
-                // CLICKS 'EQUIP' (ex. x64 stack of apples vs x2 stack of apples)
-                if (_itemPanel.activeSelf && _itemPanelName.text == itemName)
+                // Using HashCodes might be expensive
+                int newHash = ii.GetHashCode();
+                if (_itemPanel.activeSelf && _itemPanelHashCode == newHash)
                 {
                     _itemPanel.SetActive(false);
                     return;
                 }
+
+                _itemPanelHashCode = newHash;
                 _itemPanelImage.sprite = sprite;
                 _itemPanelImage.enabled = true;
                 _itemPanelName.text = itemName;

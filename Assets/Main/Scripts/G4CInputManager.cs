@@ -64,7 +64,7 @@ namespace Main.Scripts
                 _currentInteractable = bestInteractable;
             }
             
-            Debug.Log("New InteractionList: " + InteractionList.ToString());
+            Debug.Log("New InteractionList: " + InteractionList);
         }
         
         private static void DefaultInteract()
@@ -83,7 +83,7 @@ namespace Main.Scripts
 
         private static void OnToggleInventory(InputAction.CallbackContext ctx)
         {
-            InventoryManager.Instance.ToggleInventory();
+            InventoryManager.Instance.ToggleInventory(); 
         }
 
         static G4CInputManager()

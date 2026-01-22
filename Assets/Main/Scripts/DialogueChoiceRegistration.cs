@@ -19,10 +19,9 @@ public class DialogueChoiceRegistration : MonoBehaviour
     {
         DialogueUI.LaunchDialogue("SeedShopNo");
     }
-    
 
     private void OpenSeedShop()
     {
-        ShopFrontendManager.OpenShop();
+        ShopFrontendManager.OpenShop("Kevin", "Selling seeds is a tradition my family always carried.");
     }
 }

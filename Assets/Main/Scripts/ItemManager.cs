@@ -2,9 +2,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-public class ItemManager
+public static class ItemManager
 {
-    private static Dictionary<string, ItemData> Items;
+    private static readonly Dictionary<string, ItemData> Items;
 
     static ItemManager()
     {
@@ -22,7 +22,7 @@ public class ItemManager
     private static Sprite GetItemIcon(string icon)
     {
         Sprite spr = Resources.Load<Sprite>("Icons/" + icon);
-        if(spr == null)
+        if(!spr)
         {
             spr = Resources.Load<Sprite>("Icons/debug");
         }

@@ -11,6 +11,16 @@
       }
     },
     {
+      "id": "alfalfa",
+      "itemData": {
+        "name": "Alfalfa",
+        "description": "A perennial legume commonly used for grazing and hay. Its young sprouts are highly nutritious.",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Alfalfa"
+      }
+    },
+    {
       "id": "apple",
       "itemData": {
         "name": "Apple",
@@ -31,6 +41,116 @@
       }
     },
     {
+      "id": "artichoke",
+      "itemData": {
+        "name": "Artichoke",
+        "description": "Green edible flower buds that are tasty if and only if expertly cooked.",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Artichoke"
+      }
+    },
+    {
+      "id": "beetroot",
+      "itemData": {
+        "name": "Beetroot",
+        "description": "A root vegetable that can make a good beat.",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Beetroot"
+      }
+    },
+    {
+      "id": "bell-pepper",
+      "itemData": {
+        "name": "Bell Pepper",
+        "description": "",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "BellPepper"
+      }
+    },
+    {
+      "id": "blueberry",
+      "itemData": {
+        "name": "Blueberry",
+        "description": "It's blue and it's a berry. Guess it: blueberry!",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Blueberry"
+      }
+    },
+    {
+      "id": "cabbage",
+      "itemData": {
+        "name": "Cabbage",
+        "description": "It's a leafy green and red and purple and white. A choose-your-fate veggie: pickled, fermented, steamed, stewed, roasted, sautéed, braised, or raw.",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Cabbage"
+      }
+    },
+    {
+      "id": "carrot",
+      "itemData": {
+        "name": "Carrot",
+        "description": "It's an orange root veggie. May or may not give you night vision.",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Carrot"
+      }
+    },
+    {
+      "id": "cauliflower",
+      "itemData": {
+        "name": "Cauliflower",
+        "description": "",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Cauliflower"
+      }
+    },
+    {
+      "id": "corn",
+      "itemData": {
+        "name": "Corn",
+        "description": "Also known as maize. It is a staple food, and a large majority is used to feed livestock.",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Corn"
+      }
+    },
+    {
+      "id": "green-bean",
+      "itemData": {
+        "name": "Green Bean",
+        "description": "One of the first three veggies you will probably think of.",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "GreenBean"
+      }
+    },
+    {
+      "id": "kale",
+      "itemData": {
+        "name": "Kale",
+        "description": "",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Kale"
+      }
+    },
+    {
+      "id": "parsnip",
+      "itemData": {
+        "name": "Parsnip",
+        "description": "",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Parsnip"
+      }
+    },
+    {
       "id": "potato",
       "itemData": {
         "name": "Potato",
@@ -48,6 +168,106 @@
         "itemType": "SEED",
         "maxStack": 64,
         "icon": "potato_seed"
+      }
+    },
+    {
+      "id": "pumpkin",
+      "itemData": {
+        "name": "Pumpkin",
+        "description": "BOO! It's the popular orange squash used for pumpkin pies and Jack-O'-Lanterns.",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Pumpkin"
+      }
+    },
+    {
+      "id": "radish",
+      "itemData": {
+        "name": "Radish",
+        "description": "It's a red root vegetable that tastes like a softer version of a carrot with a hint of spice.",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Radish"
+      }
+    },
+    {
+      "id": "rhubarb",
+      "itemData": {
+        "name": "Rhubarb",
+        "description": "",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Rhubarb"
+      }
+    },
+    {
+      "id": "rice",
+      "itemData": {
+        "name": "Rice",
+        "description": "",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Rice"
+      }
+    },
+    {
+      "id": "soybean",
+      "itemData": {
+        "name": "Soybean",
+        "description": "",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Soybean"
+      }
+    },
+    {
+      "id": "strawberry",
+      "itemData": {
+        "name": "Strawberry",
+        "description": "It's straw and it's a berry. Actually, that's false. There is berry any straw.",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Strawberry"
+      }
+    },
+    {
+      "id": "sweet-potato",
+      "itemData": {
+        "name": "Sweet Potato",
+        "description": "POV: They offer you french fries but it's actually sweet potato fries. It's healthy though!",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Sweet Potato"
+      }
+    },
+    {
+      "id": "tomato",
+      "itemData": {
+        "name": "Tomato",
+        "description": "",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Tomato"
+      }
+    },
+    {
+      "id": "watermelon",
+      "itemData": {
+        "name": "Watermelon",
+        "description": "A summer favorite treat. Tastes like sugary water with a side of friendship.",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Watermelon"
+      }
+    },
+    {
+      "id": "wheat",
+      "itemData": {
+        "name": "Wheat",
+        "description": "A staple food. After processing, it becomes a refined grain perfect for breads and bagels.",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Wheat"
       }
     }
   ]

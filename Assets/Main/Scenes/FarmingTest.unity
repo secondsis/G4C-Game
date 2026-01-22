@@ -3211,7 +3211,7 @@ GameObject:
   - component: {fileID: 1318885791}
   - component: {fileID: 1318885790}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3224,17 +3224,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1318885788}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1000001, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2093659221}
+  m_Father: {fileID: 1400832601}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -280, y: -271.1583}
+  m_SizeDelta: {x: 263.64, y: 157.68298}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1318885790
 MonoBehaviour:
@@ -3321,7 +3321,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 15, y: 10, z: 15, w: 10}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3704,6 +3704,7 @@ RectTransform:
   m_Children:
   - {fileID: 2093659221}
   - {fileID: 1094972808}
+  - {fileID: 1318885789}
   m_Father: {fileID: 1177665992}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -4138,7 +4139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
   inventorySlotsParent: {fileID: 1494982886}
-  hotbarSlotsParent: {fileID: 2030404851}
+  hotbarSlotsParent: {fileID: 1946436659}
 --- !u!4 &1469671586
 Transform:
   m_ObjectHideFlags: 0
@@ -4632,7 +4633,7 @@ RectTransform:
   m_GameObject: {fileID: 1551538240}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -0.9090908, y: 1, z: 1}
+  m_LocalScale: {x: -0.9090907, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1533103716}
@@ -6720,8 +6721,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.1000001, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1318885789}
+  m_Children: []
   m_Father: {fileID: 1400832601}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
