@@ -141,7 +141,7 @@ public class InventoryManager : MonoBehaviour
     }
     
     /** Unequip Item
-     * 
+     * Using the inventoryitem hashcode, it will find the item and remove it from the hotbar
      */
     public void UnequipItem(int invItemHash)
     {
@@ -190,6 +190,14 @@ public class InventoryManager : MonoBehaviour
                 thisSlot = Instantiate(_hotbarSlotPrefab, hotbarSlotsParent.transform);
                 thisSlot.name = "HotbarSlot" + (i + 1);
                 _hotbarSlots.Add(thisSlot);
+                
+                //ADD THE CLICK BUTTON FUNCTION
+                thisSlot.GetComponent<Button>().onClick.AddListener(() =>
+                {
+                    // This will equip the item, according to the prefab path
+                    // Prefab Path should/must be a InventoryItem variable
+                    
+                });
             }
 
             Transform quantityObj = thisSlot.transform.Find("Quantity");
@@ -400,19 +408,27 @@ public class Item
     public ItemTypeEnum ItemType { get; private set; }
     public int MaxStack { get; private set; }
     public Sprite Sprite { get; private set; }
+    public bool Equippable { get; private set; }
+    public String PrefabPath { get; private set; }
 
     // only reason default for sprite is null is because of the warning
-    public Item(String name, String desc, ItemTypeEnum type, int maxStack = 64, Sprite sprite = null)
+    public Item(String name, String desc, ItemTypeEnum type, int maxStack = 64, Sprite sprite = null, String prefabPath="")
     {
         ItemName = name;
         Description = desc;
         ItemType = type;
         this.MaxStack = maxStack;
         this.Sprite = sprite;
+        if (string.IsNullOrEmpty(prefabPath))
+        {
+            Equippable = false;
+        }
+        PrefabPath = prefabPath;
     }
 
     public Item(String itemCodeName)
     {
+        // need to add prefabpath to the itemdata
         (string, string, ItemTypeEnum, int, Sprite) itemData = ItemManager.GetItemData(itemCodeName);
         
         ItemName = itemData.Item1;

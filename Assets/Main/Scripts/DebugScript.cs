@@ -1,4 +1,5 @@
 using System;
+using Main.Scripts;
 using TMPro;
 using UnityEngine;
 
@@ -9,16 +10,22 @@ public class DebugScript : MonoBehaviour
     public FarmPlot farmPlot;
     public PlayerStatManager _playerStatManager;
     public TextMeshProUGUI _moneyText;
+    public GameObject poucPrefab;
     private const String Symbol = "$";
     
     private void Start()
     {
         farmPlot.PlantCrop(SeedEnum.CARROT);
+        InventoryManager.Instance.AddItem("carrot-seed", 2);
     }
 
     private void Update()
     {
         _moneyText.text = Symbol + _playerStatManager.Money;
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            ToolEvents.InvokeToolEquip(poucPrefab);
+        }
     }
 
     public static void BetterDebug(System.Object message)

@@ -752,10 +752,36 @@ PrefabInstance:
     - {fileID: 326387092582235227, guid: e64362486d68bee44949ee4cbe62f5b9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6425637404512582811, guid: e64362486d68bee44949ee4cbe62f5b9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3661055607951490121}
   m_SourcePrefab: {fileID: 100100000, guid: e64362486d68bee44949ee4cbe62f5b9, type: 3}
+--- !u!1 &51183987029277598 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6425637404512582811, guid: e64362486d68bee44949ee4cbe62f5b9, type: 3}
+  m_PrefabInstance: {fileID: 6456372669825550085}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3661055607951490121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51183987029277598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2b4f36b55f28d54e99dc981deb49272, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToolHandler
+  rightHandParent: {fileID: 4379263238307605765}
 --- !u!4 &864136133848670500 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5937894405437335073, guid: e64362486d68bee44949ee4cbe62f5b9, type: 3}
+  m_PrefabInstance: {fileID: 6456372669825550085}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4379263238307605765 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7304803457985047040, guid: e64362486d68bee44949ee4cbe62f5b9, type: 3}
   m_PrefabInstance: {fileID: 6456372669825550085}
   m_PrefabAsset: {fileID: 0}

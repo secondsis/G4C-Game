@@ -101,6 +101,16 @@
       }
     },
     {
+      "id": "carrot-seed",
+      "itemData": {
+        "name": "Carrot Seed",
+        "description": "Little seeds for your rabbit's favorite orange vegetable.",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "debug"
+      }
+    },
+    {
       "id": "cauliflower",
       "itemData": {
         "name": "Cauliflower",
