@@ -14,6 +14,7 @@ public class FarmPlot : MonoBehaviour
     private static readonly String _defaultLeftInfo = "Unfertilized Plot\nAn empty area of farmable land.";
     private static readonly String _defaultRightInfo = "(EMPTY)";
     private static readonly String _fertilizedLeftInfo = "Fertilized Plot\nAn empty area of farmable land.";
+    private bool _tooltipShowing;
 
     private void Awake()
     {
@@ -21,18 +22,43 @@ public class FarmPlot : MonoBehaviour
         _tooltip = transform.Find("Plot").Find("PlotObject").GetComponent<Hover3DTooltip>();
         _tooltip.infoLeft = _defaultLeftInfo;
         _tooltip.infoRight = _defaultRightInfo;
-        Debug.Log(_cropParent);
-        G4CInputManager.RegisterInteract(InteractionType.HARVEST, HarvestCrop);
-        G4CInputManager.SetInteract(InteractionType.HARVEST, HarvestCrop, false);
 
+        // This allows the crops to be harvested. If a seed is equipped, add that function too
+        // Go into inventory and check if a item type is seed?
         _tooltip.OnTooltipShow += () =>
         {
-            G4CInputManager.SetInteract(InteractionType.HARVEST, HarvestCrop, true);
+            if (_tooltipShowing)
+            {
+                return;
+            }
+            _tooltipShowing = true;
+            G4CInputManager.RegisterInteract(InteractionType.HARVEST, HarvestCrop);
+            InventoryItem currentlyEquipped = InventoryManager.Instance.CurrentlyEquipped;
+            if (currentlyEquipped != null && currentlyEquipped.Item.ItemType == ItemTypeEnum.SEED)
+            {
+                // If interact, plant crop
+                G4CInputManager.RegisterInteract(InteractionType.HARVEST, () =>
+                {
+                    if (Enum.TryParse(currentlyEquipped.Item.ItemName.ToUpper(), out SeedEnum thisSeed))
+                    {
+                        PlantCrop(thisSeed);
+
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Could not find seed type!");
+                    }
+                    
+                    
+                });
+            }
         };
         
         _tooltip.OnTooltipHide += () =>
         {
-            G4CInputManager.SetInteract(InteractionType.HARVEST, HarvestCrop, false);
+            if (!_tooltipShowing) return;
+            _tooltipShowing = false;
+            G4CInputManager.RemoveInteract(InteractionType.HARVEST, HarvestCrop);
         };
     }
 
@@ -53,9 +79,9 @@ public class FarmPlot : MonoBehaviour
         return true;
     }
 
+    // Has a check in place so this will only complete if the crop is mature
     public void HarvestCrop()
     {
-        Debug.Log("Harvesting Crop");
         SeedEnum harvestedSeed = Logic.HarvestCrop();
         if (harvestedSeed == SeedEnum.NONE) return;
         // if (harvestedSeed == SeedEnum.NONE) return false;

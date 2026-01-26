@@ -155,6 +155,16 @@ public class InventoryManager : MonoBehaviour
         UpdateHotbar();
     }
 
+    public void DecrementCurrentlyEquipped()
+    {
+        CurrentlyEquipped.Quantity--;
+        if (CurrentlyEquipped.Quantity <= 0)
+        {
+            ToolEvents.InvokeToolUnequip();
+            CurrentlyEquipped = null;
+        }
+    }
+
     // Need to rework hotbar to be a dynamic list that has a capacity cap. 
     public void UpdateHotbar()
     {
@@ -255,8 +265,18 @@ public class InventoryManager : MonoBehaviour
 
     public void RemoveItem(string itemCodeName, int quantity)
     {
+        
         _inventoryBackendManager.RemoveItem(itemCodeName, quantity);
         UpdateInventory();
+        RemoveHotbarItem(itemCodeName);
+        
+    }
+
+    public void RemoveHotbarItem(string itemCodeName)
+    {
+        // BUG: This will not account for duplicate items.
+        _hotbar.Remove(itemCodeName.GetHashCode());
+        UpdateHotbar();
     }
 
     public void UpdateInventory()
@@ -381,15 +401,17 @@ public class InventoryBackendManager
         Inventory.Add(ii);
         return true;
     }
-
-    public void RemoveItem(string itemCodeName, int quantity)
+    
+    // Returns false if inventoryItem quantity is gone
+    public bool RemoveItem(string itemCodeName, int quantity)
     {
         (string, string, ItemTypeEnum, int, Sprite, string) itemData = ItemManager.GetItemData(itemCodeName);
         Item item = new Item(itemData.Item1, itemData.Item2, itemData.Item3, itemData.Item4, itemData.Item5, itemData.Item6);
-        RemoveItem(item, quantity);
+        return RemoveItem(item, quantity);
     }
 
-    public void RemoveItem(Item item, int quantity = 1)
+    // Returns false if inventoryItem quantity is gone
+    public bool RemoveItem(Item item, int quantity = 1)
     {
         for (int i = Inventory.Count - 1; i >= 0; i--)
         {
@@ -400,9 +422,12 @@ public class InventoryBackendManager
                 if (invItem.Quantity <= 0)
                 {
                     Inventory.Remove(invItem);
+                    return false;
                 }
             }
         }
+
+        return true;
     }
 }
 
