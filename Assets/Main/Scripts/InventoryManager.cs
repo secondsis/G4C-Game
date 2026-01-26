@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
+    // BUG: The equip/unequip AND itemPanel does not appear properly when dealing with multiple items
     public static InventoryManager Instance;
     
     // Main Inventory
@@ -21,6 +22,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private GameObject hotbarSlotsParent; // change this to be accuratevvvggggg  gggggg bgggrrvvbfuuxdddd
     private readonly List<GameObject> _hotbarSlots = new List<GameObject>(10);
     private GameObject _hotbarSlotPrefab;
+    public InventoryItem CurrentlyEquipped;
     
     // UI Side
     private GameObject _uiGameObject;
@@ -205,12 +207,15 @@ public class InventoryManager : MonoBehaviour
                         if (!ToolHandler.isToolEquipped(itemPrefab.name))
                         {
                             Debug.Log("Equipped");
-                            ToolEvents.InvokeToolEquip(itemPrefab);
+                            ToolEvents.InvokeToolEquip(itemPrefab, ii);
+                            CurrentlyEquipped = ii;
+                            // Send an event that tells every script what the new item is
                         }
                         else
                         {
                             Debug.Log("Unequipped");
                             ToolEvents.InvokeToolUnequip();
+                            CurrentlyEquipped = null;
                         }
                     
                     });
@@ -437,10 +442,7 @@ public class Item
         ItemType = type;
         this.MaxStack = maxStack;
         this.Sprite = sprite;
-        if (string.IsNullOrEmpty(prefabPath))
-        {
-            Equippable = false;
-        }
+        Equippable = !string.IsNullOrEmpty(prefabPath);
         PrefabPath = prefabPath;
     }
 

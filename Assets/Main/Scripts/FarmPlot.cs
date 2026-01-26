@@ -1,9 +1,11 @@
 using System;
+using Main.Scripts;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 public class FarmPlot : MonoBehaviour
 {
+    // TODO: Fix carrots no longer harvesting. Goal: Allow carrot seeds to be planted
     public FarmLogic Logic = new FarmLogic();
     private int _currentPlantStage;
     private bool _plotWatered;
@@ -20,6 +22,18 @@ public class FarmPlot : MonoBehaviour
         _tooltip.infoLeft = _defaultLeftInfo;
         _tooltip.infoRight = _defaultRightInfo;
         Debug.Log(_cropParent);
+        G4CInputManager.RegisterInteract(InteractionType.HARVEST, HarvestCrop);
+        G4CInputManager.SetInteract(InteractionType.HARVEST, HarvestCrop, false);
+
+        _tooltip.OnTooltipShow += () =>
+        {
+            G4CInputManager.SetInteract(InteractionType.HARVEST, HarvestCrop, true);
+        };
+        
+        _tooltip.OnTooltipHide += () =>
+        {
+            G4CInputManager.SetInteract(InteractionType.HARVEST, HarvestCrop, false);
+        };
     }
 
     public bool PlantCrop(SeedEnum seed)
@@ -39,10 +53,12 @@ public class FarmPlot : MonoBehaviour
         return true;
     }
 
-    public bool HarvestCrop()
+    public void HarvestCrop()
     {
+        Debug.Log("Harvesting Crop");
         SeedEnum harvestedSeed = Logic.HarvestCrop();
-        if (harvestedSeed == SeedEnum.NONE) return false;
+        if (harvestedSeed == SeedEnum.NONE) return;
+        // if (harvestedSeed == SeedEnum.NONE) return false;
         foreach (Transform child in _cropParent)
         {
             Destroy(child.gameObject);
@@ -55,7 +71,7 @@ public class FarmPlot : MonoBehaviour
         
         InventoryManager.Instance.AddItem(harvestedSeed.ToString().ToLower(), 1);
         _currentPlantStage = 0;
-        return true;
+        // return true;
     }
 
     public bool AddFertilizer(FertilizerTypeEnum fert)
@@ -133,13 +149,15 @@ public class FarmPlot : MonoBehaviour
         }
         
         // Check if player is hovering over plot, if so then check for E to harvest
-        if (_tooltip.showing)
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                HarvestCrop();
-            }
-        }
+        // if (_tooltip.showing)
+        // {
+        //     // Change this to an OnInteract
+        //     
+        //     // if (Input.GetKeyDown(KeyCode.E))
+        //     // {
+        //     //     HarvestCrop();
+        //     // }
+        // }
     }
 }
 

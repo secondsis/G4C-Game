@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class Hover3DTooltip : MonoBehaviour
 {
+    public event Action OnTooltipShow;
+    public event Action OnTooltipHide;
     public SimpleTooltipStyle simpleTooltipStyle;
     [TextArea] public string infoLeft = "Hello";
     [TextArea] public string infoRight = "";
@@ -39,6 +42,7 @@ public class Hover3DTooltip : MonoBehaviour
     public void ShowTooltip()
     {
         showing = true;
+        OnTooltipShow?.Invoke();
 
         // Update the text for both layers
         tooltipController.SetCustomStyledText(infoLeft, simpleTooltipStyle, STController.TextAlign.Left);
@@ -53,6 +57,7 @@ public class Hover3DTooltip : MonoBehaviour
         if (!showing)
             return;
         showing = false;
+        OnTooltipHide?.Invoke();
         tooltipController.HideTooltip();
     }
 }

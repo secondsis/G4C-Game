@@ -8,9 +8,10 @@ namespace Main.Scripts
         public static event Action<GameObject> OnToolEquip;
         public static event Action OnToolUnequip;
         
-        public static void InvokeToolEquip(GameObject tool)
+        public static void InvokeToolEquip(GameObject tool, InventoryItem item)
         {
             OnToolEquip?.Invoke(tool);
+            // MAKE THE SEEDS USABLE
         }
 
         public static void InvokeToolUnequip()

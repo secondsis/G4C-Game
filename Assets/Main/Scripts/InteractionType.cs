@@ -5,6 +5,7 @@ namespace Main.Scripts
         NONE,
         INTERACTION2, 
         INTERACTION1,
+        HARVEST,
         DIALOGUE,
     }
 }

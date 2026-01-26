@@ -22,10 +22,6 @@ public class DebugScript : MonoBehaviour
     private void Update()
     {
         _moneyText.text = Symbol + _playerStatManager.Money;
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            ToolEvents.InvokeToolEquip(poucPrefab);
-        }
     }
 
     public static void BetterDebug(System.Object message)
