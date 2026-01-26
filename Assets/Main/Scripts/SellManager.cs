@@ -8,15 +8,25 @@ public class SellManager : MonoBehaviour
     [SerializeField] private GameObject sellMenuSlotPrefab;
     [SerializeField] private GameObject content;
     [SerializeField] private Transform itemPanel;
+
+    private GameObject _ui;
     
     private void Awake()
     {
-        
+        _ui = gameObject.transform.parent.Find("UI").gameObject;
+        _ui.SetActive(false);
     }
 
     public void OpenSellMenu()
     {
+        PopulateMenu();
+        _ui.SetActive(true);
         
+    }
+
+    public void CloseSellMenu()
+    {
+        _ui.SetActive(false);
     }
 
     public void PopulateMenu()
@@ -27,6 +37,19 @@ public class SellManager : MonoBehaviour
         foreach (InventoryItem inventoryItem in inventory)
         {
             GameObject slot = Instantiate(sellMenuSlotPrefab, content.transform);
+            // Paint the image and quantity txt for "inventory" slot
+            
+            int quantity = inventoryItem.Quantity;
+            Sprite sprite = inventoryItem.Item.Sprite;
+            
+            Transform quantityObj = slot.transform.Find("Quantity");
+            Transform imageObj = slot.transform.Find("Image");
+            TextMeshProUGUI quantityTxt = quantityObj.GetComponent<TextMeshProUGUI>();
+            Image image = imageObj.GetComponent<Image>();
+
+            quantityTxt.text = quantity.ToString();
+            image.sprite = sprite;
+            
             if (inventoryItem.Item.ItemType == ItemTypeEnum.PRODUCT)
             {
                 // Set the button onClick
@@ -39,7 +62,7 @@ public class SellManager : MonoBehaviour
                     TextMeshProUGUI nameTxt = itemPanel.Find("NameBG").Find("NAME").GetComponent<TextMeshProUGUI>();
                     TextMeshProUGUI descTxt = itemPanel.transform.Find("DescBG").Find("DESCRIPTION").GetComponent<TextMeshProUGUI>();
 
-                    img.sprite = inventoryItem.Item.Sprite;
+                    img.sprite = sprite;
                     img.enabled = true;
                     
                     nameTxt.text = inventoryItem.Item.ItemName;
