@@ -1,17 +1,14 @@
+WORKING ON RADISH AND THE EGGPLANT IMAGES + SEEDS
 
 
-1b. Make Inventory Work
-    Make Items Equippable
-    Make Functioning Hotbar ; Users can click on hotbar items to see the itemPanel then unequip it from there. // still in progressnnnnn jsbfjbjebaejab
-    
-    
 2. Make Selling Work
     Open up the Selling menu, which displays your inventory
     There will be a PERSONAL shipping bin and a GLOBAL shipping bin
 3. Ensure that Planting Works (for all crops)
     Make 3d models and make the seed images
     
-4. Make the Map  jjbjefb
+4. Make the Map  jjbjefb -greg said that 
+    Demo is pretty much done, but main game (for April) has an outline in a scene rn
 
 5. Make the NPCs
 

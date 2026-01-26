@@ -121,7 +121,7 @@ public class InventoryManager : MonoBehaviour
     {
         gameObject.transform.parent.gameObject.transform.Find("UI").gameObject.SetActive(true);
         _inventoryOpened = true;
-        // FUTURE: ADD ANIMATIONS TO OPENING
+        // TODO: ADD ANIMATIONS TO OPENING
         
         EnableAllTooltips();
     }
@@ -130,7 +130,7 @@ public class InventoryManager : MonoBehaviour
     {
         gameObject.transform.parent.gameObject.transform.Find("UI").gameObject.SetActive(false);
         _inventoryOpened = false;
-        // FUTURE: ADD ANIMATIONS
+        // TODO: ADD ANIMATIONS
         
         DisableAllTooltips();
     }
@@ -158,11 +158,10 @@ public class InventoryManager : MonoBehaviour
     public void DecrementCurrentlyEquipped()
     {
         if (CurrentlyEquipped == null) return;
-        CurrentlyEquipped.Quantity--;
+        RemoveItem(CurrentlyEquipped, 1);
         if (CurrentlyEquipped.Quantity <= 0)
         {
             ToolEvents.InvokeToolUnequip();
-            RemoveItem(CurrentlyEquipped, 1);
             CurrentlyEquipped = null;
         }
     }
@@ -180,8 +179,7 @@ public class InventoryManager : MonoBehaviour
         Instance._itemPanelButtonText.text = "Equip";
 
     }
-
-    // Need to rework hotbar to be a dynamic list that has a capacity cap. 
+    
     public void UpdateHotbar()
     {
         Debug.Log("Updating hotbar");
@@ -234,7 +232,7 @@ public class InventoryManager : MonoBehaviour
                         if (!ToolHandler.isToolEquipped(itemPrefab.name))
                         {
                             Debug.Log("Equipped");
-                            ToolEvents.InvokeToolEquip(itemPrefab, ii);
+                            ToolEvents.InvokeToolEquip(itemPrefab);
                             CurrentlyEquipped = ii;
                             // Send an event that tells every script what the new item is
                         }
@@ -278,6 +276,7 @@ public class InventoryManager : MonoBehaviour
     {
         _inventoryBackendManager.AddItem(itemCodeName, quantity);
         UpdateInventory();
+        UpdateHotbar();
     }
 
     public void RemoveItem(InventoryItem ii, int quantityToRemove)
@@ -291,14 +290,12 @@ public class InventoryManager : MonoBehaviour
         }
         
         UpdateInventory();
+        UpdateHotbar();
     }
     
     public void RemoveHotbarItem(InventoryItem ii)
     {
-        // BUG: This will not account for duplicate items.
-        // actually this doesnt work at all
         _hotbar.Remove(ii.GetHashCode());
-        UpdateHotbar();
     }
 
     public void UpdateInventory(int earliestIndexRemoved=-1)
@@ -328,23 +325,55 @@ public class InventoryManager : MonoBehaviour
             if (i < _slots.Count)
             {
                 thisSlot = _slots[i];
+                // Updating listeners now
+                thisSlot.GetComponent<Button>().onClick.RemoveAllListeners();
+                thisSlot.GetComponent<Button>().onClick.AddListener(() =>
+                {
+                    // Using HashCodes might be expensive
+                    int newHash = ii.GetHashCode();
+                    Debug.Log("This hash: " + newHash);
+                    if (Instance._itemPanel.activeSelf && Instance._itemPanelHashCode == newHash)
+                    {
+                        Instance._itemPanel.SetActive(false);
+                        return;
+                    }
+
+                    Instance._itemPanelHashCode = newHash;
+                    Instance._itemPanelImage.sprite = sprite;
+                    Instance._itemPanelImage.enabled = true;
+                    Instance._itemPanelName.text = itemName;
+                    Instance._itemPanelDescription.text = desc;
+                    Instance._itemPanelDescription.enabled = true;
+                    Instance._itemPanel.SetActive(true);
+                    // Reset the itemPanel equip/unequip button (but check if item is in hotbar already)
+                    if (_hotbar.Contains(ii.GetHashCode()))
+                    {
+                        Instance._itemPanelButtonImage.color = new Color(1, 0, 0);
+                        Instance._itemPanelButtonText.text = "Unequip";
+                    }
+                    else
+                    {
+                        Instance._itemPanelButtonImage.color = new Color(0, 1, 0);
+                        Instance._itemPanelButtonText.text = "Equip";
+                    }
+
+                });
             }
             else
             {
                 thisSlot = Instantiate(_slotPrefab, inventorySlotsParent.transform);
                 thisSlot.name = "InventorySlot" + (i + 1);
                 _slots.Add(thisSlot);
-                // This is clicking the inventory slot to open/close the itemPanel
-                // why does it click multiple times
+                // Why does the hashcode not update when the inventory updates?
+                // I press slot 1, but it interprets as the old slot 1 (contains carrot seeds instead of carrot)
+                // It is locked to an old InventoryItem, and the function is never updated
                 thisSlot.GetComponent<Button>().onClick.AddListener(() =>
                 {
-                    Debug.Log("Clicked inventory slot, itemPanel was: " + _itemPanel.activeSelf);
                     // Using HashCodes might be expensive
                     int newHash = ii.GetHashCode();
                     Debug.Log("This hash: " + newHash);
                     if (Instance._itemPanel.activeSelf && Instance._itemPanelHashCode == newHash)
                     {
-                        Debug.Log("Set itemPanel false, itemPanel: " + _itemPanel.activeSelf);
                         Instance._itemPanel.SetActive(false);
                         return;
                     }

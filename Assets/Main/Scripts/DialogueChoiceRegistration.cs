@@ -8,11 +8,17 @@ public class DialogueChoiceRegistration : MonoBehaviour
         DialogueChoiceDictionary.Register("Default", Default);
         DialogueChoiceDictionary.Register("SeedShopNo", SeedShopNo);
         DialogueChoiceDictionary.Register("OpenSeedShop", OpenSeedShop);
+        DialogueChoiceDictionary.Register("DemoSeedShopNo", DemoSeedShopNo);
     }
 
     private void Default()
     {
         Debug.Log("Choice option clicked!");
+    }
+    
+    private void DemoSeedShopNo()
+    {
+        DialogueUI.LaunchDialogue("DemoSeedShopNo");
     }
 
     private void SeedShopNo()

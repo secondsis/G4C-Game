@@ -144,6 +144,39 @@
       }
     },
     {
+      "id": "corn-seed",
+      "itemData": {
+        "name": "Corn Seed",
+        "description": "This kernel holds the future.",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "CornSeed",
+        "prefabPath": ""
+      }
+    },
+    {
+      "id": "eggplant",
+      "itemData": {
+        "name": "Eggplant",
+        "description": "Why is it also called aubergine? What is aubergine? Aubergine... MAN? GRAND CANYON?",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Eggplant",
+        "prefabPath": ""
+      }
+    },
+    {
+      "id": "eggplant-seed",
+      "itemData": {
+        "name": "Eggplant Seed",
+        "description": "They look like little yellow pellets.",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "EggplantSeed",
+        "prefabPath": ""
+      }
+    },
+    {
       "id": "green-bean",
       "itemData": {
         "name": "Green Bean",
@@ -206,6 +239,17 @@
         "itemType": "PRODUCT",
         "maxStack": 64,
         "icon": "Pumpkin",
+        "prefabPath": ""
+      }
+    },
+    {
+      "id": "pumpkin-seed",
+      "itemData": {
+        "name": "Pumpkin Seed",
+        "description": "These yellow shells protect the green young inside. Squirrels love these, but make sure they're unsalted and raw!",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "PumpkinSeed",
         "prefabPath": ""
       }
     },
@@ -279,10 +323,43 @@
       "id": "tomato",
       "itemData": {
         "name": "Tomato",
-        "description": "",
+        "description": "Wonderful for pastas, salsa, pizza, burgers, and more!",
         "itemType": "PRODUCT",
         "maxStack": 64,
         "icon": "Tomato",
+        "prefabPath": ""
+      }
+    },
+    {
+      "id": "tomato-seed",
+      "itemData": {
+        "name": "Tomato Seed",
+        "description": "It wishes to become a vegetable, but it is destined to become a fruit.",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "TomatoSeed",
+        "prefabPath": ""
+      }
+    },
+    {
+      "id": "turnip",
+      "itemData": {
+        "name": "Turnip",
+        "description": "Better hope they don't commit tax fraud.",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "Turnip",
+        "prefabPath": ""
+      }
+    },
+    {
+      "id": "turnip-seed",
+      "itemData": {
+        "name": "Turnip Seed",
+        "description": "Is it Don Turnipchino III?",
+        "itemType": "PRODUCT",
+        "maxStack": 64,
+        "icon": "TurnipSeed",
         "prefabPath": ""
       }
     },
