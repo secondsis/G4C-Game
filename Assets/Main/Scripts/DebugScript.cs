@@ -2,6 +2,7 @@ using System;
 using Main.Scripts;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class DebugScript : MonoBehaviour
 {
@@ -10,13 +11,12 @@ public class DebugScript : MonoBehaviour
     public FarmPlot farmPlot;
     public PlayerStatManager _playerStatManager;
     public TextMeshProUGUI _moneyText;
-    public GameObject poucPrefab;
+    [FormerlySerializedAs("poucPrefab")] public GameObject pouchPrefab;
     private const String Symbol = "$";
     
     private void Start()
     {
-        farmPlot.PlantCrop(SeedEnum.CARROT);
-        InventoryManager.Instance.AddItem("carrot-seed", 2);
+        InventoryManager.Instance.AddItem("carrot-seed", 3);
     }
 
     private void Update()

@@ -61,6 +61,11 @@ public class InventoryManager : MonoBehaviour
         Instance = this;
     }
 
+    public List<InventoryItem> GetInventory()
+    {
+        return _inventoryBackendManager.Inventory;
+    }
+
     public void ToggleEquipButton()
     {
         if (_itemPanelButtonImage.color.g.Equals(1f))

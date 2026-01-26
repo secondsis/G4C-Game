@@ -23,6 +23,17 @@
       }
     },
     {
+      "id": "alfalfa-seed",
+      "itemData": {
+        "name": "Alfalfa Seed",
+        "description": "",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "AlfalfaSeed",
+        "prefabPath": ""
+      }
+    },
+    {
       "id": "apple",
       "itemData": {
         "name": "Apple",
@@ -39,9 +50,9 @@
         "name": "Apple Seed",
         "description": "",
         "itemType": "SEED",
-        "maxStack": 1,
+        "maxStack": 64,
         "icon": "apple_seed",
-        "prefabPath": ""
+        "prefabPath": "Prefabs/Pouch"
       }
     },
     {
@@ -52,6 +63,17 @@
         "itemType": "PRODUCT",
         "maxStack": 64,
         "icon": "Artichoke",
+        "prefabPath": ""
+      }
+    },
+    {
+      "id": "artichoke-seed",
+      "itemData": {
+        "name": "Artichoke Seed",
+        "description": "",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "ArtichokeSeed",
         "prefabPath": ""
       }
     },
@@ -67,6 +89,17 @@
       }
     },
     {
+      "id": "beetroot-seed",
+      "itemData": {
+        "name": "Beetroot Seed",
+        "description": "",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "BeetrootSeed",
+        "prefabPath": ""
+      }
+    },
+    {
       "id": "bell-pepper",
       "itemData": {
         "name": "Bell Pepper",
@@ -74,6 +107,17 @@
         "itemType": "PRODUCT",
         "maxStack": 64,
         "icon": "BellPepper",
+        "prefabPath": ""
+      }
+    },
+    {
+      "id": "bell-pepper-seed",
+      "itemData": {
+        "name": "Bell Pepper Seed",
+        "description": "",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "BellPepperSeed",
         "prefabPath": ""
       }
     },
@@ -89,6 +133,17 @@
       }
     },
     {
+      "id": "blueberry-seed",
+      "itemData": {
+        "name": "Blueberry Seed",
+        "description": "",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "BlueberrySeed",
+        "prefabPath": ""
+      }
+    },
+    {
       "id": "cabbage",
       "itemData": {
         "name": "Cabbage",
@@ -96,6 +151,17 @@
         "itemType": "PRODUCT",
         "maxStack": 64,
         "icon": "Cabbage",
+        "prefabPath": ""
+      }
+    },
+    {
+      "id": "cabbage-seed",
+      "itemData": {
+        "name": "Cabbage Seed",
+        "description": "",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "CabbageSeed",
         "prefabPath": ""
       }
     },
@@ -117,7 +183,7 @@
         "description": "Little seeds for your rabbit's favorite orange vegetable.",
         "itemType": "SEED",
         "maxStack": 64,
-        "icon": "debug",
+        "icon": "CarrotSeed",
         "prefabPath": "Prefabs/Pouch"
       }
     },
@@ -129,6 +195,17 @@
         "itemType": "PRODUCT",
         "maxStack": 64,
         "icon": "Cauliflower",
+        "prefabPath": ""
+      }
+    },
+    {
+      "id": "cauliflower-seed",
+      "itemData": {
+        "name": "Cauliflower Seed",
+        "description": "",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "CauliflowerSeed",
         "prefabPath": ""
       }
     },
@@ -188,6 +265,17 @@
       }
     },
     {
+      "id": "green-bean-seed",
+      "itemData": {
+        "name": "Green Bean Seed",
+        "description": "",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "GreenBeanSeed",
+        "prefabPath": ""
+      }
+    },
+    {
       "id": "kale",
       "itemData": {
         "name": "Kale",
@@ -199,6 +287,17 @@
       }
     },
     {
+      "id": "kale-seed",
+      "itemData": {
+        "name": "Kale Seed",
+        "description": "",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "KaleSeed",
+        "prefabPath": ""
+      }
+    },
+    {
       "id": "parsnip",
       "itemData": {
         "name": "Parsnip",
@@ -206,6 +305,17 @@
         "itemType": "PRODUCT",
         "maxStack": 64,
         "icon": "Parsnip",
+        "prefabPath": ""
+      }
+    },
+    {
+      "id": "parsnip-seed",
+      "itemData": {
+        "name": "Parsnip Seed",
+        "description": "",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "ParsnipSeed",
         "prefabPath": ""
       }
     },
@@ -265,6 +375,17 @@
       }
     },
     {
+      "id": "radish-seed",
+      "itemData": {
+        "name": "Radish Seed",
+        "description": "",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "RadishSeed",
+        "prefabPath": ""
+      }
+    },
+    {
       "id": "rhubarb",
       "itemData": {
         "name": "Rhubarb",
@@ -272,6 +393,17 @@
         "itemType": "PRODUCT",
         "maxStack": 64,
         "icon": "Rhubarb",
+        "prefabPath": ""
+      }
+    },
+    {
+      "id": "rhubarb-seed",
+      "itemData": {
+        "name": "Rhubarb Seed",
+        "description": "",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "RhubarbSeed",
         "prefabPath": ""
       }
     },
@@ -287,13 +419,13 @@
       }
     },
     {
-      "id": "soybean",
+      "id": "rice-seed",
       "itemData": {
-        "name": "Soybean",
+        "name": "Rice Seed",
         "description": "",
-        "itemType": "PRODUCT",
+        "itemType": "SEED",
         "maxStack": 64,
-        "icon": "Soybean",
+        "icon": "RiceSeed",
         "prefabPath": ""
       }
     },
@@ -309,13 +441,13 @@
       }
     },
     {
-      "id": "sweet-potato",
+      "id": "strawberry-seed",
       "itemData": {
-        "name": "Sweet Potato",
-        "description": "POV: They offer you french fries but it's actually sweet potato fries. It's healthy though!",
-        "itemType": "PRODUCT",
+        "name": "Strawberry Seed",
+        "description": "",
+        "itemType": "SEED",
         "maxStack": 64,
-        "icon": "Sweet Potato",
+        "icon": "StrawberrySeed",
         "prefabPath": ""
       }
     },
@@ -386,6 +518,17 @@
       }
     },
     {
+      "id": "watermelon-seed",
+      "itemData": {
+        "name": "Watermelon Seed",
+        "description": "",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "WatermelonSeed",
+        "prefabPath": ""
+      }
+    },
+    {
       "id": "wheat",
       "itemData": {
         "name": "Wheat",
@@ -393,6 +536,17 @@
         "itemType": "PRODUCT",
         "maxStack": 64,
         "icon": "Wheat",
+        "prefabPath": ""
+      }
+    },
+    {
+      "id": "wheat-seed",
+      "itemData": {
+        "name": "Wheat Seed",
+        "description": "",
+        "itemType": "SEED",
+        "maxStack": 64,
+        "icon": "WheatSeed",
         "prefabPath": ""
       }
     }

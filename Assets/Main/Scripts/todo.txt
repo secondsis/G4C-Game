@@ -1,13 +1,10 @@
-WORKING ON RADISH AND THE EGGPLANT IMAGES + SEEDS
-
-
 2. Make Selling Work
     Open up the Selling menu, which displays your inventory
     There will be a PERSONAL shipping bin and a GLOBAL shipping bin
 3. Ensure that Planting Works (for all crops)
     Make 3d models and make the seed images
     
-4. Make the Map  jjbjefb -greg said that 
+4. Make the Map  jjbjefb -greg said that -who's greg -danny gonzalez
     Demo is pretty much done, but main game (for April) has an outline in a scene rn
 
 5. Make the NPCs
