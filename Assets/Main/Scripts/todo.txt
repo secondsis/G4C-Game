@@ -2,7 +2,7 @@
 
 1b. Make Inventory Work
     Make Items Equippable
-    Make Functioning Hotbar ; Users can click on hotbar items to see the itemPanel then unequip it from there. 
+    Make Functioning Hotbar ; Users can click on hotbar items to see the itemPanel then unequip it from there. // still in progressnnnnn jsbfjbjebaejab
     
     
 2. Make Selling Work
@@ -11,7 +11,7 @@
 3. Ensure that Planting Works (for all crops)
     Make 3d models and make the seed images
     
-4. Make the Map 
+4. Make the Map  jjbjefb
 
 5. Make the NPCs
 

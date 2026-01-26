@@ -18,7 +18,7 @@ public class ShopFrontendManager : MonoBehaviour
         _shopUI = transform.Find("UI").gameObject;
         _profile = _shopUI.transform.Find("Profile").Find("Background").Find("Person").GetComponent<Image>();
         _shopDialogue = _shopUI.transform.Find("Dialogue").Find("Text").GetComponent<TextMeshProUGUI>();
-        ShopOwnerDictionary.Add("Kevin", Resources.Load<Sprite>("Icons/Kevin"));
+        ShopOwnerDictionary.Add("Kevin", Resources.Load<Sprite>("Icons/kevin-alpha"));
     }
 
     public static void OpenShop(string shopOwner, string msg)

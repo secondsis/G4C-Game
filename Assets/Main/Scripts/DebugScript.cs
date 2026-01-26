@@ -13,7 +13,7 @@ public class DebugScript : MonoBehaviour
     
     private void Start()
     {
-        farmPlot.PlantCrop(SeedEnum.APPLE);
+        farmPlot.PlantCrop(SeedEnum.CARROT);
     }
 
     private void Update()

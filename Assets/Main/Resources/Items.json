@@ -251,6 +251,16 @@
       }
     },
     {
+      "id": "watering-can",
+      "itemData": {
+        "name": "Watering Can",
+        "description": "The solution to quench a plant's thirst.",
+        "itemType": "TOOL",
+        "maxStack": 1,
+        "icon": "WateringCan"
+      }
+    },
+    {
       "id": "watermelon",
       "itemData": {
         "name": "Watermelon",

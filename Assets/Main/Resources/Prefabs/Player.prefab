@@ -280,9 +280,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8913362231899654431}
+  - component: {fileID: 1189208561259312113}
   m_Layer: 2
   m_Name: PlayerManagers
-  m_TagString: Untagged
+  m_TagString: PlayerStatManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -302,6 +303,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 89044941346360995}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1189208561259312113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8274790279035522593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fcfbba2a14549acb86a4bc475ad6dc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStatManager
+  playTime: 0
 --- !u!1001 &6456372669825550085
 PrefabInstance:
   m_ObjectHideFlags: 0
