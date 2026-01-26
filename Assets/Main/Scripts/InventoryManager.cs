@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Main.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -179,6 +180,7 @@ public class InventoryManager : MonoBehaviour
             string desc = item.Description;
             string itemType = item.ItemType.ToString();
             Sprite sprite = item.Sprite;
+            string prefabPath = item.PrefabPath;
 
             GameObject thisSlot;
             if (i < _hotbarSlots.Count)
@@ -190,14 +192,30 @@ public class InventoryManager : MonoBehaviour
                 thisSlot = Instantiate(_hotbarSlotPrefab, hotbarSlotsParent.transform);
                 thisSlot.name = "HotbarSlot" + (i + 1);
                 _hotbarSlots.Add(thisSlot);
-                
-                //ADD THE CLICK BUTTON FUNCTION
-                thisSlot.GetComponent<Button>().onClick.AddListener(() =>
+
+                if (item.Equippable)
                 {
-                    // This will equip the item, according to the prefab path
-                    // Prefab Path should/must be a InventoryItem variable
+                    GameObject itemPrefab = Resources.Load<GameObject>(prefabPath);
+                    //ADD THE CLICK BUTTON FUNCTION
+                    thisSlot.GetComponent<Button>().onClick.AddListener(() =>
+                    {
+                        // This will equip the item, according to the prefab path
+                        // Prefab Path should/must be a InventoryItem variable
+                        // Also add ability to unequip (ALSO unequip when u remove the item from hotbar)
+                        if (!ToolHandler.isToolEquipped(itemPrefab.name))
+                        {
+                            Debug.Log("Equipped");
+                            ToolEvents.InvokeToolEquip(itemPrefab);
+                        }
+                        else
+                        {
+                            Debug.Log("Unequipped");
+                            ToolEvents.InvokeToolUnequip();
+                        }
                     
-                });
+                    });
+                }
+
             }
 
             Transform quantityObj = thisSlot.transform.Find("Quantity");
@@ -325,8 +343,8 @@ public class InventoryBackendManager
 
     public bool AddItem(string itemCodeName, int quantity)
     {
-        (string, string, ItemTypeEnum, int, Sprite) itemData = ItemManager.GetItemData(itemCodeName);
-        Item item = new Item(itemData.Item1, itemData.Item2, itemData.Item3, itemData.Item4, itemData.Item5);
+        (string, string, ItemTypeEnum, int, Sprite, string) itemData = ItemManager.GetItemData(itemCodeName);
+        Item item = new Item(itemData.Item1, itemData.Item2, itemData.Item3, itemData.Item4, itemData.Item5, itemData.Item6);
         return AddItem(item, quantity);
     }
 
@@ -361,8 +379,8 @@ public class InventoryBackendManager
 
     public void RemoveItem(string itemCodeName, int quantity)
     {
-        (string, string, ItemTypeEnum, int, Sprite) itemData = ItemManager.GetItemData(itemCodeName);
-        Item item = new Item(itemData.Item1, itemData.Item2, itemData.Item3, itemData.Item4, itemData.Item5);
+        (string, string, ItemTypeEnum, int, Sprite, string) itemData = ItemManager.GetItemData(itemCodeName);
+        Item item = new Item(itemData.Item1, itemData.Item2, itemData.Item3, itemData.Item4, itemData.Item5, itemData.Item6);
         RemoveItem(item, quantity);
     }
 
@@ -429,13 +447,14 @@ public class Item
     public Item(String itemCodeName)
     {
         // need to add prefabpath to the itemdata
-        (string, string, ItemTypeEnum, int, Sprite) itemData = ItemManager.GetItemData(itemCodeName);
+        (string, string, ItemTypeEnum, int, Sprite, string) itemData = ItemManager.GetItemData(itemCodeName);
         
         ItemName = itemData.Item1;
         Description = itemData.Item2;
         ItemType = itemData.Item3;
         this.MaxStack = itemData.Item4;
         this.Sprite = itemData.Item5;
+        PrefabPath = itemData.Item6;
     }
 
     // override object.Equals

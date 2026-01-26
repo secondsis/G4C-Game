@@ -22,4 +22,5 @@ public class ItemData
     public string itemType;
     public int maxStack;
     public string icon;  // name of a sprite in Resources
+    public string prefabPath;
 }

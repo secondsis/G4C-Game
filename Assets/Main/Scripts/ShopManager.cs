@@ -27,7 +27,7 @@ public class ShopManager : MonoBehaviour
             string itemID = item.itemID;
             int cost = item.cost;
 
-            (string, string, ItemTypeEnum, int, Sprite) itemData = ItemManager.GetItemData(itemID);
+            (string, string, ItemTypeEnum, int, Sprite, string) itemData = ItemManager.GetItemData(itemID);
             
             // Initialize newObj's image, tooltip description, and cost text
             var hoverTooltip = newObj.GetComponent<Hover2DTooltip>();

@@ -7,7 +7,8 @@
         "description": "Test hoe for tilling ground.",
         "itemType": "TOOL",
         "maxStack": 1,
-        "icon": "hoe"
+        "icon": "hoe",
+        "prefabPath": ""
       }
     },
     {
@@ -17,7 +18,8 @@
         "description": "A perennial legume commonly used for grazing and hay. Its young sprouts are highly nutritious.",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Alfalfa"
+        "icon": "Alfalfa",
+        "prefabPath": ""
       }
     },
     {
@@ -27,7 +29,8 @@
         "description": "The fresh ripe red fruit that comes from a tree.",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Apple"
+        "icon": "Apple",
+        "prefabPath": ""
       }
     },
     {
@@ -37,7 +40,8 @@
         "description": "",
         "itemType": "SEED",
         "maxStack": 1,
-        "icon": "apple_seed"
+        "icon": "apple_seed",
+        "prefabPath": ""
       }
     },
     {
@@ -47,7 +51,8 @@
         "description": "Green edible flower buds that are tasty if and only if expertly cooked.",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Artichoke"
+        "icon": "Artichoke",
+        "prefabPath": ""
       }
     },
     {
@@ -57,7 +62,8 @@
         "description": "A root vegetable that can make a good beat.",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Beetroot"
+        "icon": "Beetroot",
+        "prefabPath": ""
       }
     },
     {
@@ -67,7 +73,8 @@
         "description": "",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "BellPepper"
+        "icon": "BellPepper",
+        "prefabPath": ""
       }
     },
     {
@@ -77,7 +84,8 @@
         "description": "It's blue and it's a berry. Guess it: blueberry!",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Blueberry"
+        "icon": "Blueberry",
+        "prefabPath": ""
       }
     },
     {
@@ -87,7 +95,8 @@
         "description": "It's a leafy green and red and purple and white. A choose-your-fate veggie: pickled, fermented, steamed, stewed, roasted, sautéed, braised, or raw.",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Cabbage"
+        "icon": "Cabbage",
+        "prefabPath": ""
       }
     },
     {
@@ -97,7 +106,8 @@
         "description": "It's an orange root veggie. May or may not give you night vision.",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Carrot"
+        "icon": "Carrot",
+        "prefabPath": ""
       }
     },
     {
@@ -107,7 +117,8 @@
         "description": "Little seeds for your rabbit's favorite orange vegetable.",
         "itemType": "SEED",
         "maxStack": 64,
-        "icon": "debug"
+        "icon": "debug",
+        "prefabPath": "Prefabs/Pouch"
       }
     },
     {
@@ -117,7 +128,8 @@
         "description": "",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Cauliflower"
+        "icon": "Cauliflower",
+        "prefabPath": ""
       }
     },
     {
@@ -127,7 +139,8 @@
         "description": "Also known as maize. It is a staple food, and a large majority is used to feed livestock.",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Corn"
+        "icon": "Corn",
+        "prefabPath": ""
       }
     },
     {
@@ -137,7 +150,8 @@
         "description": "One of the first three veggies you will probably think of.",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "GreenBean"
+        "icon": "GreenBean",
+        "prefabPath": ""
       }
     },
     {
@@ -147,7 +161,8 @@
         "description": "",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Kale"
+        "icon": "Kale",
+        "prefabPath": ""
       }
     },
     {
@@ -157,7 +172,8 @@
         "description": "",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Parsnip"
+        "icon": "Parsnip",
+        "prefabPath": ""
       }
     },
     {
@@ -167,7 +183,8 @@
         "description": "Starchy root vegetable. Best when mashed with gravy.",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Potato"
+        "icon": "Potato",
+        "prefabPath": ""
       }
     },
     {
@@ -177,7 +194,8 @@
         "description": "Budding sprout to grow the potato root vegetable.",
         "itemType": "SEED",
         "maxStack": 64,
-        "icon": "potato_seed"
+        "icon": "potato_seed",
+        "prefabPath": ""
       }
     },
     {
@@ -187,7 +205,8 @@
         "description": "BOO! It's the popular orange squash used for pumpkin pies and Jack-O'-Lanterns.",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Pumpkin"
+        "icon": "Pumpkin",
+        "prefabPath": ""
       }
     },
     {
@@ -197,7 +216,8 @@
         "description": "It's a red root vegetable that tastes like a softer version of a carrot with a hint of spice.",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Radish"
+        "icon": "Radish",
+        "prefabPath": ""
       }
     },
     {
@@ -207,7 +227,8 @@
         "description": "",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Rhubarb"
+        "icon": "Rhubarb",
+        "prefabPath": ""
       }
     },
     {
@@ -217,7 +238,8 @@
         "description": "",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Rice"
+        "icon": "Rice",
+        "prefabPath": ""
       }
     },
     {
@@ -227,7 +249,8 @@
         "description": "",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Soybean"
+        "icon": "Soybean",
+        "prefabPath": ""
       }
     },
     {
@@ -237,7 +260,8 @@
         "description": "It's straw and it's a berry. Actually, that's false. There is berry any straw.",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Strawberry"
+        "icon": "Strawberry",
+        "prefabPath": ""
       }
     },
     {
@@ -247,7 +271,8 @@
         "description": "POV: They offer you french fries but it's actually sweet potato fries. It's healthy though!",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Sweet Potato"
+        "icon": "Sweet Potato",
+        "prefabPath": ""
       }
     },
     {
@@ -257,7 +282,8 @@
         "description": "",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Tomato"
+        "icon": "Tomato",
+        "prefabPath": ""
       }
     },
     {
@@ -267,7 +293,8 @@
         "description": "The solution to quench a plant's thirst.",
         "itemType": "TOOL",
         "maxStack": 1,
-        "icon": "WateringCan"
+        "icon": "WateringCan",
+        "prefabPath": ""
       }
     },
     {
@@ -277,7 +304,8 @@
         "description": "A summer favorite treat. Tastes like sugary water with a side of friendship.",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Watermelon"
+        "icon": "Watermelon",
+        "prefabPath": ""
       }
     },
     {
@@ -287,7 +315,8 @@
         "description": "A staple food. After processing, it becomes a refined grain perfect for breads and bagels.",
         "itemType": "PRODUCT",
         "maxStack": 64,
-        "icon": "Wheat"
+        "icon": "Wheat",
+        "prefabPath": ""
       }
     }
   ]

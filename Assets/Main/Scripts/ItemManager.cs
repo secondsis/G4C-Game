@@ -32,7 +32,7 @@ public static class ItemManager
     /*
      * Returns the Name, Description, MaxStack, Icon
      */
-    public static (string, string, ItemTypeEnum, int, Sprite) GetItemData(string itemCodeName)
+    public static (string, string, ItemTypeEnum, int, Sprite, string) GetItemData(string itemCodeName)
     {
         ItemData data = Items[itemCodeName];
         string input = data.itemType;
@@ -46,7 +46,7 @@ public static class ItemManager
             Debug.LogWarning("Invalid enum string");
         }
 
-        return (data.name, data.description, itemType, data.maxStack, GetItemIcon(data.icon));
+        return (data.name, data.description, itemType, data.maxStack, GetItemIcon(data.icon), data.prefabPath);
     }
 
 }
