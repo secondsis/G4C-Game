@@ -6,6 +6,7 @@ namespace Main.Scripts
         INTERACTION2, 
         INTERACTION1,
         HARVEST,
+        PLANT,
         DIALOGUE,
     }
 }

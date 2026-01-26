@@ -36,21 +36,8 @@ public class FarmPlot : MonoBehaviour
             InventoryItem currentlyEquipped = InventoryManager.Instance.CurrentlyEquipped;
             if (currentlyEquipped != null && currentlyEquipped.Item.ItemType == ItemTypeEnum.SEED)
             {
-                // If interact, plant crop
-                G4CInputManager.RegisterInteract(InteractionType.HARVEST, () =>
-                {
-                    if (Enum.TryParse(currentlyEquipped.Item.ItemName.ToUpper(), out SeedEnum thisSeed))
-                    {
-                        PlantCrop(thisSeed);
-
-                    }
-                    else
-                    {
-                        Debug.LogWarning("Could not find seed type!");
-                    }
-                    
-                    
-                });
+                // If interact, plant crop. Remove interact when item is unequipped/finished used
+                G4CInputManager.RegisterInteract(InteractionType.PLANT, UseSeed);
             }
         };
         
@@ -59,7 +46,25 @@ public class FarmPlot : MonoBehaviour
             if (!_tooltipShowing) return;
             _tooltipShowing = false;
             G4CInputManager.RemoveInteract(InteractionType.HARVEST, HarvestCrop);
+            // might cause error if no plant interact
+            G4CInputManager.RemoveInteract(InteractionType.PLANT, UseSeed);
         };
+    }
+
+    private void UseSeed()
+    {
+        string plantName = InventoryManager.Instance.CurrentlyEquipped.Item.ItemName.Replace(" Seed", "");
+        if (Enum.TryParse(plantName.ToUpper(), out SeedEnum thisSeed))
+        {
+            PlantCrop(thisSeed);
+            // Remove a quantity of 1 from the hotbar/inventory
+            InventoryManager.Instance.DecrementCurrentlyEquipped();
+        }
+        else
+        {
+            Debug.LogWarning("Could not find seed type!");
+        }
+
     }
 
     public bool PlantCrop(SeedEnum seed)

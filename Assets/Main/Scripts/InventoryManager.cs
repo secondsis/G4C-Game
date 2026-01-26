@@ -157,17 +157,34 @@ public class InventoryManager : MonoBehaviour
 
     public void DecrementCurrentlyEquipped()
     {
+        if (CurrentlyEquipped == null) return;
         CurrentlyEquipped.Quantity--;
         if (CurrentlyEquipped.Quantity <= 0)
         {
             ToolEvents.InvokeToolUnequip();
+            RemoveItem(CurrentlyEquipped, 1);
             CurrentlyEquipped = null;
         }
+    }
+
+    private void ResetItemPanel()
+    {
+        _itemPanel.SetActive(false);
+        Instance._itemPanelHashCode = -1;
+        Instance._itemPanelImage.enabled = false;
+        Instance._itemPanelName.text = "";
+        Instance._itemPanelDescription.text = "";
+        Instance._itemPanelDescription.enabled = false;
+    
+        Instance._itemPanelButtonImage.color = new Color(0, 1, 0);
+        Instance._itemPanelButtonText.text = "Equip";
+
     }
 
     // Need to rework hotbar to be a dynamic list that has a capacity cap. 
     public void UpdateHotbar()
     {
+        Debug.Log("Updating hotbar");
         while (_hotbarSlots.Count > _hotbar.Count)
         {
             Destroy(_hotbarSlots[_hotbarSlots.Count - 1]);
@@ -263,24 +280,30 @@ public class InventoryManager : MonoBehaviour
         UpdateInventory();
     }
 
-    public void RemoveItem(string itemCodeName, int quantity)
+    public void RemoveItem(InventoryItem ii, int quantityToRemove)
     {
+        // Also remember to update the inventory/hotbar quantity text
+        bool isItemRemaining = _inventoryBackendManager.RemoveItem(ii, quantityToRemove);
+        if (!isItemRemaining)
+        {
+            RemoveHotbarItem(ii);
+            ResetItemPanel();
+        }
         
-        _inventoryBackendManager.RemoveItem(itemCodeName, quantity);
         UpdateInventory();
-        RemoveHotbarItem(itemCodeName);
-        
     }
-
-    public void RemoveHotbarItem(string itemCodeName)
+    
+    public void RemoveHotbarItem(InventoryItem ii)
     {
         // BUG: This will not account for duplicate items.
-        _hotbar.Remove(itemCodeName.GetHashCode());
+        // actually this doesnt work at all
+        _hotbar.Remove(ii.GetHashCode());
         UpdateHotbar();
     }
 
-    public void UpdateInventory()
+    public void UpdateInventory(int earliestIndexRemoved=-1)
     {
+        // TODO: make this function more efficient, utilizing the indices that were removed/modified
         List<InventoryItem> inventory = _inventoryBackendManager.Inventory;
         while (_slots.Count > inventory.Count)
         {
@@ -311,28 +334,42 @@ public class InventoryManager : MonoBehaviour
                 thisSlot = Instantiate(_slotPrefab, inventorySlotsParent.transform);
                 thisSlot.name = "InventorySlot" + (i + 1);
                 _slots.Add(thisSlot);
-            }
-            
-            // This is clicking the inventory slot to open/close the itemPanel
-            thisSlot.GetComponent<Button>().onClick.AddListener(() =>
-            {
-                Debug.Log("Clicked inventory slot");
-                // Using HashCodes might be expensive
-                int newHash = ii.GetHashCode();
-                if (_itemPanel.activeSelf && _itemPanelHashCode == newHash)
+                // This is clicking the inventory slot to open/close the itemPanel
+                // why does it click multiple times
+                thisSlot.GetComponent<Button>().onClick.AddListener(() =>
                 {
-                    _itemPanel.SetActive(false);
-                    return;
-                }
-
-                _itemPanelHashCode = newHash;
-                _itemPanelImage.sprite = sprite;
-                _itemPanelImage.enabled = true;
-                _itemPanelName.text = itemName;
-                _itemPanelDescription.text = desc;
-                _itemPanelDescription.enabled = true;
-                _itemPanel.SetActive(true);
-            });
+                    Debug.Log("Clicked inventory slot, itemPanel was: " + _itemPanel.activeSelf);
+                    // Using HashCodes might be expensive
+                    int newHash = ii.GetHashCode();
+                    Debug.Log("This hash: " + newHash);
+                    if (Instance._itemPanel.activeSelf && Instance._itemPanelHashCode == newHash)
+                    {
+                        Debug.Log("Set itemPanel false, itemPanel: " + _itemPanel.activeSelf);
+                        Instance._itemPanel.SetActive(false);
+                        return;
+                    }
+                
+                    Instance._itemPanelHashCode = newHash;
+                    Instance._itemPanelImage.sprite = sprite;
+                    Instance._itemPanelImage.enabled = true;
+                    Instance._itemPanelName.text = itemName;
+                    Instance._itemPanelDescription.text = desc;
+                    Instance._itemPanelDescription.enabled = true;
+                    Instance._itemPanel.SetActive(true);
+                    // Reset the itemPanel equip/unequip button (but check if item is in hotbar already)
+                    if (_hotbar.Contains(ii.GetHashCode()))
+                    {
+                        Instance._itemPanelButtonImage.color = new Color(1, 0, 0);
+                        Instance._itemPanelButtonText.text = "Unequip";
+                    }
+                    else
+                    {
+                        Instance._itemPanelButtonImage.color = new Color(0, 1, 0);
+                        Instance._itemPanelButtonText.text = "Equip";
+                    }
+                    
+                });
+            }
             
             Transform quantityObj = thisSlot.transform.Find("Quantity");
             Transform imageObj = thisSlot.transform.Find("Image");
@@ -365,6 +402,19 @@ public class InventoryBackendManager
 {
     public List<InventoryItem> Inventory = new List<InventoryItem>();
     public int Capacity = int.MaxValue;
+
+    public InventoryItem GetInventoryItem(int invItemHash)
+    {
+        foreach (InventoryItem invItem in Inventory)
+        {
+            if (invItem.GetHashCode() == invItemHash)
+            {
+                return invItem;
+            }
+        }
+
+        return null;
+    }
 
     public bool AddItem(string itemCodeName, int quantity)
     {
@@ -402,31 +452,14 @@ public class InventoryBackendManager
         return true;
     }
     
-    // Returns false if inventoryItem quantity is gone
-    public bool RemoveItem(string itemCodeName, int quantity)
+    public bool RemoveItem(InventoryItem ii, int quantityToRemove=1)
     {
-        (string, string, ItemTypeEnum, int, Sprite, string) itemData = ItemManager.GetItemData(itemCodeName);
-        Item item = new Item(itemData.Item1, itemData.Item2, itemData.Item3, itemData.Item4, itemData.Item5, itemData.Item6);
-        return RemoveItem(item, quantity);
-    }
-
-    // Returns false if inventoryItem quantity is gone
-    public bool RemoveItem(Item item, int quantity = 1)
-    {
-        for (int i = Inventory.Count - 1; i >= 0; i--)
+        ii.Quantity -= quantityToRemove;
+        if (ii.Quantity <= 0)
         {
-            InventoryItem invItem = Inventory[i];
-            if (invItem.Item.Equals(item))
-            {
-                invItem.Quantity -= quantity;
-                if (invItem.Quantity <= 0)
-                {
-                    Inventory.Remove(invItem);
-                    return false;
-                }
-            }
+            Inventory.Remove(ii);
+            return false;
         }
-
         return true;
     }
 }
