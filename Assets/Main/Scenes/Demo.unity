@@ -7502,9 +7502,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
-        m_MethodName: ToggleEquipButton
+      - m_Target: {fileID: 2001991773}
+        m_TargetAssemblyTypeName: SellManager, Assembly-CSharp
+        m_MethodName: SellAllItem
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -34930,9 +34930,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
-        m_MethodName: ToggleEquipButton
+      - m_Target: {fileID: 2001991773}
+        m_TargetAssemblyTypeName: SellManager, Assembly-CSharp
+        m_MethodName: SellItemOnce
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -85077,6 +85077,19 @@ MonoBehaviour:
   sellMenuSlotPrefab: {fileID: 8170273947757109104, guid: 3877e82159d176e43aaaf083db907dd1, type: 3}
   content: {fileID: 1431337632}
   itemPanel: {fileID: 1296886726}
+  sellPrices:
+  - itemID: Carrot
+    cost: 2
+  - itemID: Turnip
+    cost: 12
+  - itemID: Tomato
+    cost: 26
+  - itemID: Corn
+    cost: 18
+  - itemID: Eggplant
+    cost: 60
+  - itemID: Pumpkin
+    cost: 100
 --- !u!1 &2014422915
 GameObject:
   m_ObjectHideFlags: 0
@@ -87801,7 +87814,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2083964798
 RectTransform:
   m_ObjectHideFlags: 0

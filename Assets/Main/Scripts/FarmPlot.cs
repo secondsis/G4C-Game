@@ -56,9 +56,10 @@ public class FarmPlot : MonoBehaviour
         string plantName = InventoryManager.Instance.CurrentlyEquipped.Item.ItemName.Replace(" Seed", "");
         if (Enum.TryParse(plantName.ToUpper(), out SeedEnum thisSeed))
         {
-            PlantCrop(thisSeed);
+            bool succ = PlantCrop(thisSeed);
             // Remove a quantity of 1 from the hotbar/inventory
-            InventoryManager.Instance.DecrementCurrentlyEquipped();
+            if(succ)
+                InventoryManager.Instance.DecrementCurrentlyEquipped();
         }
         else
         {
@@ -76,7 +77,7 @@ public class FarmPlot : MonoBehaviour
             Destroy(child.gameObject);
         }
         // Baby stage crop
-        Instantiate(PlantDictionaries.PlantPrefabs[seed].Item1, _cropParent);
+        Instantiate(Dictionaries.PlantPrefabs[seed].Item1, _cropParent);
         _currentPlantStage = 0;
         // Update Hover UI
         _tooltip.infoLeft = $"{seed.ToString()}\nThere is a plant here.";
@@ -114,7 +115,7 @@ public class FarmPlot : MonoBehaviour
             Object.Destroy(child.gameObject);
         }
         // Fertilizer Texture
-        Instantiate(PlantDictionaries.FertilizerPrefabs[fert], fertParent);
+        Instantiate(Dictionaries.FertilizerPrefabs[fert], fertParent);
         return true;
     }
 
@@ -127,7 +128,7 @@ public class FarmPlot : MonoBehaviour
         }
 
         // Watered Texture -- MIGHT BE UNFINISHED???
-        GameObject newObj = Instantiate(PlantDictionaries.WateredPlotObject, plotParent);
+        GameObject newObj = Instantiate(Dictionaries.WateredPlotObject, plotParent);
         _plotWatered = true;
     }
 
@@ -140,10 +141,10 @@ public class FarmPlot : MonoBehaviour
 
         GameObject obj = stage switch
         {
-            0 => PlantDictionaries.PlantPrefabs[Logic.SeedType].Item1,
-            1 => PlantDictionaries.PlantPrefabs[Logic.SeedType].Item2,
-            2 => PlantDictionaries.PlantPrefabs[Logic.SeedType].Item3,
-            3 => PlantDictionaries.PlantPrefabs[Logic.SeedType].Item4,
+            0 => Dictionaries.PlantPrefabs[Logic.SeedType].Item1,
+            1 => Dictionaries.PlantPrefabs[Logic.SeedType].Item2,
+            2 => Dictionaries.PlantPrefabs[Logic.SeedType].Item3,
+            3 => Dictionaries.PlantPrefabs[Logic.SeedType].Item4,
             _ => null
         };
 
@@ -240,7 +241,7 @@ public class FarmLogic
     public bool IsWatered()
     {
         // If seconds past from last time watered is greater than the plant's water duration, then it is not watered
-        if (GlobalTime.UnixTime - UnixTimeLastWatered >= PlantDictionaries.DefaultWaterDuration * PlantDictionaries.DefaultPlantThirst[SeedType])
+        if (GlobalTime.UnixTime - UnixTimeLastWatered >= Dictionaries.DefaultWaterDuration * Dictionaries.DefaultPlantThirst[SeedType])
         {
             return false;
         }
@@ -255,7 +256,7 @@ public class FarmLogic
         }
 
         long timeGrown = GlobalTime.UnixTime - UnixTimePlanted;
-        float plantGrowthTime = PlantDictionaries.DefaultPlantGrowthTimes[SeedType];
+        float plantGrowthTime = Dictionaries.DefaultPlantGrowthTimes[SeedType];
 
         if (timeGrown <= 0.25f * plantGrowthTime)
         {

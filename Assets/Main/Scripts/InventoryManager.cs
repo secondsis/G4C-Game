@@ -297,6 +297,16 @@ public class InventoryManager : MonoBehaviour
         UpdateInventory();
         UpdateHotbar();
     }
+
+    public InventoryItem GetInventoryItemFromHashCode(int hashCode)
+    {
+        foreach(InventoryItem ii in _inventoryBackendManager.Inventory)
+        {
+            if (ii.GetHashCode() == hashCode) return ii;
+        }
+
+        return null;
+    }
     
     public void RemoveHotbarItem(InventoryItem ii)
     {

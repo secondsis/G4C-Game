@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class PlantDictionaries
+public static class Dictionaries
 {
     public static readonly float DefaultWaterDuration = 300f;
     public static readonly GameObject WateredPlotObject = null;
@@ -42,12 +42,13 @@ public static class PlantDictionaries
         { FertilizerTypeEnum.HIGH_QUALITY, null}
     };
 
-    public static readonly Dictionary<SeedEnum, float> SeedCosts = new()
-    {
-        { SeedEnum.APPLE, 10.00f},
-        { SeedEnum.CARROT, 2.00f},
-        { SeedEnum.GRAPE, 5.00f},
-        { SeedEnum.STRAWBERRY, 2.50f},
-        { SeedEnum.WATERMELON, 12.00f}
-    };
+    // public static readonly Dictionary<SeedEnum, float> SeedCosts = new()
+    // {
+    //     { SeedEnum.APPLE, 10.00f},
+    //     { SeedEnum.CARROT, 2.00f},
+    //     { SeedEnum.GRAPE, 5.00f},
+    //     { SeedEnum.STRAWBERRY, 2.50f},
+    //     { SeedEnum.WATERMELON, 12.00f}
+    // };
+
 }

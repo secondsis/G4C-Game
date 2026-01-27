@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerStatManager : MonoBehaviour
 {
+    public static PlayerStatManager Instance;
     public int Money { get; private set; }
 
     public int playTime;
@@ -11,6 +12,15 @@ public class PlayerStatManager : MonoBehaviour
     private void Awake()
     {
         Money = PlayerPrefs.GetInt("Money");
+        
+        // THIS IS A SINGLETON
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
     }
 
     // DEBUG
