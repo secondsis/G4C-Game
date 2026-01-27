@@ -99,6 +99,7 @@ public class SellManager : MonoBehaviour
             InventoryManager.Instance.RemoveItem(item, quantityToRemove);
             UpdateSellMenu();
             ResetItemPanel();
+            SFXManager.Instance.SellSfx();
         }
     }
     

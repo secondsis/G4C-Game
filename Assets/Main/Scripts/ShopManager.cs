@@ -55,6 +55,7 @@ public class ShopManager : MonoBehaviour
         if (!_playerStatManager.SpendMoney(cost)) return;
         
         InventoryManager.Instance.AddItem(itemID, 1);
+        SFXManager.Instance.BuySfx();
     }
 }
 

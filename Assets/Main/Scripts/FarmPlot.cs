@@ -103,6 +103,7 @@ public class FarmPlot : MonoBehaviour
         
         InventoryManager.Instance.AddItem(harvestedSeed.ToString().ToLower(), 1);
         _currentPlantStage = 0;
+        SFXManager.Instance.HarvestSfx();
         // return true;
     }
 

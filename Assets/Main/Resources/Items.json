@@ -206,7 +206,7 @@
         "itemType": "SEED",
         "maxStack": 64,
         "icon": "CauliflowerSeed",
-        "prefabPath": ""
+        "prefabPath": "Prefabs/Pouch"
       }
     },
     {
@@ -228,7 +228,7 @@
         "itemType": "SEED",
         "maxStack": 64,
         "icon": "CornSeed",
-        "prefabPath": ""
+        "prefabPath": "Prefabs/Pouch"
       }
     },
     {
@@ -250,7 +250,7 @@
         "itemType": "SEED",
         "maxStack": 64,
         "icon": "EggplantSeed",
-        "prefabPath": ""
+        "prefabPath": "Prefabs/Pouch"
       }
     },
     {
@@ -272,7 +272,7 @@
         "itemType": "SEED",
         "maxStack": 64,
         "icon": "GreenBeanSeed",
-        "prefabPath": ""
+        "prefabPath": "Prefabs/Pouch"
       }
     },
     {
@@ -360,7 +360,7 @@
         "itemType": "SEED",
         "maxStack": 64,
         "icon": "PumpkinSeed",
-        "prefabPath": ""
+        "prefabPath": "Prefabs/Pouch"
       }
     },
     {
@@ -382,7 +382,7 @@
         "itemType": "SEED",
         "maxStack": 64,
         "icon": "RadishSeed",
-        "prefabPath": ""
+        "prefabPath": "Prefabs/Pouch"
       }
     },
     {
@@ -470,7 +470,7 @@
         "itemType": "PRODUCT",
         "maxStack": 64,
         "icon": "TomatoSeed",
-        "prefabPath": ""
+        "prefabPath": "Prefabs/Pouch"
       }
     },
     {
@@ -492,7 +492,7 @@
         "itemType": "PRODUCT",
         "maxStack": 64,
         "icon": "TurnipSeed",
-        "prefabPath": ""
+        "prefabPath": "Prefabs/Pouch"
       }
     },
     {

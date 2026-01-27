@@ -4,6 +4,11 @@ public enum SeedEnum
     APPLE,
     CARROT,
     GRAPE,
+    EGGPLANT,
+    CORN,
+    TOMATO,
+    PUMPKIN,
+    TURNIP,
     STRAWBERRY,
     WATERMELON
 }

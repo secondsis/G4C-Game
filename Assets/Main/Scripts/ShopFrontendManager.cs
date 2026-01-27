@@ -77,6 +77,7 @@ public class ShopFrontendManager : MonoBehaviour
         // Cursor.lockState = CursorLockMode.None;
         // Cursor.visible = true;
         OnShopOpen?.Invoke();
+        SFXManager.Instance.ShopEnterSfx();
     }
     
     public static void CloseShop()
