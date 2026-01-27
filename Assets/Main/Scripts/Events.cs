@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Main.Scripts
 {
-    public static class ToolEvents
+    public static class Events
     {
         public static event Action<GameObject> OnToolEquip;
         public static event Action OnToolUnequip;

@@ -24,14 +24,14 @@ public class ToolHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        ToolEvents.OnToolEquip += EquipInHand;
-        ToolEvents.OnToolUnequip += UnequipInHand;
+        Events.OnToolEquip += EquipInHand;
+        Events.OnToolUnequip += UnequipInHand;
     }
 
     private void OnDisable()
     {
-        ToolEvents.OnToolEquip -= EquipInHand;
-        ToolEvents.OnToolUnequip -= UnequipInHand;
+        Events.OnToolEquip -= EquipInHand;
+        Events.OnToolUnequip -= UnequipInHand;
     }
 
     public void EquipInHand(GameObject tool)

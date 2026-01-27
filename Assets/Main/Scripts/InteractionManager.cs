@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Main.Scripts;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,8 @@ public class InteractionManager : MonoBehaviour
     private Camera cam;
     [SerializeField] private RectTransform interactionTransform1;
     [SerializeField] private RectTransform interactionTransform2;
+    
+    [SerializeField] private TextMeshProUGUI interactionTitle1;
     private Interaction targetInteraction;
     private GameObject _player;
     
@@ -25,7 +28,7 @@ public class InteractionManager : MonoBehaviour
     {
         cam = GameObject.FindGameObjectsWithTag("MainCamera")[0].GetComponent<Camera>();
         _player = GameObject.FindGameObjectWithTag("Player");
-
+        
         _input = G4CInputManager.G4CPlayerInput;
         _input.Enable();
         _input.Player.Enable();
@@ -69,6 +72,7 @@ public class InteractionManager : MonoBehaviour
             if (Interactions.Count == 1)
             {
                 targetInteraction = Interactions[0];
+                interactionTitle1.text = targetInteraction.title;
                 hasTarget = true;
                 return;
             }

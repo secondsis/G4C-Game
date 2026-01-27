@@ -7,8 +7,11 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    // BUG: The equip/unequip AND itemPanel does not appear properly when dealing with multiple items
     public static InventoryManager Instance;
+    
+    // EVENTS
+    public static event Action OnInventoryOpen;
+    public static event Action OnInventoryClose;
     
     // Main Inventory
     private readonly InventoryBackendManager _inventoryBackendManager = new InventoryBackendManager();
@@ -19,7 +22,7 @@ public class InventoryManager : MonoBehaviour
 
     // Hotbar (should contain the indices of the inventory)
     private readonly List<int> _hotbar = new List<int>(10);
-    [SerializeField] private GameObject hotbarSlotsParent; // change this to be accuratevvvggggg  gggggg bgggrrvvbfuuxdddd
+    [SerializeField] private GameObject hotbarSlotsParent; // change this to be accurate
     private readonly List<GameObject> _hotbarSlots = new List<GameObject>(10);
     private GameObject _hotbarSlotPrefab;
     public InventoryItem CurrentlyEquipped;
@@ -35,6 +38,10 @@ public class InventoryManager : MonoBehaviour
     private TextMeshProUGUI _itemPanelDescription;
     private Image _itemPanelButtonImage;
     private TextMeshProUGUI _itemPanelButtonText;
+    
+    // Blocking Menus
+    private bool _shopBlocking = false;
+    private bool _sellMenuBlocking = false;
 
     private void Awake()
     {
@@ -59,6 +66,41 @@ public class InventoryManager : MonoBehaviour
         }
 
         Instance = this;
+    }
+    
+    private void SetSellMenuBlockingTrue()
+    {
+        _sellMenuBlocking = true;
+    }
+    private void SetSellMenuBlockingFalse()
+    {
+        _sellMenuBlocking = false;
+    }
+    private void SetShopBlockingTrue()
+    {
+        _shopBlocking = true;
+    }
+    private void SetShopBlockingFalse()
+    {
+        _shopBlocking = false;
+    }
+
+    private void OnEnable()
+    {
+        SellManager.OnSellMenuOpen += SetSellMenuBlockingTrue;
+        SellManager.OnSellMenuClose += SetSellMenuBlockingFalse;
+
+        ShopFrontendManager.OnShopOpen += SetShopBlockingTrue;
+        ShopFrontendManager.OnShopClose += SetShopBlockingFalse;
+    }
+
+    private void OnDisable()
+    {
+        SellManager.OnSellMenuOpen -= SetSellMenuBlockingTrue;
+        SellManager.OnSellMenuClose -= SetSellMenuBlockingFalse;
+
+        ShopFrontendManager.OnShopOpen -= SetShopBlockingTrue;
+        ShopFrontendManager.OnShopClose -= SetShopBlockingFalse;
     }
 
     public List<InventoryItem> GetInventory()
@@ -124,11 +166,19 @@ public class InventoryManager : MonoBehaviour
 
     private void OpenInventory()
     {
+        if (_shopBlocking || _sellMenuBlocking)
+        {
+            DebugScript.BetterDebug("WARNING: Cannot open inventory because shop or sell menu are open");
+            return;
+        }
         gameObject.transform.parent.gameObject.transform.Find("UI").gameObject.SetActive(true);
         _inventoryOpened = true;
         // TODO: ADD ANIMATIONS TO OPENING
         
         EnableAllTooltips();
+        // Cursor.lockState = CursorLockMode.None;
+        // Cursor.visible = true;
+        OnInventoryOpen?.Invoke();
     }
 
     private void CloseInventory()
@@ -138,6 +188,9 @@ public class InventoryManager : MonoBehaviour
         // TODO: ADD ANIMATIONS
         
         DisableAllTooltips();
+        // Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.visible = false;
+        OnInventoryClose?.Invoke();
     }
 
     // Should be called upon using the equip button
@@ -166,7 +219,7 @@ public class InventoryManager : MonoBehaviour
         RemoveItem(CurrentlyEquipped, 1);
         if (CurrentlyEquipped.Quantity <= 0)
         {
-            ToolEvents.InvokeToolUnequip();
+            Events.InvokeToolUnequip();
             CurrentlyEquipped = null;
         }
     }
@@ -237,14 +290,14 @@ public class InventoryManager : MonoBehaviour
                         if (!ToolHandler.isToolEquipped(itemPrefab.name))
                         {
                             Debug.Log("Equipped");
-                            ToolEvents.InvokeToolEquip(itemPrefab);
+                            Events.InvokeToolEquip(itemPrefab);
                             CurrentlyEquipped = ii;
                             // Send an event that tells every script what the new item is
                         }
                         else
                         {
                             Debug.Log("Unequipped");
-                            ToolEvents.InvokeToolUnequip();
+                            Events.InvokeToolUnequip();
                             CurrentlyEquipped = null;
                         }
                     

@@ -9,6 +9,7 @@ namespace Main.Scripts
     {
         private InteractionManager interactionManager;
         public UnityEvent onInteraction;
+        public string title = "Talk";
 
         private void Awake()
         {

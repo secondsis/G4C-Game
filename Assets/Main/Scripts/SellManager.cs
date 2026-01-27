@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -5,6 +6,9 @@ using UnityEngine.UI;
 
 public class SellManager : MonoBehaviour
 {
+    public static event Action OnSellMenuOpen;
+    public static event Action OnSellMenuClose;
+    
     [SerializeField] private GameObject sellMenuSlotPrefab;
     [SerializeField] private GameObject content;
     [SerializeField] private Transform itemPanel;
@@ -14,23 +18,74 @@ public class SellManager : MonoBehaviour
     private int _itemPanelHashCode;
 
     private GameObject _ui;
+
+    private bool _inventoryBlocking = false;
+    private bool _shopBlocking = false;
     
     private void Awake()
     {
         _ui = gameObject.transform.parent.Find("UI").gameObject;
         _ui.SetActive(false);
+        
+        
+    }
+
+    private void SetInventoryBlockingTrue()
+    {
+        _inventoryBlocking = true;
+    }
+    private void SetInventoryBlockingFalse()
+    {
+        _inventoryBlocking = false;
+    }
+    private void SetShopBlockingTrue()
+    {
+        _shopBlocking = true;
+    }
+    private void SetShopBlockingFalse()
+    {
+        _shopBlocking = false;
+    }
+
+    private void OnEnable()
+    {
+        // Blocking menus
+        InventoryManager.OnInventoryOpen += SetInventoryBlockingTrue;
+        InventoryManager.OnInventoryClose += SetInventoryBlockingFalse;
+
+        ShopFrontendManager.OnShopOpen += SetShopBlockingTrue;
+        ShopFrontendManager.OnShopClose += SetShopBlockingFalse;
+    }
+
+    private void OnDisable()
+    {
+        InventoryManager.OnInventoryOpen -= SetInventoryBlockingTrue;
+        InventoryManager.OnInventoryClose -= SetInventoryBlockingFalse;
+        
+        ShopFrontendManager.OnShopOpen -= SetShopBlockingTrue;
+        ShopFrontendManager.OnShopClose -= SetShopBlockingFalse;
     }
 
     public void OpenSellMenu()
     {
+        if (_inventoryBlocking || _shopBlocking)
+        {
+            DebugScript.BetterDebug("WARNING: Cannot open sell menu because inventory or shop are open");
+            return;
+        }
         UpdateSellMenu();
         _ui.SetActive(true);
-        
+        // Cursor.lockState = CursorLockMode.None;
+        // Cursor.visible = true;
+        OnSellMenuOpen?.Invoke();
     }
 
     public void CloseSellMenu()
     {
         _ui.SetActive(false);
+        // Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.visible = false;
+        OnSellMenuClose?.Invoke();
     }
 
     private void SellItem(InventoryItem item, int quantityToRemove)
