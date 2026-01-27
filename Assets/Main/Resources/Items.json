@@ -467,7 +467,7 @@
       "itemData": {
         "name": "Tomato Seed",
         "description": "It wishes to become a vegetable, but it is destined to become a fruit.",
-        "itemType": "PRODUCT",
+        "itemType": "SEED",
         "maxStack": 64,
         "icon": "TomatoSeed",
         "prefabPath": "Prefabs/Pouch"
@@ -489,7 +489,7 @@
       "itemData": {
         "name": "Turnip Seed",
         "description": "Is it Don Turnipchino III?",
-        "itemType": "PRODUCT",
+        "itemType": "SEED",
         "maxStack": 64,
         "icon": "TurnipSeed",
         "prefabPath": "Prefabs/Pouch"

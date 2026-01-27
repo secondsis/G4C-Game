@@ -26,7 +26,12 @@ public static class Dictionaries
         { SeedEnum.CARROT, 2f},
         { SeedEnum.GRAPE, 1.3f},
         { SeedEnum.STRAWBERRY, 1f},
-        { SeedEnum.WATERMELON, 4.3f}
+        { SeedEnum.WATERMELON, 4.3f},
+        { SeedEnum.EGGPLANT, 2f},
+        { SeedEnum.CORN, 2f},
+        { SeedEnum.TOMATO, 2f},
+        { SeedEnum.PUMPKIN, 2f},
+        { SeedEnum.TURNIP, 2f},
     };
 
     public static readonly Dictionary<SeedEnum, (GameObject, GameObject, GameObject, GameObject)> PlantPrefabs = new()
