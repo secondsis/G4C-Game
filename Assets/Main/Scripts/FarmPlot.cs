@@ -53,10 +53,13 @@ public class FarmPlot : MonoBehaviour
 
     private void UseSeed()
     {
+        // may be something wrong with currentlyequipped?
+        Debug.Log("Using seed: " + InventoryManager.Instance.CurrentlyEquipped.Item.ItemName);
         string plantName = InventoryManager.Instance.CurrentlyEquipped.Item.ItemName.Replace(" Seed", "");
         if (Enum.TryParse(plantName.ToUpper(), out SeedEnum thisSeed))
         {
             bool succ = PlantCrop(thisSeed);
+            Debug.Log(thisSeed);
             // Remove a quantity of 1 from the hotbar/inventory
             if(succ)
                 InventoryManager.Instance.DecrementCurrentlyEquipped();
@@ -67,7 +70,7 @@ public class FarmPlot : MonoBehaviour
         }
 
     }
-
+// Idk why but tomato is turned into carrot
     public bool PlantCrop(SeedEnum seed)
     {
         if (!Logic.PlantCrop(seed)) return false;
