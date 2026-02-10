@@ -278,32 +278,37 @@ public class InventoryManager : MonoBehaviour
                 thisSlot.name = "HotbarSlot" + (i + 1);
                 _hotbarSlots.Add(thisSlot);
 
-                if (item.Equippable)
+                
+                
+            }
+            // MUST REMOVE ALL LISTENERS FIRST!! Don't want "artifacts" from old stuff
+            Button thisSlotBtn = thisSlot.GetComponent<Button>();
+            thisSlotBtn.onClick.RemoveAllListeners();
+            if (item.Equippable)
+            {
+                GameObject itemPrefab = Resources.Load<GameObject>(prefabPath);
+                //ADD THE CLICK BUTTON FUNCTION
+                thisSlotBtn.onClick.AddListener(() =>
                 {
-                    GameObject itemPrefab = Resources.Load<GameObject>(prefabPath);
-                    //ADD THE CLICK BUTTON FUNCTION
-                    thisSlot.GetComponent<Button>().onClick.AddListener(() =>
+                    // This will equip the item, according to the prefab path
+                    // Prefab Path should/must be a InventoryItem variable
+                    // Also add ability to unequip (ALSO unequip when u remove the item from hotbar)
+                    if (CurrentlyEquipped != ii)
                     {
-                        // This will equip the item, according to the prefab path
-                        // Prefab Path should/must be a InventoryItem variable
-                        // Also add ability to unequip (ALSO unequip when u remove the item from hotbar)
-                        if (!ToolHandler.isToolEquipped(itemPrefab.name))
-                        {
-                            Debug.Log("Equipped " + itemPrefab.name);
-                            Events.InvokeToolEquip(itemPrefab);
-                            CurrentlyEquipped = ii;
-                            // Send an event that tells every script what the new item is
-                        }
-                        else
-                        {
-                            Debug.Log("Unequipped");
-                            Events.InvokeToolUnequip();
-                            CurrentlyEquipped = null;
-                        }
+                        Debug.Log("Equipped " + ii.Item.ItemName);
+                        Events.InvokeToolEquip(itemPrefab);
+                        // 
+                        CurrentlyEquipped = ii;
+                        // Send an event that tells every script what the new item is
+                    }
+                    else
+                    {
+                        Debug.Log("Unequipped");
+                        Events.InvokeToolUnequip();
+                        CurrentlyEquipped = null;
+                    }
                     
-                    });
-                }
-
+                });
             }
 
             Transform quantityObj = thisSlot.transform.Find("Quantity");

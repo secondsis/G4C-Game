@@ -57,7 +57,7 @@ public class FarmPlot : MonoBehaviour
         Debug.Log("Using seed: " + InventoryManager.Instance.CurrentlyEquipped.Item.ItemName);
         string plantName = InventoryManager.Instance.CurrentlyEquipped.Item.ItemName.Replace(" Seed", "");
         if (Enum.TryParse(plantName.ToUpper(), out SeedEnum thisSeed))
-        { 
+        {
             bool succ = PlantCrop(thisSeed);
             Debug.Log(thisSeed);
             // Remove a quantity of 1 from the hotbar/inventory
