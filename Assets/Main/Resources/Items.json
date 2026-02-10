@@ -26,7 +26,7 @@
       "id": "alfalfa-seed",
       "itemData": {
         "name": "Alfalfa Seed",
-        "description": "",
+        "description": "Kids in primary school put these in a bag with water and watch them grow.",
         "itemType": "SEED",
         "maxStack": 64,
         "icon": "AlfalfaSeed",
@@ -48,7 +48,7 @@
       "id": "apple-seed",
       "itemData": {
         "name": "Apple Seed",
-        "description": "",
+        "description": "Watch out! These contain arsenic D: !",
         "itemType": "SEED",
         "maxStack": 64,
         "icon": "apple_seed",
@@ -521,7 +521,7 @@
       "id": "watermelon-seed",
       "itemData": {
         "name": "Watermelon Seed",
-        "description": "",
+        "description": "Have you ever been told those stories? I assure you, eating these are safe... probably.",
         "itemType": "SEED",
         "maxStack": 64,
         "icon": "WatermelonSeed",
