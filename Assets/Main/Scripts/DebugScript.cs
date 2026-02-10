@@ -31,4 +31,10 @@ public class DebugScript : MonoBehaviour
         Debug.Log(message);
         #endif
     }
+
+    public static void AddWateringCan()
+    {
+        InventoryManager.Instance.AddItem("watering-can", 1);
+        
+    }
 }
