@@ -19,6 +19,7 @@ public static class Dictionaries
         { SeedEnum.TURNIP, 60f},
     };
 
+    // A multiplier on how fast the plant drinks the water. A better watering can will last longer in general.
     public static readonly Dictionary<SeedEnum, float> DefaultPlantThirst = new()
     {
         { SeedEnum.NONE, 100f},
@@ -57,14 +58,4 @@ public static class Dictionaries
         { FertilizerTypeEnum.ADEQUATE_QUALITY, null},
         { FertilizerTypeEnum.HIGH_QUALITY, null}
     };
-
-    // public static readonly Dictionary<SeedEnum, float> SeedCosts = new()
-    // {
-    //     { SeedEnum.APPLE, 10.00f},
-    //     { SeedEnum.CARROT, 2.00f},
-    //     { SeedEnum.GRAPE, 5.00f},
-    //     { SeedEnum.STRAWBERRY, 2.50f},
-    //     { SeedEnum.WATERMELON, 12.00f}
-    // };
-
 }
