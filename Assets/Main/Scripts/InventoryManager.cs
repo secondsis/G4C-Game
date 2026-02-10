@@ -289,7 +289,7 @@ public class InventoryManager : MonoBehaviour
                         // Also add ability to unequip (ALSO unequip when u remove the item from hotbar)
                         if (!ToolHandler.isToolEquipped(itemPrefab.name))
                         {
-                            Debug.Log("Equipped");
+                            Debug.Log("Equipped " + itemPrefab.name);
                             Events.InvokeToolEquip(itemPrefab);
                             CurrentlyEquipped = ii;
                             // Send an event that tells every script what the new item is

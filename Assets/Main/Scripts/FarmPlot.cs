@@ -5,7 +5,7 @@ using Object = UnityEngine.Object;
 
 public class FarmPlot : MonoBehaviour
 {
-    // TODO: Fix carrots no longer harvesting. Goal: Allow carrot seeds to be planted
+    // TODO: Fix a bug with crops.
     public FarmLogic Logic = new FarmLogic();
     private int _currentPlantStage;
     private bool _plotWatered;
@@ -57,7 +57,7 @@ public class FarmPlot : MonoBehaviour
         Debug.Log("Using seed: " + InventoryManager.Instance.CurrentlyEquipped.Item.ItemName);
         string plantName = InventoryManager.Instance.CurrentlyEquipped.Item.ItemName.Replace(" Seed", "");
         if (Enum.TryParse(plantName.ToUpper(), out SeedEnum thisSeed))
-        {
+        { 
             bool succ = PlantCrop(thisSeed);
             Debug.Log(thisSeed);
             // Remove a quantity of 1 from the hotbar/inventory
@@ -70,10 +70,12 @@ public class FarmPlot : MonoBehaviour
         }
 
     }
-// Idk why but tomato is turned into carrot
+// TODO: Fix crops changing state
     public bool PlantCrop(SeedEnum seed)
     {
+        
         if (!Logic.PlantCrop(seed)) return false;
+        Debug.Log("Planted " + seed);
         
         foreach (Transform child in _cropParent)
         {
@@ -93,6 +95,7 @@ public class FarmPlot : MonoBehaviour
     {
         SeedEnum harvestedSeed = Logic.HarvestCrop();
         if (harvestedSeed == SeedEnum.NONE) return;
+        Debug.Log("Harvested " + harvestedSeed);
         // if (harvestedSeed == SeedEnum.NONE) return false;
         foreach (Transform child in _cropParent)
         {

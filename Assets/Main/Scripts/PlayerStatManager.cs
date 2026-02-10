@@ -21,6 +21,7 @@ public class PlayerStatManager : MonoBehaviour
         }
 
         Instance = this;
+        DebugMoney();
     }
 
     // DEBUG
