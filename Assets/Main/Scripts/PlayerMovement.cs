@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
+    // TODO: Rework movement system this week 2/10-2/15
     public Camera playerCamera;
     public float walkSpeed = 6f;
     public float runSpeed = 12f;

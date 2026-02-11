@@ -7,6 +7,8 @@ namespace Main.Scripts
     {
         public static event Action<GameObject> OnToolEquip;
         public static event Action OnToolUnequip;
+        public static event Action OnToolUse;
+        
         
         public static void InvokeToolEquip(GameObject tool)
         {
@@ -17,6 +19,16 @@ namespace Main.Scripts
         public static void InvokeToolUnequip()
         {
             OnToolUnequip?.Invoke();
+        }
+
+        // Invoked when player clicks
+        public static void InvokeToolUse()
+        {
+            if (InventoryManager.Instance.CurrentlyEquipped != null)
+            {
+                OnToolUse?.Invoke();
+                // Individual tools may connect to this event using a script under the prefab
+            }
         }
     }
 }

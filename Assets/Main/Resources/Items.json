@@ -503,7 +503,7 @@
         "itemType": "TOOL",
         "maxStack": 1,
         "icon": "WateringCan",
-        "prefabPath": ""
+        "prefabPath": "Prefabs/WateringCan"
       }
     },
     {

@@ -8,7 +8,7 @@ public class Hover2DTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [TextArea] public string infoRight = "";
     private STController tooltipController;
     private bool showing = false;
-    private bool hovering = false;
+    private bool hovering = false; 
     private bool _enabled = false;
 
     private void Awake()

@@ -205,6 +205,7 @@ MonoBehaviour:
 
     An empty area of farmable land.'
   infoRight: (READY)
+  showing: 0
 --- !u!1 &3443708841010495328
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4423551068122435179}
   - component: {fileID: 7251349108599663016}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FarmPlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

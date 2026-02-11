@@ -4,7 +4,7 @@ public class PlayerStatManager : MonoBehaviour
 {
     public static PlayerStatManager Instance;
     public int Money { get; private set; }
-
+    public static float ReachDistance { get; private set; }
     public int playTime;
     
     // public int Level { get; private set; }
@@ -12,6 +12,7 @@ public class PlayerStatManager : MonoBehaviour
     private void Awake()
     {
         Money = PlayerPrefs.GetInt("Money");
+        ReachDistance = 100f;
         
         // THIS IS A SINGLETON
         if (Instance != null && Instance != this)

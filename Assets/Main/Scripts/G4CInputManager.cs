@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PrimeTweenDemo;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -85,12 +86,18 @@ namespace Main.Scripts
         {
             InventoryManager.Instance.ToggleInventory(); 
         }
+        
+        private static void OnClick(InputAction.CallbackContext ctx)
+        {
+            Events.InvokeToolUse();
+        }
 
         static G4CInputManager()
         {
             // Initialize each event
             G4CPlayerInput.Player.Interact.performed += OnInteract;
             G4CPlayerInput.Player.ToggleInventory.performed += OnToggleInventory;
+            G4CPlayerInput.Player.Click.performed += OnClick;
             
         }
     }

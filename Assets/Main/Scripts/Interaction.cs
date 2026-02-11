@@ -18,6 +18,7 @@ namespace Main.Scripts
 
         private void OnTriggerEnter(Collider other)
         {
+            
             Debug.Log("Interaction trigger entered");
             // Add to Interaction Manager
             if (other.CompareTag("Player"))
