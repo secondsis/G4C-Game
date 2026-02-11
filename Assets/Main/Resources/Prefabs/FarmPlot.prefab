@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 1553273357403945802}
   - component: {fileID: 5234936779115815094}
   - component: {fileID: 6498410044847283343}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlotObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d2e49c29713a6bb48a4dce1852c787d0, type: 2}
+  - {fileID: 2100000, guid: 25948797d11c94d4496493e9869b36c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -247,7 +247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4423551068122435179}
   - component: {fileID: 7251349108599663016}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: FarmPlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

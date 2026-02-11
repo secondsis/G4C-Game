@@ -1,6 +1,7 @@
 using System;
 using Main.Scripts;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class WateringCan : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class WateringCan : MonoBehaviour
         // Find the FarmPlot that the mouse is pointing at and if it is within reaching distance
         // Raycasting?
         Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
+        // Debug.DrawRay(ray.origin, ray.direction * PlayerStatManager.ReachDistance, Color.red);
+        
         RaycastHit hit;
 
         int plotMask = LayerMask.GetMask("FarmPlotLayer");
@@ -25,11 +28,13 @@ public class WateringCan : MonoBehaviour
         if (Physics.Raycast(ray, out hit, PlayerStatManager.ReachDistance, plotMask))
         {
             GameObject obj = hit.transform.gameObject;
-            FarmPlot farmPlot = obj.GetComponent<FarmPlot>();
+            FarmPlot farmPlot = obj.transform.parent.parent.GetComponent<FarmPlot>();
+            DebugScript.BetterDebug(obj.name);
             if (farmPlot)
             {
                 // Water this farmplot
                 farmPlot.WaterCrop();
+                DebugScript.BetterDebug("Watered crop!");
             }
             
         }
@@ -43,6 +48,7 @@ public class WateringCan : MonoBehaviour
 
     private void OnDisable()
     {
+        G4CInputManager.RemoveInteract(InteractionType.WATER, OnWateringCanUse);
         // Events.OnToolUse -= OnWateringCanUse;
     }
 }

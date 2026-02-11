@@ -134,7 +134,7 @@ public class FarmPlot : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        // Watered Texture -- MIGHT BE UNFINISHED???
+        // Watered Texture
         GameObject newObj = Instantiate(Dictionaries.WateredPlotObject, plotParent);
         _plotWatered = true;
     }
