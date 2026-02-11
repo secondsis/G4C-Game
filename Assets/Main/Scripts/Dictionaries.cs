@@ -4,7 +4,10 @@ using UnityEngine;
 public static class Dictionaries
 {
     public static readonly float DefaultWaterDuration = 300f;
-    public static readonly GameObject WateredPlotObject = Resources.Load<GameObject>("Prefabs/WetPlot");
+    // public static readonly GameObject WateredPlotObject = Resources.Load<GameObject>("Prefabs/WetPlot");
+    // public static readonly GameObject DryPlotObject = Resources.Load<GameObject>("Prefabs/DryPlot");
+    public static readonly Material WateredPlotMaterial = Resources.Load<Material>("Materials/WetPlot");
+    public static readonly Material DryPlotMaterial = Resources.Load<Material>("Materials/DryPlot");
     public static readonly Dictionary<SeedEnum, float> DefaultPlantGrowthTimes = new()
     {
         { SeedEnum.APPLE, 10f},

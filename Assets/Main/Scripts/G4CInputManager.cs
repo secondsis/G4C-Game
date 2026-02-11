@@ -75,7 +75,7 @@ namespace Main.Scripts
 
         private static void OnInteract(InputAction.CallbackContext ctx)
         {
-            // Debug.Log("OnInteract was called! Current Interactable: " +  _currentInteractable?.GetInteractType());
+            DebugScript.BetterDebug("OnInteract was called! Current Interactable: " +  _currentInteractable?.GetInteractType());
             if (_currentInteractable != null && !_currentInteractable.TempDisabled)
             {
                 _currentInteractable.Interact();

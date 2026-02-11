@@ -1,7 +1,5 @@
-using System;
 using Main.Scripts;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class WateringCan : MonoBehaviour
 {
@@ -29,7 +27,6 @@ public class WateringCan : MonoBehaviour
         {
             GameObject obj = hit.transform.gameObject;
             FarmPlot farmPlot = obj.transform.parent.parent.GetComponent<FarmPlot>();
-            DebugScript.BetterDebug(obj.name);
             if (farmPlot)
             {
                 // Water this farmplot
@@ -42,12 +39,14 @@ public class WateringCan : MonoBehaviour
     
     private void OnEnable()
     {
+        DebugScript.BetterDebug("Registed watering can");
         G4CInputManager.RegisterInteract(InteractionType.WATER, OnWateringCanUse);
         // Events.OnToolUse += OnWateringCanUse;
     }
 
     private void OnDisable()
     {
+        DebugScript.BetterDebug("Unregisted watering can");
         G4CInputManager.RemoveInteract(InteractionType.WATER, OnWateringCanUse);
         // Events.OnToolUse -= OnWateringCanUse;
     }

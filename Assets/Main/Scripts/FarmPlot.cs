@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Main.Scripts;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -10,6 +11,8 @@ public class FarmPlot : MonoBehaviour
     private int _currentPlantStage;
     private bool _plotWatered;
     private Transform _cropParent;
+    private Transform _plotParent;
+    private Renderer _plotObjectRenderer;
     private Hover3DTooltip _tooltip;
     private static readonly String _defaultLeftInfo = "Unfertilized Plot\nAn empty area of farmable land.";
     private static readonly String _defaultRightInfo = "(EMPTY)";
@@ -19,7 +22,10 @@ public class FarmPlot : MonoBehaviour
     private void Awake()
     {
         _cropParent = transform.Find("Crop");
+        _plotParent = transform.Find("Plot");
+        _plotObjectRenderer = _plotParent.GetChild(0).GetComponent<Renderer>();
         _tooltip = transform.Find("Plot").Find("PlotObject").GetComponent<Hover3DTooltip>();
+        DebugScript.BetterDebug(_tooltip);
         _tooltip.infoLeft = _defaultLeftInfo;
         _tooltip.infoRight = _defaultRightInfo;
 
@@ -75,7 +81,7 @@ public class FarmPlot : MonoBehaviour
     {
         
         if (!Logic.PlantCrop(seed)) return false;
-        Debug.Log("Planted " + seed);
+        DebugScript.BetterDebug("Planted " + seed);
         
         foreach (Transform child in _cropParent)
         {
@@ -128,15 +134,17 @@ public class FarmPlot : MonoBehaviour
 
     public void WaterCrop()
     {
-        Transform plotParent = gameObject.transform.Find("Plot");
-        foreach (Transform child in plotParent)
-        {
-            Destroy(child.gameObject);
-        }
+        
+        // foreach (Transform child in _plotParent)
+        // {
+        //     Destroy(child.gameObject);
+        // }
 
         // Watered Texture
-        GameObject newObj = Instantiate(Dictionaries.WateredPlotObject, plotParent);
+        _plotObjectRenderer.material = Dictionaries.WateredPlotMaterial;
+        // GameObject newObj = Instantiate(Dictionaries.WateredPlotObject, _plotParent);
         _plotWatered = true;
+        Logic.WaterCrop();
     }
 
     private void SetPlantStage(int stage)
@@ -170,11 +178,15 @@ public class FarmPlot : MonoBehaviour
     private void DryPlot()
     {
         _plotWatered = false;
-        // WIP
+        // foreach (Transform child in _plotParent)
+        // {
+        //     Destroy(child.gameObject);
+        // }
+        _plotObjectRenderer.material = Dictionaries.DryPlotMaterial;
     }
 
     // Check for water and plant stage
-    // Is this efficient?
+    // TODO: Make this more efficient?
     private void Update()
     {
         if (!Logic.IsWatered() && _plotWatered)
@@ -243,15 +255,20 @@ public class FarmLogic
     public void WaterCrop()
     {
         UnixTimeLastWatered = GlobalTime.UnixTime;
+        DebugScript.BetterDebug("Wait for " + (Dictionaries.DefaultWaterDuration * Dictionaries.DefaultPlantThirst[SeedType]) + " time");
+        
     }
 
     public bool IsWatered()
     {
+       
         // If seconds past from last time watered is greater than the plant's water duration, then it is not watered
-        if (GlobalTime.UnixTime - UnixTimeLastWatered >= Dictionaries.DefaultWaterDuration * Dictionaries.DefaultPlantThirst[SeedType])
+        if (GlobalTime.UnixTime - UnixTimeLastWatered >= Dictionaries.DefaultWaterDuration / Dictionaries.DefaultPlantThirst[SeedType])
         {
+            DebugScript.BetterDebug("Is Watered? No.");
             return false;
         }
+        DebugScript.BetterDebug("Is Watered? Yes." + (GlobalTime.UnixTime - UnixTimeLastWatered));
         return true;
     }
 

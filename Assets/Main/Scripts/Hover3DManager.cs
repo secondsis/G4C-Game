@@ -6,11 +6,11 @@ public class Hover3DManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        int layerMask = LayerMask.GetMask("Default"); // only hit these layers
+        // int layerMask = LayerMask.GetMask("Default"); // only hit these layers
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         // If raycast hits an object
-        if (Physics.Raycast(ray, out RaycastHit hit, 1000f, layerMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, PlayerStatManager.ReachDistance))
         {
             Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red);
             GameObject newHit = hit.collider.gameObject;

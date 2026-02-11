@@ -61,7 +61,7 @@ public class InteractionManager : MonoBehaviour
     {
         // I AM NOT SURE IF WHEN I PASS THIS, ALL VARIABLES ARE STATIC/CONSTANT/FROZEN
         if (targetInteraction == null) return;
-        Debug.Log("Interacted");
+        DebugScript.BetterDebug("Interacted");
         targetInteraction.onInteraction.Invoke();
     }
 

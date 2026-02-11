@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5469299336354891113}
   - component: {fileID: 6444118930563152208}
   m_Layer: 7
-  m_Name: PlotObject
+  m_Name: WetPlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
