@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!current.IsName(state) || forceOverride)
         {
-            // Debug.Log("Playing " + state);
+            // DebugScript.BetterDebug("Playing " + state);
             _animator.Play(state, 0, 0.0f);
         }
 

@@ -240,7 +240,7 @@ public class InventoryManager : MonoBehaviour
     
     public void UpdateHotbar()
     {
-        Debug.Log("Updating hotbar");
+        DebugScript.BetterDebug("Updating hotbar");
         while (_hotbarSlots.Count > _hotbar.Count)
         {
             Destroy(_hotbarSlots[_hotbarSlots.Count - 1]);
@@ -252,7 +252,7 @@ public class InventoryManager : MonoBehaviour
             int iiHash = _hotbar[i];
             if (iiHash == -1)
             {
-                Debug.Log("Reached end of hotbar");
+                DebugScript.BetterDebug("Reached end of hotbar");
                 break;
             }
             InventoryItem ii = _inventoryBackendManager.Inventory.Find(item => item.GetHashCode() == iiHash);
@@ -295,7 +295,7 @@ public class InventoryManager : MonoBehaviour
                     // Also add ability to unequip (ALSO unequip when u remove the item from hotbar)
                     if (CurrentlyEquipped != ii)
                     {
-                        Debug.Log("Equipped " + ii.Item.ItemName);
+                        DebugScript.BetterDebug("Equipped " + ii.Item.ItemName);
                         Events.InvokeToolEquip(itemPrefab);
                         // 
                         CurrentlyEquipped = ii;
@@ -303,7 +303,7 @@ public class InventoryManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("Unequipped");
+                        DebugScript.BetterDebug("Unequipped");
                         Events.InvokeToolUnequip();
                         CurrentlyEquipped = null;
                     }
@@ -404,7 +404,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     // Using HashCodes might be expensive
                     int newHash = ii.GetHashCode();
-                    Debug.Log("This hash: " + newHash);
+                    DebugScript.BetterDebug("This hash: " + newHash);
                     if (Instance._itemPanel.activeSelf && Instance._itemPanelHashCode == newHash)
                     {
                         Instance._itemPanel.SetActive(false);
@@ -444,7 +444,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     // Using HashCodes might be expensive
                     int newHash = ii.GetHashCode();
-                    Debug.Log("This hash: " + newHash);
+                    DebugScript.BetterDebug("This hash: " + newHash);
                     if (Instance._itemPanel.activeSelf && Instance._itemPanelHashCode == newHash)
                     {
                         Instance._itemPanel.SetActive(false);
@@ -536,7 +536,7 @@ public class InventoryBackendManager
         {
             if (invItem.Item.Equals(item) && invItem.Quantity < invItem.Item.MaxStack)
             {
-                Debug.Log("same item, stacking");
+                DebugScript.BetterDebug("same item, stacking");
                 invItem.Quantity += quantity;
                 if (invItem.Quantity > item.MaxStack)
                 {

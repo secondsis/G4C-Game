@@ -149,6 +149,7 @@ public class FarmPlot : MonoBehaviour
 
     private void SetPlantStage(int stage)
     {
+        DebugScript.BetterDebug("Setting plant stage: " + stage);
         foreach (Transform child in _cropParent)
         {
             Destroy(child.gameObject);
@@ -178,10 +179,7 @@ public class FarmPlot : MonoBehaviour
     private void DryPlot()
     {
         _plotWatered = false;
-        // foreach (Transform child in _plotParent)
-        // {
-        //     Destroy(child.gameObject);
-        // }
+        // Just change material
         _plotObjectRenderer.material = Dictionaries.DryPlotMaterial;
     }
 
@@ -190,6 +188,8 @@ public class FarmPlot : MonoBehaviour
     private void Update()
     {
         Logic.DecrementWater(Time.deltaTime);
+        Logic.GrowPlant(Time.deltaTime);
+        
         if (!Logic.IsWatered() && _plotWatered)
         {
             DryPlot();
@@ -199,17 +199,6 @@ public class FarmPlot : MonoBehaviour
         {
             SetPlantStage(Logic.GetPlantStage());
         }
-        
-        // Check if player is hovering over plot, if so then check for E to harvest
-        // if (_tooltip.showing)
-        // {
-        //     // Change this to an OnInteract
-        //     
-        //     // if (Input.GetKeyDown(KeyCode.E))
-        //     // {
-        //     //     HarvestCrop();
-        //     // }
-        // }
     }
 }
 
@@ -217,25 +206,22 @@ public class FarmLogic
 {
     public FertilizerTypeEnum Fertilizer { get; private set; }
     public SeedEnum SeedType { get; private set; }
-    public long UnixTimePlanted { get; private set; }
 
-    public long UnixTimeLastWatered { get; private set; }
-
-    public float PercentWater;
+    private float PercentWater;
+    private float PercentGrown;
 
     public FarmLogic()
     {
         Fertilizer = FertilizerTypeEnum.NONE;
         SeedType = SeedEnum.NONE;
-        UnixTimeLastWatered = 0L;
         PercentWater = 0f;
     }
 
     public bool PlantCrop(SeedEnum seed)
     {
         if (SeedType != SeedEnum.NONE) return false;
+        PercentGrown = 0f;
         SeedType = seed;
-        UnixTimePlanted = GlobalTime.UnixTime;
         return true;
     }
 
@@ -245,7 +231,7 @@ public class FarmLogic
         SeedEnum oldSeed = SeedType;
         SeedType = SeedEnum.NONE;
         Fertilizer = FertilizerTypeEnum.NONE;
-        UnixTimePlanted = 0;
+        PercentGrown = 0f;
         return oldSeed;
     }
 
@@ -271,50 +257,40 @@ public class FarmLogic
         {
             // Every second is multiplied by the plant's thirst (ex. x1.3 mult.), then divided by the expected water duration
             PercentWater -= delta * Dictionaries.DefaultPlantThirst[SeedType] / Dictionaries.DefaultWaterDuration;
-            DebugScript.BetterDebug(PercentWater);
-            if (PercentWater < 0f)
-            {
-                PercentWater = 0f;
-            }
+
+            if (PercentWater < 0f) PercentWater = 0f;
         }
     }
 
+    // simplified
     public bool IsWatered()
     {
-        // If seconds past from last time watered is greater than the plant's water duration, then it is not watered
-        if (PercentWater <= 0f)
+        return !(PercentWater <= 0f);
+    }
+
+    // MUST CALL IN UPDATE
+    public void GrowPlant(float delta)
+    {
+        if (SeedType == SeedEnum.NONE) return;
+        // Can't grow without water
+        if (!IsWatered()) return;
+        if (PercentGrown >= 1f) return;
+        
+        // Any growth inhibitors/whatever can be multiplied at the end
+        PercentGrown += delta / Dictionaries.DefaultPlantGrowthTimes[SeedType];
+        if(PercentGrown > 1f) 
         {
-            DebugScript.BetterDebug("Is Watered? No.");
-            return false;
+            PercentGrown = 1f;
         }
-        return true;
     }
 
     public int GetPlantStage()
     {
-        if (SeedType == SeedEnum.NONE)
-        {
-            return 0;
-        }
+        if (SeedType == SeedEnum.NONE) return 0;
 
-        long timeGrown = GlobalTime.UnixTime - UnixTimePlanted;
-        float plantGrowthTime = Dictionaries.DefaultPlantGrowthTimes[SeedType];
+        // long timeGrown = GlobalTime.UnixTime - UnixTimePlanted;
+        // float plantGrowthTime = Dictionaries.DefaultPlantGrowthTimes[SeedType];
 
-        if (timeGrown <= 0.25f * plantGrowthTime)
-        {
-            return 0;
-        }
-        else if (timeGrown <= 0.5f * plantGrowthTime)
-        {
-            return 1;
-        }
-        else if (timeGrown <= 0.75f * plantGrowthTime)
-        {
-            return 2;
-        }
-        else
-        {
-            return 3;
-        }
+        return (int) (PercentGrown / 0.33f);
     }
 }

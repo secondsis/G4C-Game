@@ -19,7 +19,11 @@ public class WateringCan : MonoBehaviour
     {
         _waterQuantity = _waterCapacity;
     }
-    
+    // Activate the prompt for the water refill at the well
+    private void ActivateRefillPrompt()
+    {
+        
+    }
     
 
     private void OnWateringCanUse()

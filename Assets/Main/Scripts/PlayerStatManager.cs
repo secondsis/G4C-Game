@@ -71,5 +71,6 @@ public class PlayerStatManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         DebugScript.BetterDebug("App quit");
+        SaveStats();
     }
 }
