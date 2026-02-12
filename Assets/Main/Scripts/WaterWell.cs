@@ -13,13 +13,19 @@ public class WaterWell : MonoBehaviour
 
     private void CheckEnableInteraction(GameObject obj)
     {
-        DebugScript.BetterDebug(obj.name + " interact waterwell");
-        
+        if (!obj.name.Equals("WateringCan")) return;
+        _interaction.PromptEnable();
     }
 
     private void CheckDisableInteraction()
     {
-        DebugScript.BetterDebug("Disabled tool");
+        // Need to check if obj name is watering can but can't.?
+        if (InventoryManager.Instance.CurrentlyEquipped != null &&
+            InventoryManager.Instance.CurrentlyEquipped.Item.ItemName.Equals("Watering Can"))
+        {
+            DebugScript.BetterDebug("Disabled watering can");
+            _interaction.PromptDisable();
+        }
     }
 
     private void Awake()
@@ -36,17 +42,7 @@ public class WaterWell : MonoBehaviour
         // Watering Can Refill
         Events.InvokeWaterWellInteract();
     }
-
-    private void DisplayInteractPrompt()
-    {
-        _interaction.PromptEnable();
-    }
-
-    private void HideInteractPrompt()
-    {
-        _interaction.PromptDisable();
-    }
-
+    
     // Check if Player is holding Watering Can
     // private void OnTriggerStay(Collider other)
     // {
@@ -62,4 +58,5 @@ public class WaterWell : MonoBehaviour
     //         _isHoldingWateringCan = false;
     //     }
     // }
+    
 }

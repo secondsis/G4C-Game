@@ -17,10 +17,7 @@ namespace Main.Scripts
         public static bool IsBlocked(InteractionType interactionType, Action onInteract)
         {
             if (_currentInteractable == null) return false;
-            // why does this always return false? 
-            // There should be a case where the currentInteractable (dialogue) isnt equal to interaction1
-            // Debug.Log("Current Interactable: " + _currentInteractable.GetInteractType() + " | Check: " + interactionType);
-            // Why is it both interaction1? 
+
             return !_currentInteractable.RawEquals(interactionType, onInteract);
         }
 
@@ -65,8 +62,6 @@ namespace Main.Scripts
 
                 _currentInteractable = bestInteractable;
             }
-            
-            // Debug.Log("New InteractionList: " + InteractionList);
         }
         
         private static void DefaultInteract()

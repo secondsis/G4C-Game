@@ -55,14 +55,14 @@ public class WateringCan : MonoBehaviour
     private void OnEnable()
     {
         DebugScript.BetterDebug("Registed watering can");
-        G4CInputManager.RegisterInteract(InteractionType.WATER, OnWateringCanUse);
+        G4CInputManager.RegisterInteract(InteractionType.WATER, OnWateringCanUse, 2);
         Events.OnWaterWellInteract += RefillWater;
     }
 
     private void OnDisable()
     {
         DebugScript.BetterDebug("Unregisted watering can");
-        G4CInputManager.RemoveInteract(InteractionType.WATER, OnWateringCanUse);
+        G4CInputManager.RemoveInteract(InteractionType.WATER, OnWateringCanUse, 2);
         Events.OnWaterWellInteract -= RefillWater;
     }
 }

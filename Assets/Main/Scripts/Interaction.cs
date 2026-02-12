@@ -10,11 +10,21 @@ namespace Main.Scripts
         private InteractionManager interactionManager;
         public UnityEvent onInteraction;
         public string title = "Talk";
+        public string interactionKeybind = "E";
         private bool promptEnabled = true;
 
         private void Awake()
         {
             interactionManager = GameObject.FindGameObjectWithTag("InteractionManager").GetComponent<InteractionManager>();
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if(!promptEnabled) return;
+            if (other.CompareTag("Player") && !interactionManager.Interactions1.Contains(this))
+            {
+                interactionManager.Interactions1.Add(this);
+            }
         }
 
         private void OnTriggerEnter(Collider other)
@@ -24,7 +34,7 @@ namespace Main.Scripts
             // Add to Interaction Manager
             if (other.CompareTag("Player"))
             {
-                interactionManager.Interactions.Add(this);
+                interactionManager.Interactions1.Add(this);
             }
         }
 
@@ -35,7 +45,7 @@ namespace Main.Scripts
             // Remove from InteractionManager
             if (other.CompareTag("Player"))
             {
-                interactionManager.Interactions.Remove(this);
+                interactionManager.Interactions1.Remove(this);
             }
         }
 
@@ -45,7 +55,7 @@ namespace Main.Scripts
 
             try
             {
-                interactionManager.Interactions.Remove(this);
+                interactionManager.Interactions1.Remove(this);
             }
             catch (Exception e)
             {
