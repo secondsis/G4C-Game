@@ -240,7 +240,7 @@ public class InventoryManager : MonoBehaviour
     
     public void UpdateHotbar()
     {
-        DebugScript.BetterDebug("Updating hotbar");
+        // DebugScript.BetterDebug("Updating hotbar");
         while (_hotbarSlots.Count > _hotbar.Count)
         {
             Destroy(_hotbarSlots[_hotbarSlots.Count - 1]);

@@ -12,22 +12,22 @@ public class WateringCan : MonoBehaviour
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         _waterCapacity = 100f;
         _waterQuantity = 100f;
+        
     }
 
     // Must wait a bit (waiting prompt?)
     private void RefillWater()
     {
         _waterQuantity = _waterCapacity;
+        DebugScript.BetterDebug("Refilled Watering Can (" +  _waterQuantity + " liters)");
     }
-    // Activate the prompt for the water refill at the well
-    private void ActivateRefillPrompt()
-    {
-        
-    }
-    
 
     private void OnWateringCanUse()
     {
+        if (_waterQuantity - 1 < 0) return;
+        _waterQuantity -= 1;
+        DebugScript.BetterDebug("Used Watering Can (" +  _waterQuantity + " liters)");
+        
         // Find the FarmPlot that the mouse is pointing at and if it is within reaching distance
         Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
         // Debug.DrawRay(ray.origin, ray.direction * PlayerStatManager.ReachDistance, Color.red);
@@ -56,13 +56,13 @@ public class WateringCan : MonoBehaviour
     {
         DebugScript.BetterDebug("Registed watering can");
         G4CInputManager.RegisterInteract(InteractionType.WATER, OnWateringCanUse);
-        // Events.OnToolUse += OnWateringCanUse;
+        Events.OnWaterWellInteract += RefillWater;
     }
 
     private void OnDisable()
     {
         DebugScript.BetterDebug("Unregisted watering can");
         G4CInputManager.RemoveInteract(InteractionType.WATER, OnWateringCanUse);
-        // Events.OnToolUse -= OnWateringCanUse;
+        Events.OnWaterWellInteract -= RefillWater;
     }
 }

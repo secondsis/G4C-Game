@@ -60144,6 +60144,7 @@ GameObject:
   - component: {fileID: 1314965229}
   - component: {fileID: 1314965227}
   - component: {fileID: 1314965226}
+  - component: {fileID: 1314965230}
   m_Layer: 0
   m_Name: WaterWellInteractive
   m_TagString: Untagged
@@ -60166,9 +60167,9 @@ MonoBehaviour:
   onInteraction:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DialogueComponent, Assembly-CSharp
-        m_MethodName: StartDialogue
+      - m_Target: {fileID: 1314965230}
+        m_TargetAssemblyTypeName: WaterWell, Assembly-CSharp
+        m_MethodName: OnInteractPrompt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -60215,6 +60216,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1314965230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314965225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02cefad45a7f5594a9ef6addb14eb2c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaterWell
 --- !u!1 &1324756170
 GameObject:
   m_ObjectHideFlags: 0
