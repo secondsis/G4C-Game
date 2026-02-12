@@ -4,16 +4,27 @@ using UnityEngine;
 public class WateringCan : MonoBehaviour
 {
     private Camera mainCam;
+    private float _waterCapacity; // May be upgraded later in an upgrade shop
+    private float _waterQuantity;
 
     private void Awake()
     {
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        _waterCapacity = 100f;
+        _waterQuantity = 100f;
     }
+
+    // Must wait a bit (waiting prompt?)
+    private void RefillWater()
+    {
+        _waterQuantity = _waterCapacity;
+    }
+    
+    
 
     private void OnWateringCanUse()
     {
         // Find the FarmPlot that the mouse is pointing at and if it is within reaching distance
-        // Raycasting?
         Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
         // Debug.DrawRay(ray.origin, ray.direction * PlayerStatManager.ReachDistance, Color.red);
         

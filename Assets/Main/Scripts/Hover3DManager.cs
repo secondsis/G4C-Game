@@ -4,6 +4,7 @@ public class Hover3DManager : MonoBehaviour
 {
     GameObject lastHit;
 
+    // TODO: Make this more efficient?
     private void LateUpdate()
     {
         // int layerMask = LayerMask.GetMask("Default"); // only hit these layers

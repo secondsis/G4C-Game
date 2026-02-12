@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerStatManager : MonoBehaviour
@@ -65,5 +66,10 @@ public class PlayerStatManager : MonoBehaviour
             // NOT REaLLY ACCURATE
             playTime += 30;
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        DebugScript.BetterDebug("App quit");
     }
 }

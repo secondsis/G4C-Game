@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using PrimeTweenDemo;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +10,8 @@ namespace Main.Scripts
         public static readonly PlayerInputActions G4CPlayerInput = new PlayerInputActions();
 
         private static Interactable _currentInteractable;
+        private static Interactable _currentInteractable2;
+        
         private static readonly List<Interactable> InteractionList = new List<Interactable>();
         
         public static bool IsBlocked(InteractionType interactionType, Action onInteract)
@@ -23,7 +24,7 @@ namespace Main.Scripts
             return !_currentInteractable.RawEquals(interactionType, onInteract);
         }
 
-        public static void RegisterInteract(InteractionType interactionType, Action newOnInteract)
+        public static void RegisterInteract(InteractionType interactionType, Action newOnInteract, int interactNum=1)
         {
             // if (currentInteractionType > interactionType) return;
             // // NEVER LET THERE BE TWO INTERACTIONS OF THE SAME TYPE
@@ -41,12 +42,12 @@ namespace Main.Scripts
             InteractionList.Add(newInteractable);
         }
 
-        public static void SetInteract(InteractionType interactionType, Action newOnInteract, bool enabled)
+        public static void SetInteract(InteractionType interactionType, Action newOnInteract, bool enabled, int interactNum=1)
         {
             InteractionList.Find(i => i.RawEquals(interactionType, newOnInteract)).TempDisabled = !enabled;
         }
 
-        public static void RemoveInteract(InteractionType interactionType, Action oldOnInteract)
+        public static void RemoveInteract(InteractionType interactionType, Action oldOnInteract, int interactNum=1)
         {
             Interactable oldInteractable = new Interactable(interactionType, oldOnInteract);
             InteractionList.Remove(oldInteractable);
@@ -82,6 +83,15 @@ namespace Main.Scripts
             }
         }
 
+        private static void OnInteract2(InputAction.CallbackContext ctx)
+        {
+            DebugScript.BetterDebug("OnInteract2: " + _currentInteractable2?.GetInteractType());
+            if (_currentInteractable2 != null && !_currentInteractable2.TempDisabled)
+            {
+                _currentInteractable2.Interact();
+            }
+        }
+
         private static void OnToggleInventory(InputAction.CallbackContext ctx)
         {
             InventoryManager.Instance.ToggleInventory(); 
@@ -96,6 +106,7 @@ namespace Main.Scripts
         {
             // Initialize each event
             G4CPlayerInput.Player.Interact.performed += OnInteract;
+            G4CPlayerInput.Player.Interact2.performed += OnInteract2;
             G4CPlayerInput.Player.ToggleInventory.performed += OnToggleInventory;
             G4CPlayerInput.Player.Click.performed += OnClick;
             

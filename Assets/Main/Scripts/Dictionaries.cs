@@ -25,17 +25,17 @@ public static class Dictionaries
     // A multiplier on how fast the plant drinks the water. A better watering can will last longer in general.
     public static readonly Dictionary<SeedEnum, float> DefaultPlantThirst = new()
     {
-        { SeedEnum.NONE, 100f},
-        { SeedEnum.APPLE, 2f},
-        { SeedEnum.CARROT, 2f},
-        { SeedEnum.GRAPE, 1.3f},
+        { SeedEnum.NONE, 1f},
+        { SeedEnum.APPLE, 2.4f},
+        { SeedEnum.CARROT, 1.3f},
+        { SeedEnum.GRAPE, 2f},
         { SeedEnum.STRAWBERRY, 1f},
         { SeedEnum.WATERMELON, 4.3f},
-        { SeedEnum.EGGPLANT, 2f},
-        { SeedEnum.CORN, 2f},
-        { SeedEnum.TOMATO, 2f},
-        { SeedEnum.PUMPKIN, 2f},
-        { SeedEnum.TURNIP, 2f},
+        { SeedEnum.EGGPLANT, 1.8f},
+        { SeedEnum.CORN, 1.9f},
+        { SeedEnum.TOMATO, 2.1f},
+        { SeedEnum.PUMPKIN, 3f},
+        { SeedEnum.TURNIP, 1.3f},
     };
 
     public static readonly Dictionary<SeedEnum, (GameObject, GameObject, GameObject, GameObject)> PlantPrefabs = new()
@@ -57,7 +57,7 @@ public static class Dictionaries
     public static readonly Dictionary<FertilizerTypeEnum, GameObject> FertilizerPrefabs = new()
     {
         { FertilizerTypeEnum.NONE, null},
-        { FertilizerTypeEnum.LOW_QUALITY, null},
+        { FertilizerTypeEnum.LOW_QUALITY, Resources.Load<GameObject>("Prefabs/FertilizerLow")},
         { FertilizerTypeEnum.ADEQUATE_QUALITY, null},
         { FertilizerTypeEnum.HIGH_QUALITY, null}
     };

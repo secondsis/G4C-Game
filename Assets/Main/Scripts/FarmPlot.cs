@@ -125,7 +125,7 @@ public class FarmPlot : MonoBehaviour
         Transform fertParent = gameObject.transform.Find("Fertilizer");
         foreach (Transform child in fertParent)
         {
-            Object.Destroy(child.gameObject);
+            Destroy(child.gameObject);
         }
         // Fertilizer Texture
         Instantiate(Dictionaries.FertilizerPrefabs[fert], fertParent);
@@ -189,6 +189,7 @@ public class FarmPlot : MonoBehaviour
     // TODO: Make this more efficient?
     private void Update()
     {
+        Logic.DecrementWater(Time.deltaTime);
         if (!Logic.IsWatered() && _plotWatered)
         {
             DryPlot();
@@ -220,11 +221,14 @@ public class FarmLogic
 
     public long UnixTimeLastWatered { get; private set; }
 
+    public float PercentWater;
+
     public FarmLogic()
     {
         Fertilizer = FertilizerTypeEnum.NONE;
         SeedType = SeedEnum.NONE;
         UnixTimeLastWatered = 0L;
+        PercentWater = 0f;
     }
 
     public bool PlantCrop(SeedEnum seed)
@@ -254,21 +258,35 @@ public class FarmLogic
 
     public void WaterCrop()
     {
-        UnixTimeLastWatered = GlobalTime.UnixTime;
-        DebugScript.BetterDebug("Wait for " + (Dictionaries.DefaultWaterDuration * Dictionaries.DefaultPlantThirst[SeedType]) + " time");
-        
+        PercentWater = 1f;
+        // UnixTimeLastWatered = GlobalTime.UnixTime;
+        // DebugScript.BetterDebug("Wait for " + (Dictionaries.DefaultWaterDuration * Dictionaries.DefaultPlantThirst[SeedType]) + " time");
+
+    }
+
+    // MUST BE CALLED IN UPDATE()
+    public void DecrementWater(float delta)
+    {
+        if (PercentWater > 0f)
+        {
+            // Every second is multiplied by the plant's thirst (ex. x1.3 mult.), then divided by the expected water duration
+            PercentWater -= delta * Dictionaries.DefaultPlantThirst[SeedType] / Dictionaries.DefaultWaterDuration;
+            DebugScript.BetterDebug(PercentWater);
+            if (PercentWater < 0f)
+            {
+                PercentWater = 0f;
+            }
+        }
     }
 
     public bool IsWatered()
     {
-       
         // If seconds past from last time watered is greater than the plant's water duration, then it is not watered
-        if (GlobalTime.UnixTime - UnixTimeLastWatered >= Dictionaries.DefaultWaterDuration / Dictionaries.DefaultPlantThirst[SeedType])
+        if (PercentWater <= 0f)
         {
             DebugScript.BetterDebug("Is Watered? No.");
             return false;
         }
-        DebugScript.BetterDebug("Is Watered? Yes." + (GlobalTime.UnixTime - UnixTimeLastWatered));
         return true;
     }
 
