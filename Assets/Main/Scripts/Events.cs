@@ -15,7 +15,6 @@ namespace Main.Scripts
         public static void InvokeToolEquip(GameObject tool)
         {
             OnToolEquip?.Invoke(tool);
-            // MAKE THE SEEDS USABLE
         }
 
         public static void InvokeToolUnequip()

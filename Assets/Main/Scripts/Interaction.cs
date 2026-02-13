@@ -12,10 +12,12 @@ namespace Main.Scripts
         public string title = "Talk";
         public string interactionKeybind = "E";
         private bool promptEnabled = true;
+        private int interactionType;
 
         private void Awake()
         {
             interactionManager = GameObject.FindGameObjectWithTag("InteractionManager").GetComponent<InteractionManager>();
+            interactionType = interactionKeybind.Equals("E") ? 1 : 2;
         }
 
         private void OnTriggerStay(Collider other)
@@ -23,7 +25,14 @@ namespace Main.Scripts
             if(!promptEnabled) return;
             if (other.CompareTag("Player") && !interactionManager.Interactions1.Contains(this))
             {
-                interactionManager.Interactions1.Add(this);
+                if (interactionType == 1)
+                {
+                    interactionManager.Interactions1.Add(this);
+                }
+                else
+                {
+                    interactionManager.Interactions2.Add(this);
+                }
             }
         }
 
@@ -34,7 +43,14 @@ namespace Main.Scripts
             // Add to Interaction Manager
             if (other.CompareTag("Player"))
             {
-                interactionManager.Interactions1.Add(this);
+                if (interactionType == 1)
+                {
+                    interactionManager.Interactions1.Add(this);
+                }
+                else
+                {
+                    interactionManager.Interactions2.Add(this);
+                }
             }
         }
 
@@ -45,7 +61,14 @@ namespace Main.Scripts
             // Remove from InteractionManager
             if (other.CompareTag("Player"))
             {
-                interactionManager.Interactions1.Remove(this);
+                if (interactionType == 1)
+                {
+                    interactionManager.Interactions1.Remove(this);
+                }
+                else
+                {
+                    interactionManager.Interactions2.Remove(this);
+                }
             }
         }
 
@@ -55,7 +78,15 @@ namespace Main.Scripts
 
             try
             {
-                interactionManager.Interactions1.Remove(this);
+                if (interactionType == 1)
+                {
+                    interactionManager.Interactions1.Remove(this);
+                }
+                else
+                {
+                    interactionManager.Interactions2.Remove(this);
+                }
+                
             }
             catch (Exception e)
             {

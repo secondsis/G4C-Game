@@ -47609,6 +47609,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   title: Sell
+  interactionKeybind: E
 --- !u!135 &977771515
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -60180,6 +60181,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   title: Refill
+  interactionKeybind: F
 --- !u!135 &1314965227
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -62019,6 +62021,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   title: Shop
+  interactionKeybind: E
 --- !u!135 &1351769914
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -78512,6 +78515,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   title: 
+  interactionKeybind: E
 --- !u!135 &1843100669
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -81057,9 +81061,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionManager
   interactionTransform1: {fileID: 121037808}
-  interactionTransform2: {fileID: 263656479}
   interactionTitle1: {fileID: 379330156}
-  Interactions: []
+  interactionKeybind1: {fileID: 1371664951}
+  interactionTransform2: {fileID: 263656479}
+  interactionTitle2: {fileID: 1178333485}
+  interactionKeybind2: {fileID: 247018618}
+  Interactions1: []
+  Interactions2: []
 --- !u!43 &1917674544
 Mesh:
   m_ObjectHideFlags: 0

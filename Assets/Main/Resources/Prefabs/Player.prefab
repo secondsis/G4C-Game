@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &110863075228181188
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1826190632704119261}
+  m_Layer: 2
+  m_Name: CameraPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1826190632704119261
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110863075228181188}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1230655011627382493}
+  m_Father: {fileID: 89044941346360995}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &890212595572462378
 GameObject:
   m_ObjectHideFlags: 0
@@ -28,11 +60,11 @@ Transform:
   m_GameObject: {fileID: 890212595572462378}
   serializedVersion: 2
   m_LocalRotation: {x: 0.11067581, y: 0.7089165, z: -0.114184655, w: 0.6871318}
-  m_LocalPosition: {x: -2.887, y: 2.09, z: 0.152}
+  m_LocalPosition: {x: -2.887001, y: 2.0899997, z: 0.15200043}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 89044941346360995}
+  m_Father: {fileID: 1826190632704119261}
   m_LocalEulerAnglesHint: {x: 18.3, y: 91.788, z: 0}
 --- !u!20 &2361027422029786975
 Camera:
@@ -170,9 +202,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1230655011627382493}
   - {fileID: 864136133848670500}
   - {fileID: 8913362231899654431}
+  - {fileID: 1826190632704119261}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &2998430722589467146
@@ -219,6 +251,7 @@ MonoBehaviour:
   gravity: 10
   lookSpeed: 2
   lookXLimit: 45
+  lookYLimit: 45
   defaultHeight: 2
   crouchHeight: 1
   crouchSpeed: 3

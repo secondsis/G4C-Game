@@ -45,7 +45,8 @@ public class InteractionManager : MonoBehaviour
         _input.Player.Interact2.Enable();
 
         // TODO: Make this only be called when necessary
-        G4CInputManager.RegisterInteract(InteractionType.INTERACTION1, OnInteract);
+        G4CInputManager.RegisterInteract(InteractionType.INTERACTION1, OnInteract1);
+        G4CInputManager.RegisterInteract(InteractionType.INTERACTION2, OnInteract2, 2);
         
         // THIS IS A SINGLETON
         if (Instance != null && Instance != this)
@@ -62,17 +63,26 @@ public class InteractionManager : MonoBehaviour
         // Potential Blocker: DIALOGUE
         DialogueUI.Instance.OnDialogueUIActiveChanged += b =>
         {
-            blocking1 = G4CInputManager.IsBlocked(InteractionType.INTERACTION1, OnInteract);
+            blocking1 = G4CInputManager.IsBlocked(InteractionType.INTERACTION1, OnInteract1);
             Debug.Log("Updated blocking: " + blocking1);
         };
     }
     
-    private void OnInteract()
+    private void OnInteract1()
     {
         // I AM NOT SURE IF WHEN I PASS THIS, ALL VARIABLES ARE STATIC/CONSTANT/FROZEN
         if (targetInteraction1 == null) return;
         DebugScript.BetterDebug("Interacted");
         targetInteraction1.onInteraction.Invoke();
+    }
+    
+    private void OnInteract2()
+    {
+        DebugScript.BetterDebug("OnInteract2 Called/");
+        // I AM NOT SURE IF WHEN I PASS THIS, ALL VARIABLES ARE STATIC/CONSTANT/FROZEN
+        if (targetInteraction2 == null) return;
+        DebugScript.BetterDebug("Interacted2");
+        targetInteraction2.onInteraction.Invoke();
     }
 
     private void UpdateTargetTransform1()
@@ -83,7 +93,7 @@ public class InteractionManager : MonoBehaviour
             {
                 targetInteraction1 = Interactions1[0];
                 interactionTitle1.text = targetInteraction1.title;
-                // Also the interaction button
+                // Also the interaction button key
                 interactionKeybind1.text = targetInteraction1.interactionKeybind;
                 hasTarget1 = true;
                 return;

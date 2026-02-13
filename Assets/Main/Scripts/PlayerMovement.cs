@@ -11,12 +11,14 @@ public class PlayerMovement : MonoBehaviour
     public float gravity = 10f;
     public float lookSpeed = 2f;
     public float lookXLimit = 45f;
+    public float lookYLimit = 45f;
     public float defaultHeight = 2f;
     public float crouchHeight = 1f;
     public float crouchSpeed = 3f;
 
     private Vector3 _moveDirection = Vector3.zero;
     private float _rotationX = 0;
+    private float _rotationY = 0;
     private CharacterController _characterController;
     private Animator _animator;
 
@@ -25,18 +27,14 @@ public class PlayerMovement : MonoBehaviour
     private bool _isRunning = false;
     private bool _inShiftlock = false;
 
-
-    void SetAnim(string state, bool forceOverride = false)
+    private void SetAnim(string state, bool forceOverride = false)
     {
         var current = _animator.GetCurrentAnimatorStateInfo(0);
-
-
+        
         if (!current.IsName(state) || forceOverride)
         {
-            // DebugScript.BetterDebug("Playing " + state);
             _animator.Play(state, 0, 0.0f);
         }
-
     }
 
     public void PlayJumpAnim()
@@ -59,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
         SetAnim("Run");
     }
 
-    void Awake()
+    private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
@@ -104,28 +102,107 @@ public class PlayerMovement : MonoBehaviour
             PlayIdleAnim();
         }
     }
+    
+    //     private void Update()
+    // {
+    //     checkShiftlock();
+    //     Vector3 forward = playerCamera.transform.TransformDirection(Vector3.forward);
+    //     Vector3 right = playerCamera.transform.TransformDirection(Vector3.right);
+    //
+    //     bool isRunning = Input.GetKey(KeyCode.LeftShift);
+    //     float curSpeedX = _canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
+    //     float curSpeedY = _canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
+    //     float movementDirectionY = _moveDirection.y;
+    //     if(curSpeedX != 0 && curSpeedY != 0)
+    //         _moveDirection = (forward * curSpeedX + (right * curSpeedY)) / 1.41421356237f;
+    //     else _moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+    //
+    //     if (curSpeedX == 0 && curSpeedY == 0)
+    //     {
+    //         this._isRunning = false;
+    //     }
+    //     else
+    //     {
+    //         this._isRunning = true;
+    //     }
+    //
+    //     if (_characterController.isGrounded)
+    //     {
+    //         _isJumping = false;
+    //     }
+    //
+    //     if (Input.GetButton("Jump") && _canMove && _characterController.isGrounded)
+    //     {
+    //         _moveDirection.y = jumpPower;
+    //         _isJumping = true;
+    //         PlayJumpAnim();
+    //     }
+    //     else
+    //     {
+    //         _moveDirection.y = movementDirectionY;
+    //     }
+    //
+    //     if (!_characterController.isGrounded)
+    //     {
+    //         _moveDirection.y -= gravity * Time.deltaTime;
+    //     }
+    //
+    //     if (Input.GetKey(KeyCode.R) && _canMove)
+    //     {
+    //         _characterController.height = crouchHeight;
+    //         walkSpeed = crouchSpeed;
+    //         runSpeed = crouchSpeed;
+    //
+    //     }
+    //     else
+    //     {
+    //         _characterController.height = defaultHeight;
+    //         walkSpeed = 6f;
+    //         runSpeed = 12f;
+    //     }
+    //
+    //     _characterController.Move(_moveDirection * Time.deltaTime);
+    //
+    //     if (_canMove)
+    //     {
+    //         _rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+    //         _rotationX = Mathf.Clamp(_rotationX, -lookXLimit, lookXLimit);
+    //         playerCamera.transform.localRotation = Quaternion.Euler(_rotationX, 0, 0);
+    //         playerCamera.transform.LookAt(transform);
+    //         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+    //     }
+    //
+    //     manageAnimations();
+    // }
 
-    void Update()
+    private void Update()
     {
-        checkShiftlock();
-        Vector3 forward = playerCamera.transform.TransformDirection(Vector3.forward);
-        Vector3 right = playerCamera.transform.TransformDirection(Vector3.right);
+        // checkShiftlock();
+        
+        // Gets the direction of the forward and right relative to the camera
+        // Vector3 forward = playerCamera.transform.TransformDirection(Vector3.forward);
+        // Vector3 right = playerCamera.transform.TransformDirection(Vector3.right);
+        Vector3 forward = transform.TransformDirection(Vector3.right);
+        Vector3 right = transform.TransformDirection(-Vector3.forward);
 
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
+        
         float curSpeedX = _canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedY = _canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
+        
         float movementDirectionY = _moveDirection.y;
+        
         if(curSpeedX != 0 && curSpeedY != 0)
             _moveDirection = (forward * curSpeedX + (right * curSpeedY)) / 1.41421356237f;
         else _moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
         if (curSpeedX == 0 && curSpeedY == 0)
         {
-            this._isRunning = false;
+            _isRunning = false;
         }
         else
         {
-            this._isRunning = true;
+            _isRunning = true;
         }
 
         if (_characterController.isGrounded)
@@ -167,11 +244,18 @@ public class PlayerMovement : MonoBehaviour
 
         if (_canMove)
         {
-            _rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+            if (Input.GetMouseButton(1))
+            {
+                DebugScript.BetterDebug("Right mouse down");
+                _rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+                _rotationY += -Input.GetAxis("Mouse X") * lookSpeed;
+            }
             _rotationX = Mathf.Clamp(_rotationX, -lookXLimit, lookXLimit);
-            playerCamera.transform.localRotation = Quaternion.Euler(_rotationX, 0, 0);
-            playerCamera.transform.LookAt(transform);
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+            _rotationY = Mathf.Clamp(_rotationY, -lookYLimit, lookYLimit);
+            
+            playerCamera.transform.localRotation = Quaternion.Euler(_rotationX, _rotationY, 0);
+            // playerCamera.transform.LookAt(transform);
+            // transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * lookSpeed, 0);
         }
 
         manageAnimations();

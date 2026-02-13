@@ -25,8 +25,6 @@ public class WateringCan : MonoBehaviour
     private void OnWateringCanUse()
     {
         if (_waterQuantity - 1 < 0) return;
-        _waterQuantity -= 1;
-        DebugScript.BetterDebug("Used Watering Can (" +  _waterQuantity + " liters)");
         
         // Find the FarmPlot that the mouse is pointing at and if it is within reaching distance
         Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
@@ -46,7 +44,8 @@ public class WateringCan : MonoBehaviour
             {
                 // Water this farmplot
                 farmPlot.WaterCrop();
-                DebugScript.BetterDebug("Watered crop!");
+                _waterQuantity -= 1;
+                DebugScript.BetterDebug("Used Watering Can (" +  _waterQuantity + " liters)");
             }
             
         }

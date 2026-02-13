@@ -39,24 +39,14 @@ public class WaterWell : MonoBehaviour
 
     public void OnInteractPrompt()
     {
+        DebugScript.BetterDebug("OnInteractPrompt called");
         // Watering Can Refill
         Events.InvokeWaterWellInteract();
     }
-    
-    // Check if Player is holding Watering Can
-    // private void OnTriggerStay(Collider other)
-    // {
-    //     if (!other.CompareTag("Player")) return;
-    //     
-    //     if (InventoryManager.Instance.CurrentlyEquipped != null && InventoryManager.Instance.CurrentlyEquipped.Item.ItemName.Equals("Watering Can"))
-    //     {
-    //         _interaction.PromptEnable();
-    //     }
-    //     else
-    //     {
-    //         if(_isHoldingWateringCan) HideInteractPrompt();
-    //         _isHoldingWateringCan = false;
-    //     }
-    // }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // For some reason the watering can is not refilling?
+        
+    }
 }

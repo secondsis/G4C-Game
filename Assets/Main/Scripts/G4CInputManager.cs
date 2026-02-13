@@ -81,6 +81,7 @@ namespace Main.Scripts
         private static void OnInteract2(InputAction.CallbackContext ctx)
         {
             DebugScript.BetterDebug("OnInteract2: " + _currentInteractable2?.GetInteractType());
+            
             if (_currentInteractable2 != null && !_currentInteractable2.TempDisabled)
             {
                 _currentInteractable2.Interact();

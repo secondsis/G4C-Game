@@ -25,7 +25,7 @@ public class FarmPlot : MonoBehaviour
         _plotParent = transform.Find("Plot");
         _plotObjectRenderer = _plotParent.GetChild(0).GetComponent<Renderer>();
         _tooltip = transform.Find("Plot").Find("PlotObject").GetComponent<Hover3DTooltip>();
-        DebugScript.BetterDebug(_tooltip);
+        // DebugScript.BetterDebug(_tooltip);
         _tooltip.infoLeft = _defaultLeftInfo;
         _tooltip.infoRight = _defaultRightInfo;
 
