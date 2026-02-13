@@ -5,11 +5,14 @@ public class PlayerMovement : MonoBehaviour
 {
     // TODO: Rework movement system this week 2/10-2/15
     public Camera playerCamera;
+    private Transform cameraPivot;
+    private Transform characterTransform;
+    
     public float walkSpeed = 6f;
     public float runSpeed = 12f;
     public float jumpPower = 7f;
     public float gravity = 10f;
-    public float lookSpeed = 2f;
+    public float lookSpeed = 6f;
     public float lookXLimit = 45f;
     public float lookYLimit = 45f;
     public float defaultHeight = 2f;
@@ -61,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
     {
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
+        cameraPivot = playerCamera.transform.parent;
+        characterTransform = transform.Find("Character");
         Cursor.lockState = CursorLockMode.Confined;
         // Cursor.visible = false;
     }
@@ -180,10 +185,10 @@ public class PlayerMovement : MonoBehaviour
         // checkShiftlock();
         
         // Gets the direction of the forward and right relative to the camera
-        // Vector3 forward = playerCamera.transform.TransformDirection(Vector3.forward);
-        // Vector3 right = playerCamera.transform.TransformDirection(Vector3.right);
-        Vector3 forward = transform.TransformDirection(Vector3.right);
-        Vector3 right = transform.TransformDirection(-Vector3.forward);
+        Vector3 forward = playerCamera.transform.TransformDirection(Vector3.forward);
+        Vector3 right = playerCamera.transform.TransformDirection(Vector3.right);
+        // Vector3 forward = transform.TransformDirection(Vector3.right);
+        // Vector3 right = transform.TransformDirection(-Vector3.forward);
 
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
         
@@ -246,16 +251,35 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetMouseButton(1))
             {
-                DebugScript.BetterDebug("Right mouse down");
-                _rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
-                _rotationY += -Input.GetAxis("Mouse X") * lookSpeed;
+                _rotationX += Input.GetAxis("Mouse X") * lookSpeed;
+                _rotationY += Input.GetAxis("Mouse Y") * lookSpeed;
             }
-            _rotationX = Mathf.Clamp(_rotationX, -lookXLimit, lookXLimit);
+
             _rotationY = Mathf.Clamp(_rotationY, -lookYLimit, lookYLimit);
-            
-            playerCamera.transform.localRotation = Quaternion.Euler(_rotationX, _rotationY, 0);
+
+            cameraPivot.transform.localRotation = Quaternion.Euler(0, _rotationX, _rotationY);
             // playerCamera.transform.LookAt(transform);
-            // transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * lookSpeed, 0);
+            
+            // characterTransform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * lookSpeed, 0);
+            DebugScript.BetterDebug(_moveDirection);
+            float rotationY = 0f;
+            if (Input.GetAxis("Horizontal") >= 0.1f)
+            {
+                rotationY = 180f;
+            } else if (Input.GetAxis("Horizontal") <= -0.1f)
+            {
+                rotationY = 0f;
+            }
+
+            if (Input.GetAxis("Vertical") >= 0.1f)
+            {
+                rotationY = 90f;
+            } else if (Input.GetAxis("Vertical") <= -0.1f)
+            {
+                rotationY = 270f;
+            }
+            
+            characterTransform.rotation = Quaternion.Euler(0, rotationY, 0);
         }
 
         manageAnimations();
