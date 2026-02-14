@@ -24,7 +24,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _moveDirection = Vector3.zero;
     private float _camRotationX = 0;
     private float _camRotationY = 0;
-    private float localCamRotationX = 0;
+    private float deltaCamRotationX = 0;
+    private Quaternion _originalCamRotation;
     private Quaternion _playerRotation;
     private CharacterController _characterController;
     private Animator _animator;
@@ -92,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             // Later, change this to a ShiftLock icon
             Cursor.visible = false;
-            localCamRotationX = cameraPivot.localRotation.x;
+            _originalCamRotation = cameraPivot.rotation;
         }
         else
         {
@@ -179,11 +180,12 @@ public class PlayerMovement : MonoBehaviour
         
         if (canMove)
         {
-            // offset it
-            localCamRotationX += Input.GetAxis("Mouse X") * lookSpeed;
-            cameraPivot.localRotation = Quaternion.Euler(0, localCamRotationX, 0);
-            cameraPivot.LookAt(transform);
-            characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.LookRotation(cameraPivot.right, Vector3.up), Time.deltaTime * 10f);
+            // CANT FIGURE OUT WHY THE CAMERA ROTATES ON AN ANGLE LIKE A SLANTED CIRCLE
+            deltaCamRotationX += Input.GetAxis("Mouse X") * lookSpeed;
+            cameraPivot.rotation = _originalCamRotation * Quaternion.Euler(0, deltaCamRotationX, 0);
+            // cameraPivot.rotation.Set();
+            // cameraPivot.LookAt(transform);
+            characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.LookRotation(cameraPivot.right), Time.deltaTime * 10f);
         }
     }
 
