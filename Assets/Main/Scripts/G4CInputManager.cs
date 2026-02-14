@@ -13,6 +13,7 @@ namespace Main.Scripts
         private static Interactable _currentInteractable2;
         
         private static readonly List<Interactable> InteractionList = new List<Interactable>();
+        private static readonly List<Interactable> InteractionList2 = new List<Interactable>();
         
         public static bool IsBlocked(InteractionType interactionType, Action onInteract)
         {
@@ -25,48 +26,111 @@ namespace Main.Scripts
         {
             // if (currentInteractionType > interactionType) return;
             // // NEVER LET THERE BE TWO INTERACTIONS OF THE SAME TYPE
-            if (_currentInteractable?.GetInteractType() == interactionType)
+            switch (interactNum)
             {
-                Debug.LogWarning("NEVER LET THERE BE TWO INTERACTIONS OF THE SAME TYPE");
+                case 1: 
+                {
+                    if (_currentInteractable?.GetInteractType() == interactionType)
+                    {
+                        Debug.LogWarning("NEVER LET THERE BE TWO INTERACTIONS OF THE SAME TYPE");
+                    }
+
+                    Interactable newInteractable = new Interactable(interactionType, newOnInteract);
+
+                    if (_currentInteractable == null || interactionType > _currentInteractable.GetInteractType())
+                    {
+                        _currentInteractable = newInteractable;
+                    }
+                    InteractionList.Add(newInteractable);
+                    break;
+                }
+                case 2:
+                {
+                    if (_currentInteractable2?.GetInteractType() == interactionType)
+                    {
+                        Debug.LogWarning("NEVER LET THERE BE TWO INTERACTIONS OF THE SAME TYPE");
+                    }
+
+                    Interactable newInteractable = new Interactable(interactionType, newOnInteract);
+
+                    if (_currentInteractable2 == null || interactionType > _currentInteractable2.GetInteractType())
+                    {
+                        _currentInteractable2 = newInteractable;
+                    }
+                    InteractionList2.Add(newInteractable);
+                    break;
+                }
             }
 
-            Interactable newInteractable = new Interactable(interactionType, newOnInteract);
 
-            if (_currentInteractable == null || interactionType > _currentInteractable.GetInteractType())
-            {
-                _currentInteractable = newInteractable;
-            }
-            InteractionList.Add(newInteractable);
         }
 
         public static void SetInteract(InteractionType interactionType, Action newOnInteract, bool enabled, int interactNum=1)
         {
-            InteractionList.Find(i => i.RawEquals(interactionType, newOnInteract)).TempDisabled = !enabled;
+            switch (interactNum)
+            {
+                case 1:
+                {
+                    InteractionList.Find(i => i.RawEquals(interactionType, newOnInteract)).TempDisabled = !enabled;
+                    break;
+                }
+                case 2:
+                {
+                    InteractionList2.Find(i => i.RawEquals(interactionType, newOnInteract)).TempDisabled = !enabled;
+                    break;
+                }
+            }
+ 
         }
 
         public static void RemoveInteract(InteractionType interactionType, Action oldOnInteract, int interactNum=1)
         {
-            Interactable oldInteractable = new Interactable(interactionType, oldOnInteract);
-            InteractionList.Remove(oldInteractable);
-            if (oldInteractable.Equals(_currentInteractable))
+            switch (interactNum)
             {
-                // Recalc the currentInteraction
-                Interactable bestInteractable = InteractionList[0];
-                foreach (Interactable interactable in InteractionList)
+                case 1:
                 {
-                    if (interactable.GetInteractType() > bestInteractable.GetInteractType())
+                    Interactable oldInteractable = new Interactable(interactionType, oldOnInteract);
+                    InteractionList.Remove(oldInteractable);
+                    if (oldInteractable.Equals(_currentInteractable))
                     {
-                        bestInteractable = interactable;
-                    }
-                }
+                        // Recalc the currentInteraction
+                        Interactable bestInteractable = InteractionList[0];
+                        foreach (Interactable interactable in InteractionList)
+                        {
+                            if (interactable.GetInteractType() > bestInteractable.GetInteractType())
+                            {
+                                bestInteractable = interactable;
+                            }
+                        }
 
-                _currentInteractable = bestInteractable;
+                        _currentInteractable = bestInteractable;
+                    }
+
+                    break;
+                }
+                case 2:
+                {
+                    Interactable oldInteractable = new Interactable(interactionType, oldOnInteract);
+                    InteractionList2.Remove(oldInteractable);
+                    if (oldInteractable.Equals(_currentInteractable2))
+                    {
+                        // Recalc the currentInteraction
+                        Interactable bestInteractable = InteractionList2[0];
+                        foreach (Interactable interactable in InteractionList2)
+                        {
+                            if (interactable.GetInteractType() > bestInteractable.GetInteractType())
+                            {
+                                bestInteractable = interactable;
+                            }
+                        }
+
+                        _currentInteractable2 = bestInteractable;
+                    }
+
+                    break;
+                }
             }
-        }
-        
-        private static void DefaultInteract()
-        {
-            Debug.Log("No Interaction Objects Nearby");
+
         }
 
         private static void OnInteract(InputAction.CallbackContext ctx)
@@ -84,6 +148,8 @@ namespace Main.Scripts
             
             if (_currentInteractable2 != null && !_currentInteractable2.TempDisabled)
             {
+                // This is called when watering plot.
+                DebugScript.BetterDebug("OnInteract2 called!");
                 _currentInteractable2.Interact();
             }
         }

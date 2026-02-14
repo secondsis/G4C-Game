@@ -23,16 +23,16 @@ namespace Main.Scripts
         private void OnTriggerStay(Collider other)
         {
             if(!promptEnabled) return;
-            if (other.CompareTag("Player") && !interactionManager.Interactions1.Contains(this))
+            if (!other.CompareTag("Player")) return;
+            
+            if (interactionType == 1 && !interactionManager.Interactions1.Contains(this))
             {
-                if (interactionType == 1)
-                {
-                    interactionManager.Interactions1.Add(this);
-                }
-                else
-                {
-                    interactionManager.Interactions2.Add(this);
-                }
+                interactionManager.Interactions1.Add(this);
+            } 
+            else if (!interactionManager.Interactions2.Contains(this))
+            {
+                DebugScript.BetterDebug("Adding Interaction2");
+                interactionManager.Interactions2.Add(this);
             }
         }
 
@@ -49,6 +49,7 @@ namespace Main.Scripts
                 }
                 else
                 {
+                    DebugScript.BetterDebug("Enter: Adding Interaction2");
                     interactionManager.Interactions2.Add(this);
                 }
             }
@@ -67,6 +68,7 @@ namespace Main.Scripts
                 }
                 else
                 {
+                    DebugScript.BetterDebug("Removing Interaction2");
                     interactionManager.Interactions2.Remove(this);
                 }
             }

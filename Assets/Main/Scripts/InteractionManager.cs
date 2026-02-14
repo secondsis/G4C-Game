@@ -139,8 +139,10 @@ public class InteractionManager : MonoBehaviour
         {
             if (Interactions2.Count == 1)
             {
+                if (targetInteraction2 == Interactions2[0]) return;
                 targetInteraction2 = Interactions2[0];
                 interactionTitle2.text = targetInteraction2.title;
+                DebugScript.BetterDebug("Setting targetInteraction2: " + targetInteraction2.title);
                 // Also the interaction button
                 interactionKeybind2.text = targetInteraction2.interactionKeybind;
                 hasTarget2 = true;
@@ -163,7 +165,10 @@ public class InteractionManager : MonoBehaviour
 
             if (hasMinDist)
             {
+                DebugScript.BetterDebug("Has minDist Setting targetInteraction2: " + minInteraction.title);
                 targetInteraction2 = minInteraction;
+                interactionTitle2.text = targetInteraction2.title;
+                interactionKeybind2.text = targetInteraction2.interactionKeybind;
                 hasTarget2 = true;
             }
             else

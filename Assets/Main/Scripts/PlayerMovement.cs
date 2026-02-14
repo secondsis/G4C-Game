@@ -261,7 +261,7 @@ public class PlayerMovement : MonoBehaviour
             // playerCamera.transform.LookAt(transform);
             
             // characterTransform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * lookSpeed, 0);
-            DebugScript.BetterDebug(_moveDirection);
+            // DebugScript.BetterDebug(_moveDirection);
             float rotationY = 0f;
             if (Input.GetAxis("Horizontal") >= 0.1f)
             {

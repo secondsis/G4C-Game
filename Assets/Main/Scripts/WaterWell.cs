@@ -37,16 +37,11 @@ public class WaterWell : MonoBehaviour
         Events.OnToolUnequip += CheckDisableInteraction;
     }
 
+    // Upon interacting with the water well, invoke the watering can to refill
     public void OnInteractPrompt()
     {
         DebugScript.BetterDebug("OnInteractPrompt called");
         // Watering Can Refill
         Events.InvokeWaterWellInteract();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        // For some reason the watering can is not refilling?
-        
     }
 }
