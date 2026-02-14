@@ -24,6 +24,7 @@ public class SFXManager : MonoBehaviour
     public void BuySfx()
     {
         buySfx.Play();
+        DebugScript.BetterDebug("what");
     }
 
     public void SellSfx()
@@ -40,5 +41,6 @@ public class SFXManager : MonoBehaviour
     {
         shopEnterSfx.time = 2f;
         shopEnterSfx.Play();
+        
     }
 }

@@ -1,9 +1,9 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    // TODO: Rework movement system this week 2/10-2/15
     public Camera playerCamera;
     private Transform cameraPivot;
     private Transform characterTransform;
@@ -16,17 +16,20 @@ public class PlayerMovement : MonoBehaviour
     public float lookXLimit = 45f;
     public float lookYLimit = 45f;
     public float defaultHeight = 2f;
-    public float crouchHeight = 1f;
-    public float crouchSpeed = 3f;
+    
+    // Don't need crouching until buildings exist
+    // public float crouchHeight = 1f;
+    // public float crouchSpeed = 3f;
 
     private Vector3 _moveDirection = Vector3.zero;
     private float _camRotationX = 0;
     private float _camRotationY = 0;
+    private float localCamRotationX = 0;
     private Quaternion _playerRotation;
     private CharacterController _characterController;
     private Animator _animator;
 
-    private bool _canMove = true;
+    [FormerlySerializedAs("_canMove")] public bool canMove = true;
     private bool _isJumping = false;
     private bool _isRunning = false;
     private bool _inShiftlock = false;
@@ -46,10 +49,10 @@ public class PlayerMovement : MonoBehaviour
         SetAnim("Jump", true);
     }
 
-    public void PlayWalkAnim()
-    {
-        SetAnim("Walk");
-    }
+    // public void PlayWalkAnim()
+    // {
+    //     SetAnim("Walk");
+    // }
 
     public void PlayIdleAnim()
     {
@@ -70,29 +73,35 @@ public class PlayerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         // Cursor.visible = false;
     }
-
-    // A function to be placed in Update()
-    private void checkShiftlock()
+    
+    // Based on Roblox's ShiftLock feature (idk if other games have it) (also cuz i use a laptop so RMB is annoying)
+    private void CheckShiftLock()
     {
-        if (Input.GetKey(KeyCode.LeftAlt))
+        // Can't actually be Shift because Shift is to sprint
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
-            _inShiftlock = !_inShiftlock;
+            ToggleShiftLockMode(!_inShiftlock);
         }
     }
 
-    private void manageMovement()
+    private void ToggleShiftLockMode(bool shiftLockEnabled)
     {
+        _inShiftlock = shiftLockEnabled;
         if (_inShiftlock)
         {
-
+            Cursor.lockState = CursorLockMode.Locked;
+            // Later, change this to a ShiftLock icon
+            Cursor.visible = false;
+            localCamRotationX = cameraPivot.localRotation.x;
         }
         else
         {
-            
+            Cursor.lockState = CursorLockMode.None; 
+            Cursor.visible = true;
         }
     }
 
-    private void manageAnimations()
+    private void ManageAnimations()
     {
         // Animations
         if (_isJumping)
@@ -109,19 +118,84 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Problem: 1. Player changes directions instantly  2. Player's directions are inaccurate
-    private void Update()
+    private void MovementInShiftLock()
     {
-        // checkShiftlock();
+        Vector3 forward = playerCamera.transform.TransformDirection(Vector3.forward);
+        Vector3 right = playerCamera.transform.TransformDirection(Vector3.right);
+
+        bool isRunning = Input.GetKey(KeyCode.LeftShift);
+        float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
+        float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
+        float movementDirectionY = _moveDirection.y;
+        if(curSpeedX != 0 && curSpeedY != 0)
+            _moveDirection = (forward * curSpeedX + (right * curSpeedY)) / 1.41421356237f;
+        else _moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+
+        if (curSpeedX == 0 && curSpeedY == 0)
+        {
+            _isRunning = false;
+        }
+        else
+        {
+            _isRunning = true;
+        }
+
+        if (_characterController.isGrounded)
+        {
+            _isJumping = false;
+        }
+
+        if (Input.GetButton("Jump") && canMove && _characterController.isGrounded)
+        {
+            _moveDirection.y = jumpPower;
+            _isJumping = true;
+            PlayJumpAnim();
+        }
+        else
+        {
+            _moveDirection.y = movementDirectionY;
+        }
+
+        if (!_characterController.isGrounded)
+        {
+            _moveDirection.y -= gravity * Time.deltaTime;
+        }
+
+        // if (Input.GetKey(KeyCode.R) && _canMove)
+        // {
+        //     _characterController.height = crouchHeight;
+        //     walkSpeed = crouchSpeed;
+        //     runSpeed = crouchSpeed;
+        //
+        // }
+        // else
+        {
+            _characterController.height = defaultHeight;
+            walkSpeed = 6f;
+            runSpeed = 12f;
+        }
+
+        _characterController.Move(_moveDirection * Time.deltaTime);
         
-        // Gets the direction of the forward and right relative to the camera
+        if (canMove)
+        {
+            // offset it
+            localCamRotationX += Input.GetAxis("Mouse X") * lookSpeed;
+            cameraPivot.localRotation = Quaternion.Euler(0, localCamRotationX, 0);
+            cameraPivot.LookAt(transform);
+            characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.LookRotation(cameraPivot.right, Vector3.up), Time.deltaTime * 10f);
+        }
+    }
+
+    private void MovementNormal()
+    { 
         Vector3 forward = playerCamera.transform.TransformDirection(Vector3.forward);
         Vector3 right = playerCamera.transform.TransformDirection(Vector3.right);
 
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
         
-        float curSpeedX = _canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
-        float curSpeedY = _canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
+        float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
+        float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
         
         float movementDirectionY = _moveDirection.y;
         
@@ -143,7 +217,7 @@ public class PlayerMovement : MonoBehaviour
             _isJumping = false;
         }
 
-        if (Input.GetButton("Jump") && _canMove && _characterController.isGrounded)
+        if (Input.GetButton("Jump") && canMove && _characterController.isGrounded)
         {
             _moveDirection.y = jumpPower;
             _isJumping = true;
@@ -159,14 +233,14 @@ public class PlayerMovement : MonoBehaviour
             _moveDirection.y -= gravity * Time.deltaTime;
         }
 
-        if (Input.GetKey(KeyCode.R) && _canMove)
-        {
-            _characterController.height = crouchHeight;
-            walkSpeed = crouchSpeed;
-            runSpeed = crouchSpeed;
-
-        }
-        else
+        // if (Input.GetKey(KeyCode.R) && _canMove)
+        // {
+        //     _characterController.height = crouchHeight;
+        //     walkSpeed = crouchSpeed;
+        //     runSpeed = crouchSpeed;
+        //
+        // }
+        // else
         {
             _characterController.height = defaultHeight;
             walkSpeed = 6f;
@@ -175,7 +249,7 @@ public class PlayerMovement : MonoBehaviour
 
         _characterController.Move(_moveDirection * Time.deltaTime);
 
-        if (_canMove)
+        if (canMove)
         {
             if (Input.GetMouseButton(1))
             {
@@ -191,7 +265,6 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetAxis("Horizontal") >= 0.1f)
             {
                 _playerRotation = Quaternion.LookRotation(cameraPivot.forward *-1, Vector3.up);
-                DebugScript.BetterDebug(Quaternion.LookRotation(cameraPivot.forward, Vector3.up));
             } else if (Input.GetAxis("Horizontal") <= -0.1f)
             {
                 _playerRotation = Quaternion.LookRotation(cameraPivot.forward, Vector3.up);
@@ -221,7 +294,25 @@ public class PlayerMovement : MonoBehaviour
             // Spherical lerp (treats vectors as directions instead of positions) what the physics
             characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation,_playerRotation, Time.deltaTime * 10f);
         }
+    }
 
-        manageAnimations();
+    // Manages Player movement (and camera rotation) and checks for ShiftLock mode
+    private void ManageMovement()
+    {
+        CheckShiftLock();
+        if (_inShiftlock)
+        {
+            MovementInShiftLock();
+        }
+        else
+        {
+            MovementNormal();
+        }
+    }
+    
+    private void Update()
+    {
+        ManageMovement();
+        ManageAnimations();
     }
 }
