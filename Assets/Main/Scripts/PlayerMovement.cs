@@ -20,8 +20,9 @@ public class PlayerMovement : MonoBehaviour
     public float crouchSpeed = 3f;
 
     private Vector3 _moveDirection = Vector3.zero;
-    private float _rotationX = 0;
-    private float _rotationY = 0;
+    private float _camRotationX = 0;
+    private float _camRotationY = 0;
+    private Quaternion _playerRotation;
     private CharacterController _characterController;
     private Animator _animator;
 
@@ -180,6 +181,7 @@ public class PlayerMovement : MonoBehaviour
     //     manageAnimations();
     // }
 
+    // Problem: 1. Player changes directions instantly  2. Player's directions are inaccurate
     private void Update()
     {
         // checkShiftlock();
@@ -187,8 +189,6 @@ public class PlayerMovement : MonoBehaviour
         // Gets the direction of the forward and right relative to the camera
         Vector3 forward = playerCamera.transform.TransformDirection(Vector3.forward);
         Vector3 right = playerCamera.transform.TransformDirection(Vector3.right);
-        // Vector3 forward = transform.TransformDirection(Vector3.right);
-        // Vector3 right = transform.TransformDirection(-Vector3.forward);
 
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
         
@@ -251,35 +251,84 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetMouseButton(1))
             {
-                _rotationX += Input.GetAxis("Mouse X") * lookSpeed;
-                _rotationY += Input.GetAxis("Mouse Y") * lookSpeed;
+                _camRotationX += Input.GetAxis("Mouse X") * lookSpeed;
+                _camRotationY += Input.GetAxis("Mouse Y") * lookSpeed;
             }
 
-            _rotationY = Mathf.Clamp(_rotationY, -lookYLimit, lookYLimit);
+            _camRotationY = Mathf.Clamp(_camRotationY, -lookYLimit, lookYLimit);
 
-            cameraPivot.transform.localRotation = Quaternion.Euler(0, _rotationX, _rotationY);
-            // playerCamera.transform.LookAt(transform);
-            
-            // characterTransform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * lookSpeed, 0);
-            // DebugScript.BetterDebug(_moveDirection);
-            float rotationY = 0f;
+            cameraPivot.transform.localRotation = Quaternion.Euler(0, _camRotationX, _camRotationY);
+
+            Quaternion temp = Quaternion.identity;
+            // Need to calculate _playerRotationY based on camera's current rotation
             if (Input.GetAxis("Horizontal") >= 0.1f)
             {
-                rotationY = 180f;
+                _playerRotation = Quaternion.LookRotation(cameraPivot.forward, Vector3.up);
+                temp = Quaternion.LookRotation(cameraPivot.forward, Vector3.up);
+                DebugScript.BetterDebug(Quaternion.LookRotation(cameraPivot.forward, Vector3.up));
             } else if (Input.GetAxis("Horizontal") <= -0.1f)
             {
-                rotationY = 0f;
+                _playerRotation = -Quaternion.LookRotation(cameraPivot.forward).y;
+                temp = Quaternion.LookRotation(cameraPivot.forward * -1, Vector3.up);
             }
 
             if (Input.GetAxis("Vertical") >= 0.1f)
             {
-                rotationY = 90f;
+                _playerRotation = 90f;
             } else if (Input.GetAxis("Vertical") <= -0.1f)
             {
-                rotationY = 270f;
+                _playerRotation = 270f;
+            }
+
+            // Idk any better way to do it off the top of my mind
+            if (Input.GetAxis("Horizontal") >= 0.1f && Input.GetAxis("Vertical") >= 0.1f)
+            {
+                _playerRotation = 135f;
+            } else if (Input.GetAxis("Horizontal") >= 0.1f && Input.GetAxis("Vertical") <= -0.1f)
+            {
+                _playerRotation = 225f;
+            } else if (Input.GetAxis("Horizontal") <= -0.1f && Input.GetAxis("Vertical") >= 0.1f)
+            {
+                _playerRotation = 45f;
+            } else if (Input.GetAxis("Horizontal") <= -0.1f && Input.GetAxis("Vertical") <= -0.1f)
+            {
+                _playerRotation = 315f;
             }
             
-            characterTransform.rotation = Quaternion.Euler(0, rotationY, 0);
+            // if (Input.GetAxis("Horizontal") >= 0.1f)
+            // {
+            //     _playerRotationY = 180f;
+            // } else if (Input.GetAxis("Horizontal") <= -0.1f)
+            // {
+            //     _playerRotationY = 0f;
+            // }
+            //
+            // if (Input.GetAxis("Vertical") >= 0.1f)
+            // {
+            //     _playerRotationY = 90f;
+            // } else if (Input.GetAxis("Vertical") <= -0.1f)
+            // {
+            //     _playerRotationY = 270f;
+            // }
+            //
+            // // Idk any better way to do it off the top of my mind
+            // if (Input.GetAxis("Horizontal") >= 0.1f && Input.GetAxis("Vertical") >= 0.1f)
+            // {
+            //     _playerRotationY = 135f;
+            // } else if (Input.GetAxis("Horizontal") >= 0.1f && Input.GetAxis("Vertical") <= -0.1f)
+            // {
+            //     _playerRotationY = 225f;
+            // } else if (Input.GetAxis("Horizontal") <= -0.1f && Input.GetAxis("Vertical") >= 0.1f)
+            // {
+            //     _playerRotationY = 45f;
+            // } else if (Input.GetAxis("Horizontal") <= -0.1f && Input.GetAxis("Vertical") <= -0.1f)
+            // {
+            //     _playerRotationY = 315f;
+            // }
+            
+            // Spherical lerp (treats vectors as directions instead of positions) what the physics
+            // characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.AngleAxis(_playerRotationY, Vector3.up), Time.deltaTime * 10f);
+            characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, temp, Time.deltaTime * 10f);
         }
 
         manageAnimations();
