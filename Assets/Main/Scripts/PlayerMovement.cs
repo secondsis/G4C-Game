@@ -182,7 +182,8 @@ public class PlayerMovement : MonoBehaviour
         {
             // CANT FIGURE OUT WHY THE CAMERA ROTATES ON AN ANGLE LIKE A SLANTED CIRCLE
             deltaCamRotationX += Input.GetAxis("Mouse X") * lookSpeed;
-            cameraPivot.rotation = _originalCamRotation * Quaternion.Euler(0, deltaCamRotationX, 0);
+            cameraPivot.rotation = Quaternion.Euler(0f, _originalCamRotation.y * deltaCamRotationX, 0f);
+            DebugScript.BetterDebug(cameraPivot.rotation);
             // cameraPivot.rotation.Set();
             // cameraPivot.LookAt(transform);
             characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation, Quaternion.LookRotation(cameraPivot.right), Time.deltaTime * 10f);
