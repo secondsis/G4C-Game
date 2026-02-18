@@ -25,29 +25,14 @@ public class WateringCan : MonoBehaviour
     private void OnWateringCanUse()
     {
         if (_waterQuantity - 1 < 0) return;
-        
-        // Find the FarmPlot that the mouse is pointing at and if it is within reaching distance
-        Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
-        // Debug.DrawRay(ray.origin, ray.direction * PlayerStatManager.ReachDistance, Color.red);
-        
-        RaycastHit hit;
 
-        int plotMask = LayerMask.GetMask("FarmPlotLayer");
-    
-        // outputs the first object it hits
-        // need masks
-        if (Physics.Raycast(ray, out hit, PlayerStatManager.ReachDistance, plotMask))
+        FarmPlot farmPlot = FarmPlot.GetFarmPlotFromRay();
+        if (farmPlot)
         {
-            GameObject obj = hit.transform.gameObject;
-            FarmPlot farmPlot = obj.transform.parent.parent.GetComponent<FarmPlot>();
-            if (farmPlot)
-            {
-                // Water this farmplot
-                farmPlot.WaterCrop();
-                _waterQuantity -= 1;
-                DebugScript.BetterDebug("Used Watering Can (" +  _waterQuantity + " liters)");
-            }
-            
+            // Water this farmplot
+            farmPlot.WaterCrop();
+            _waterQuantity -= 1;
+            DebugScript.BetterDebug("Used Watering Can (" +  _waterQuantity + " liters)");
         }
     }
     

@@ -254,6 +254,17 @@
       }
     },
     {
+      "id": "fertilizer-pouch",
+      "itemData": {
+        "name": "Fertilizer Pouch",
+        "description": "Some basic fertilizer to make your plants grow faster.",
+        "itemType": "FERTILIZER", 
+        "maxStack": 64,
+        "icon": "Default",
+        "prefabPath": "Prefabs/FertilizerPouch"
+      }
+    },
+    {
       "id": "green-bean",
       "itemData": {
         "name": "Green Bean",

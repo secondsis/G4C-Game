@@ -6,7 +6,6 @@ using Object = UnityEngine.Object;
 
 public class FarmPlot : MonoBehaviour
 {
-    // TODO: Fix a bug with crops.
     public FarmLogic Logic = new FarmLogic();
     private int _currentPlantStage;
     private bool _plotWatered;
@@ -18,6 +17,27 @@ public class FarmPlot : MonoBehaviour
     private static readonly String _defaultRightInfo = "(EMPTY)";
     private static readonly String _fertilizedLeftInfo = "Fertilized Plot\nAn empty area of farmable land.";
     private bool _tooltipShowing;
+
+    public static FarmPlot GetFarmPlotFromRay()
+    {
+        // Find the FarmPlot that the mouse is pointing at and if it is within reaching distance
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        // Debug.DrawRay(ray.origin, ray.direction * PlayerStatManager.ReachDistance, Color.red);
+        
+        RaycastHit hit;
+
+        int plotMask = LayerMask.GetMask("FarmPlotLayer");
+    
+        // outputs the first object it hits
+        // need masks
+        if (Physics.Raycast(ray, out hit, PlayerStatManager.ReachDistance, plotMask))
+        {
+            GameObject obj = hit.transform.gameObject;
+            return obj.transform.parent.parent.GetComponent<FarmPlot>();
+        }
+
+        return null;
+    }
 
     private void Awake()
     {
@@ -119,6 +139,7 @@ public class FarmPlot : MonoBehaviour
         // return true;
     }
 
+    // Create a Fertilizer Item, that will call this function
     public bool AddFertilizer(FertilizerTypeEnum fert)
     {
         if (!Logic.AddFertilizer(fert)) return false;
@@ -134,12 +155,6 @@ public class FarmPlot : MonoBehaviour
 
     public void WaterCrop()
     {
-        
-        // foreach (Transform child in _plotParent)
-        // {
-        //     Destroy(child.gameObject);
-        // }
-
         // Watered Texture
         _plotObjectRenderer.material = Dictionaries.WateredPlotMaterial;
         // GameObject newObj = Instantiate(Dictionaries.WateredPlotObject, _plotParent);
@@ -238,6 +253,9 @@ public class FarmLogic
     public bool AddFertilizer(FertilizerTypeEnum fert)
     {
         if (Fertilizer != FertilizerTypeEnum.NONE) return false;
+        // Can only add fertilizer if there is no crop
+        if (SeedType != SeedEnum.NONE) return false;
+        
         Fertilizer = fert;
         return true;
     }
@@ -275,9 +293,16 @@ public class FarmLogic
         // Can't grow without water
         if (!IsWatered()) return;
         if (PercentGrown >= 1f) return;
+
+        // Growth multipliers can be fertilizer, uhhh magic (?), good bugs
+        float multiplier = Dictionaries.FertilizerGrowthMultiplier[Fertilizer];
+
+        // Growth inhibitors can be length of dryness, parasitic bugs
+        float inhibitor = 1f;
         
         // Any growth inhibitors/whatever can be multiplied at the end
-        PercentGrown += delta / Dictionaries.DefaultPlantGrowthTimes[SeedType];
+        PercentGrown += delta / Dictionaries.DefaultPlantGrowthTimes[SeedType] * (multiplier) / (inhibitor);
+        
         if(PercentGrown > 1f) 
         {
             PercentGrown = 1f;

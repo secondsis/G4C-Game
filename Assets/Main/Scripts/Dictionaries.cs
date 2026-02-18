@@ -58,7 +58,25 @@ public static class Dictionaries
     {
         { FertilizerTypeEnum.NONE, null},
         { FertilizerTypeEnum.LOW_QUALITY, Resources.Load<GameObject>("Prefabs/FertilizerLow")},
-        { FertilizerTypeEnum.ADEQUATE_QUALITY, null},
-        { FertilizerTypeEnum.HIGH_QUALITY, null}
+        { FertilizerTypeEnum.ADEQUATE_QUALITY, Resources.Load<GameObject>("Prefabs/FertilizerMed")},
+        { FertilizerTypeEnum.HIGH_QUALITY, Resources.Load<GameObject>("Prefabs/FertilizerHigh")}
+    };
+
+    public static readonly Dictionary<FertilizerTypeEnum, float> FertilizerGrowthMultiplier = new()
+    {
+        { FertilizerTypeEnum.NONE, 1f},
+        { FertilizerTypeEnum.LOW_QUALITY, 1.2f},
+        { FertilizerTypeEnum.ADEQUATE_QUALITY, 1.5f},
+        { FertilizerTypeEnum.HIGH_QUALITY, 2f}
+    };
+    
+    // Increases the chances of higher quality crops (TODO: MAKE DIFFERENT QUALITY CROPS?)
+    // High quality fertilizer unlocks a chance of obtaining Tier 4 crops
+    public static readonly Dictionary<FertilizerTypeEnum, float> FertilizerQualityMultiplier = new()
+    {
+        { FertilizerTypeEnum.NONE, 1f},
+        { FertilizerTypeEnum.LOW_QUALITY, 1f},
+        { FertilizerTypeEnum.ADEQUATE_QUALITY, 1.2f},
+        { FertilizerTypeEnum.HIGH_QUALITY, 2f}
     };
 }

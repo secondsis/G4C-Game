@@ -34,7 +34,7 @@ public class DebugScript : MonoBehaviour
 
     public static void AddWateringCan()
     {
-        InventoryManager.Instance.AddItem("watering-can", 1);
+        InventoryManager.Instance.AddItem("fertilizer-pouch", 1);
         
     }
 }

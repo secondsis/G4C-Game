@@ -138,6 +138,7 @@ namespace Main.Scripts
             DebugScript.BetterDebug("OnInteract was called! Current Interactable: " +  _currentInteractable?.GetInteractType());
             if (_currentInteractable != null && !_currentInteractable.TempDisabled)
             {
+                // Why is _currentInteractable not existant check
                 _currentInteractable.Interact();
             }
         }
