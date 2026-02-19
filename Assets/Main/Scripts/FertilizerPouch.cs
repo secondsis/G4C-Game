@@ -13,6 +13,7 @@ public class FertilizerPouch : MonoBehaviour
         if (farmPlot)
         {
             farmPlot.AddFertilizer(FertilizerTypeEnum.LOW_QUALITY);
+            Destroy(gameObject);
         }
     }
     

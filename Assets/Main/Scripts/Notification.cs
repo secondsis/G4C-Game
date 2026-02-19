@@ -12,6 +12,16 @@ namespace Main.Scripts
             message = msg;
             notificationLevel = level;
         }
+
+        public String GetMessage()
+        {
+            return message;
+        }
+
+        public NotificationLevel GetNotificationLevel()
+        {
+            return notificationLevel;
+        }
     }
 
     public enum NotificationLevel
