@@ -9,6 +9,8 @@ TagManager:
   - InteractionManager
   - DialogueLogic
   - ShopUI
+  - Audio
+  - NPCManager
   layers:
   - Default
   - TransparentFX
