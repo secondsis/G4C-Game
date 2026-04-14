@@ -32,6 +32,7 @@ public class DebugScript : MonoBehaviour
         #endif
     }
 
+    // Temporary to debug items (not watering can)
     public static void AddWateringCan()
     {
         InventoryManager.Instance.AddItem("fertilizer-pouch", 1);

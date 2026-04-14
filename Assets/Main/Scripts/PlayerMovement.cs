@@ -75,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
         // Cursor.visible = false;
     }
     
-    // Based on Roblox's ShiftLock feature (idk if other games have it) (also cuz i use a laptop so RMB is annoying)
+    // Based on Roblox's ShiftLock feature
     private void CheckShiftLock()
     {
         // Can't actually be Shift because Shift is to sprint
