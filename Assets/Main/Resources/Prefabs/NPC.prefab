@@ -169,37 +169,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!1 &6463020394076857559
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4952005575419182637}
-  m_Layer: 2
-  m_Name: NPCManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4952005575419182637
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6463020394076857559}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 89044941346360995}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7793633447365950823
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,6 +180,7 @@ GameObject:
   - component: {fileID: 89044941346360995}
   - component: {fileID: 5668804291108624602}
   - component: {fileID: 7630158346296645307}
+  - component: {fileID: 6399428295619697656}
   m_Layer: 2
   m_Name: NPC
   m_TagString: Player
@@ -233,7 +203,6 @@ Transform:
   m_Children:
   - {fileID: 864136133848670500}
   - {fileID: 1826190632704119261}
-  - {fileID: 4952005575419182637}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &5668804291108624602
@@ -285,6 +254,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6399428295619697656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7793633447365950823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91183511cd54a1548893099e57f01f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCInstance
+  npc:
+    id: 1
+    name: Eric
+    walkSpeed: 0
+    dialogue: {fileID: 0}
+    config: 
 --- !u!1001 &6456372669825550085
 PrefabInstance:
   m_ObjectHideFlags: 0

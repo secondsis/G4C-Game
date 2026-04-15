@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
 using Main.Scripts;
 using UnityEngine;
 
 public class NPCInstance : MonoBehaviour
 {
     [SerializeField] private NPCManager.NPC npc;
+    private List<Dialogue> dialogues;
+    
 
     private GameObject TalkInteractPrefab;
     // public int id;
@@ -24,5 +27,6 @@ public class NPCInstance : MonoBehaviour
         {
             Instantiate(TalkInteractPrefab, gameObject.transform.parent.transform);
         }
+        
     }
 }
