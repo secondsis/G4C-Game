@@ -1,16 +1,20 @@
+using System;
+using Main.Scripts;
 using UnityEngine;
 
 public class TalkInteractManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private DialogueComponent dialogueComponent;
+    private Interaction interactionScript;
+
+    private void Awake()
     {
-        
+        dialogueComponent = GetComponent<DialogueComponent>();
+        interactionScript = GetComponent<Interaction>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetDialogue(Dialogue dialogue)
     {
-        
+        dialogueComponent.dialogue = dialogue;
     }
 }

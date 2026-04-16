@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public float lookYLimit = 45f;
     public float defaultHeight = 2f;
     
-    // Don't need crouching until buildings exist
+    // If want to implement crouching
     // public float crouchHeight = 1f;
     // public float crouchSpeed = 3f;
 
@@ -72,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         cameraPivot = playerCamera.transform.parent;
         characterTransform = transform.Find("Character");
         Cursor.lockState = CursorLockMode.Confined;
+        DebugScript.BetterDebug("Run Speed: " + runSpeed);
         // Cursor.visible = false;
     }
     
@@ -162,6 +163,7 @@ public class PlayerMovement : MonoBehaviour
             _moveDirection.y -= gravity * Time.deltaTime;
         }
 
+        // If I want to implement crouching
         // if (Input.GetKey(KeyCode.R) && _canMove)
         // {
         //     _characterController.height = crouchHeight;
@@ -170,11 +172,11 @@ public class PlayerMovement : MonoBehaviour
         //
         // }
         // else
-        {
-            _characterController.height = defaultHeight;
-            walkSpeed = 6f;
-            runSpeed = 12f;
-        }
+        // {
+        //     _characterController.height = defaultHeight;
+        //     walkSpeed = 6f;
+        //     runSpeed = 12f;
+        // }
 
         _characterController.Move(_moveDirection * Time.deltaTime);
         
@@ -236,6 +238,7 @@ public class PlayerMovement : MonoBehaviour
             _moveDirection.y -= gravity * Time.deltaTime;
         }
 
+        // If I want tto implement crouching
         // if (Input.GetKey(KeyCode.R) && _canMove)
         // {
         //     _characterController.height = crouchHeight;
@@ -244,11 +247,11 @@ public class PlayerMovement : MonoBehaviour
         //
         // }
         // else
-        {
-            _characterController.height = defaultHeight;
-            walkSpeed = 6f;
-            runSpeed = 12f;
-        }
+        // {
+        //     _characterController.height = defaultHeight;
+        //     walkSpeed = 6f;
+        //     runSpeed = 12f;
+        // }
 
         _characterController.Move(_moveDirection * Time.deltaTime);
 

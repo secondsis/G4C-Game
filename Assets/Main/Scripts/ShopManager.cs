@@ -17,7 +17,7 @@ public class ShopManager : MonoBehaviour
     private void Awake()
     {
         _shopItemPrefab = Resources.Load<GameObject>("Prefabs/ShopItem");
-        _playerStatManager = GameObject.FindGameObjectWithTag("Player").transform.Find("PlayerManagers")
+        _playerStatManager = GameObject.FindGameObjectWithTag("PlayerStatManager")
             .GetComponent<PlayerStatManager>();
         foreach (ShopItem item in stock)
         {

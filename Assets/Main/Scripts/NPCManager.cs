@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Main.Scripts
 {
     public class NPCManager
@@ -9,7 +11,7 @@ namespace Main.Scripts
             public string name;
             public int walkSpeed;
             // add walkpath variable
-            public Dialogue dialogue;
+            public List<Dialogue> dialogue;
 
             // Other info to add, maybe specific characteristics
             public string config;

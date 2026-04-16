@@ -6,10 +6,13 @@ using UnityEngine;
 public class NPCInstance : MonoBehaviour
 {
     [SerializeField] private NPCManager.NPC npc;
+    [SerializeField] private float offset;
     private List<Dialogue> dialogues;
     
 
     private GameObject TalkInteractPrefab;
+    private GameObject TalkInteractObject;
+    private TalkInteractManager TalkInteractManager;
     // public int id;
     // public string name;
     // public int walkSpeed;
@@ -21,12 +24,18 @@ public class NPCInstance : MonoBehaviour
     
     private void Awake()
     {
-        TalkInteractPrefab = Resources.Load<GameObject>("Prefabs/NPC/TalkInteract");
-        // Create an interact prompt (if dialogue)
-        if (npc.dialogue)
-        {
-            Instantiate(TalkInteractPrefab, gameObject.transform.parent.transform);
-        }
+        TalkInteractPrefab = Resources.Load<GameObject>("Prefabs/TalkInteract");
+        // NPC might have multiple dialogue
+        dialogues = npc.dialogue;
         
+        // Create an interact prompt (if dialogue)
+        if (dialogues != null)
+        {
+            TalkInteractObject = Instantiate(TalkInteractPrefab, gameObject.transform);
+            TalkInteractObject.transform.localPosition = Vector3.zero;
+            TalkInteractObject.transform.localPosition += new Vector3(0, offset, 0);
+            TalkInteractManager = TalkInteractObject.GetComponent<TalkInteractManager>();
+            TalkInteractManager.SetDialogue(dialogues[0]);
+        }
     }
 }
