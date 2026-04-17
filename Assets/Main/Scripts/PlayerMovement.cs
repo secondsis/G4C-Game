@@ -4,6 +4,8 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement Instance;
+    
     public Camera playerCamera;
     private Transform cameraPivot;
     private Transform characterTransform;
@@ -35,6 +37,30 @@ public class PlayerMovement : MonoBehaviour
     private bool _isRunning = false;
     private bool _inShiftlock = false;
 
+    private void Awake()
+    {
+        _characterController = GetComponent<CharacterController>();
+        _animator = GetComponent<Animator>();
+        cameraPivot = playerCamera.transform.parent;
+        characterTransform = transform.Find("Character");
+        Cursor.lockState = CursorLockMode.Confined;
+        DebugScript.BetterDebug("Run Speed: " + runSpeed);
+        // Cursor.visible = false;
+        
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
+
+    public static void ToggleMovement(bool enabled)
+    {
+        Instance.canMove = enabled;
+    }
+    
     private void SetAnim(string state, bool forceOverride = false)
     {
         var current = _animator.GetCurrentAnimatorStateInfo(0);
@@ -63,17 +89,6 @@ public class PlayerMovement : MonoBehaviour
     public void PlayRunAnim()
     {
         SetAnim("Run");
-    }
-
-    private void Awake()
-    {
-        _characterController = GetComponent<CharacterController>();
-        _animator = GetComponent<Animator>();
-        cameraPivot = playerCamera.transform.parent;
-        characterTransform = transform.Find("Character");
-        Cursor.lockState = CursorLockMode.Confined;
-        DebugScript.BetterDebug("Run Speed: " + runSpeed);
-        // Cursor.visible = false;
     }
     
     // Based on Roblox's ShiftLock feature
@@ -299,6 +314,7 @@ public class PlayerMovement : MonoBehaviour
             
             // Spherical lerp (treats vectors as directions instead of positions) what the physics
             characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation,_playerRotation, Time.deltaTime * 10f);
+            characterTransform.localEulerAngles = new Vector3(0, characterTransform.localEulerAngles.y, 0);
         }
     }
 

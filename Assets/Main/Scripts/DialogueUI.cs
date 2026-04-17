@@ -50,7 +50,9 @@ namespace Main.Scripts
             }
             _dialogueActivity.gameObject.SetActive(true);
             OnDialogueUIActiveChanged?.Invoke(true);
-            Debug.Log("Starting dialogue...");
+            DebugScript.BetterDebug("Starting dialogue...");
+            // STOP MOVEMENT
+            PlayerMovement.ToggleMovement(false);
             _runner = new DialogueExecuter(dialogue);
             G4CInputManager.RegisterInteract(InteractionType.DIALOGUE, OnInteract);
             ShowNext();
@@ -58,8 +60,12 @@ namespace Main.Scripts
 
         public void ShowNext()
         {
+            DebugScript.BetterDebug("Show Next");
             if (!_runner.HasNext)
             {
+                DebugScript.BetterDebug("No Next");
+                // REENABLE MOVEMENT
+                PlayerMovement.ToggleMovement(true);
                 G4CInputManager.RemoveInteract(InteractionType.DIALOGUE, OnInteract);
                 OnDialogueUIActiveChanged?.Invoke(false);
                 _dialogueActivity.gameObject.SetActive(false);
@@ -72,6 +78,7 @@ namespace Main.Scripts
             if (line.type == DialogueLineType.PLAYER_CHOICE)
             {
                 // HOTKEY SHOULD NOT PROGRESS DIALOGUE WHEN CHOICE / why does it still progress?
+                // Turns off dialogue temporarily if there is a dialogue choice
                 G4CInputManager.SetInteract(InteractionType.DIALOGUE, OnInteract, false);
                 var choices = line.choices;
                 var choiceActionIds = line.choiceActionIds;
@@ -133,8 +140,10 @@ namespace Main.Scripts
         //     _dialogueActivity.OnActiveChanged -= HandleDialogueUI;
         // }
 
+        // This is never called
         private void OnInteract()
         {
+            DebugScript.BetterDebug("OnInteract - DialogueUI");
             ShowNext();
             // Make typewriting effect .. later
         }

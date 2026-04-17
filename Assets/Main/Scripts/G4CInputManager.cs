@@ -14,6 +14,11 @@ namespace Main.Scripts
         
         private static readonly List<Interactable> InteractionList = new List<Interactable>();
         private static readonly List<Interactable> InteractionList2 = new List<Interactable>();
+
+        public static InteractionType GetCurrentInteractionType()
+        {
+            return _currentInteractable.GetInteractType();
+        }
         
         public static bool IsBlocked(InteractionType interactionType, Action onInteract)
         {
@@ -24,6 +29,7 @@ namespace Main.Scripts
 
         public static void RegisterInteract(InteractionType interactionType, Action newOnInteract, int interactNum=1)
         {
+            DebugScript.BetterDebug("Registering interaction type: " + interactionType);
             // if (currentInteractionType > interactionType) return;
             // // NEVER LET THERE BE TWO INTERACTIONS OF THE SAME TYPE
             switch (interactNum)
@@ -139,6 +145,7 @@ namespace Main.Scripts
             if (_currentInteractable != null && !_currentInteractable.TempDisabled)
             {
                 // Why is _currentInteractable not existant check
+                DebugScript.BetterDebug("OnInteract called!");
                 _currentInteractable.Interact();
             }
         }

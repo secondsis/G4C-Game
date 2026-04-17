@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: WiseJoeWelcomesYou
   m_EditorClassIdentifier: Assembly-CSharp::Main.Scripts.Dialogue
   lines:
-  - type: 1
+  - type: 0
     speaker: Wise Joe
     text: Lil' Joey! Oh am I so glad to see you!
     choices: []
-    choicesEvents: []
+    choiceActionIds: []
     rewardIds: []
   - type: 0
     speaker: Joey
     text: 'Hey Pops. City business got pretty dull, so I decided to come back here. '
     choices: []
-    choicesEvents: []
+    choiceActionIds: []
     rewardIds: []

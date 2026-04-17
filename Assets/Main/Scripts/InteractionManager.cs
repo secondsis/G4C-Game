@@ -92,7 +92,8 @@ public class InteractionManager : MonoBehaviour
     // Sets the target interact based on shortest distance from player
     private void UpdateTargetTransform1()
     {
-        if (!(Interactions1.Count > 0 && !blocking1))
+        // This means there is another interaction blocking this, OR there are no interactions, OR manual blocking (cutscenes)
+        if (G4CInputManager.GetCurrentInteractionType() > InteractionType.INTERACTION1 || Interactions1.Count == 0 || blocking1)
         {
             targetInteraction1 = null;
             hasTarget1 = false;
@@ -208,7 +209,7 @@ public class InteractionManager : MonoBehaviour
         {
             // Get the screen position of the world object
             Vector3 screenPos = cam.WorldToScreenPoint(targetInteraction1.transform.position);
-            DebugScript.BetterDebug(cam.transform.position);
+            // DebugScript.BetterDebug(cam.transform.position);
             // WHY do these numbers go crazy even though position is the same
             // DebugScript.BetterDebug(screenPos);
             //
