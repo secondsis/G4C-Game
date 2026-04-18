@@ -10,42 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d44279b3fc34cb5a05798cced51db58, type: 3}
-  m_Name: WiseJoeWelcomesYou
+  m_Name: ChairGod
   m_EditorClassIdentifier: Assembly-CSharp::Main.Scripts.Dialogue
   lines:
   - type: 0
-    speaker: Wise Joe
-    text: Lil' Joey! Oh am I so glad to see you!
+    speaker: 
+    text: It appears the chairs have made their own ritual.
     choices: []
     choiceActionIds: []
     rewardIds: []
   - type: 0
-    speaker: Joey
-    text: 'Hey Pops. City business got pretty dull, so I decided to come back here. '
+    speaker: 
+    text: The chair in the middle is decorated in red cloth.
     choices: []
     choiceActionIds: []
     rewardIds: []
   - type: 0
-    speaker: Joey
-    text: Say, why do you look like me?
+    speaker: 
+    text: Maybe it is their God.
     choices: []
     choiceActionIds: []
     rewardIds: []
   - type: 0
-    speaker: Wise Joe
-    text: Hmmm?
+    speaker: 
+    text: Maybe it is an intruder.
     choices: []
     choiceActionIds: []
     rewardIds: []
   - type: 0
-    speaker: Wise Joe
-    text: 'Ah, well you know the saying. '
-    choices: []
-    choiceActionIds: []
-    rewardIds: []
-  - type: 0
-    speaker: Wise Joe
-    text: '"The apple doesn''t fall far from the tree."'
+    speaker: 
+    text: Who knows the truth of the chair ritual...
     choices: []
     choiceActionIds: []
     rewardIds: []

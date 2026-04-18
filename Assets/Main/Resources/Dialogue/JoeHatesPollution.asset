@@ -10,42 +10,54 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d44279b3fc34cb5a05798cced51db58, type: 3}
-  m_Name: WiseJoeWelcomesYou
+  m_Name: JoeHatesPollution
   m_EditorClassIdentifier: Assembly-CSharp::Main.Scripts.Dialogue
   lines:
   - type: 0
-    speaker: Wise Joe
-    text: Lil' Joey! Oh am I so glad to see you!
+    speaker: Joey
+    text: Hey Pops, what's the big ol' factory over yonder?
     choices: []
     choiceActionIds: []
     rewardIds: []
   - type: 0
     speaker: Joey
-    text: 'Hey Pops. City business got pretty dull, so I decided to come back here. '
+    text: Wasn't here last time.
+    choices: []
+    choiceActionIds: []
+    rewardIds: []
+  - type: 0
+    speaker: Wise Joe
+    text: 'Don''t go near there. '
+    choices: []
+    choiceActionIds: []
+    rewardIds: []
+  - type: 0
+    speaker: Wise Joe
+    text: I don't trust them manufacturers.
+    choices: []
+    choiceActionIds: []
+    rewardIds: []
+  - type: 0
+    speaker: Wise Joe
+    text: 'Them would rather us choke to death than pay a cent back. '
     choices: []
     choiceActionIds: []
     rewardIds: []
   - type: 0
     speaker: Joey
-    text: Say, why do you look like me?
+    text: I feel like factories should be outlawed in residential areas.
     choices: []
     choiceActionIds: []
     rewardIds: []
   - type: 0
     speaker: Wise Joe
-    text: Hmmm?
+    text: Them cityfolk always picking off on us!
     choices: []
     choiceActionIds: []
     rewardIds: []
   - type: 0
-    speaker: Wise Joe
-    text: 'Ah, well you know the saying. '
-    choices: []
-    choiceActionIds: []
-    rewardIds: []
-  - type: 0
-    speaker: Wise Joe
-    text: '"The apple doesn''t fall far from the tree."'
+    speaker: Joey
+    text: ...
     choices: []
     choiceActionIds: []
     rewardIds: []

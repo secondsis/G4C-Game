@@ -10,42 +10,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d44279b3fc34cb5a05798cced51db58, type: 3}
-  m_Name: WiseJoeWelcomesYou
+  m_Name: JoeWhyEmptyTown
   m_EditorClassIdentifier: Assembly-CSharp::Main.Scripts.Dialogue
   lines:
   - type: 0
+    speaker: Joey
+    text: Why is the town so empty?
+    choices: []
+    choiceActionIds: []
+    rewardIds: []
+  - type: 0
     speaker: Wise Joe
-    text: Lil' Joey! Oh am I so glad to see you!
+    text: Spring festival by the river.
     choices: []
     choiceActionIds: []
     rewardIds: []
   - type: 0
     speaker: Joey
-    text: 'Hey Pops. City business got pretty dull, so I decided to come back here. '
+    text: 'At this time of the year?! '
+    choices: []
+    choiceActionIds: []
+    rewardIds: []
+  - type: 0
+    speaker: Wise Joe
+    text: 'Just a month late. '
+    choices: []
+    choiceActionIds: []
+    rewardIds: []
+  - type: 0
+    speaker: Wise Joe
+    text: Naturally I stayed behind just for you.
     choices: []
     choiceActionIds: []
     rewardIds: []
   - type: 0
     speaker: Joey
-    text: Say, why do you look like me?
-    choices: []
-    choiceActionIds: []
-    rewardIds: []
-  - type: 0
-    speaker: Wise Joe
-    text: Hmmm?
-    choices: []
-    choiceActionIds: []
-    rewardIds: []
-  - type: 0
-    speaker: Wise Joe
-    text: 'Ah, well you know the saying. '
-    choices: []
-    choiceActionIds: []
-    rewardIds: []
-  - type: 0
-    speaker: Wise Joe
-    text: '"The apple doesn''t fall far from the tree."'
+    text: Dad, you're making me blush.
     choices: []
     choiceActionIds: []
     rewardIds: []
