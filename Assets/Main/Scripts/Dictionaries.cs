@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -78,5 +79,18 @@ public static class Dictionaries
         { FertilizerTypeEnum.LOW_QUALITY, 1f},
         { FertilizerTypeEnum.ADEQUATE_QUALITY, 1.2f},
         { FertilizerTypeEnum.HIGH_QUALITY, 2f}
+    };
+
+    // After exhausting ALL events, witness ending cutscene
+    public static Dictionary<String, Boolean> GameEvents = new()
+    {
+        { "Kevin", false }, // KevinsComeback -> JoeWhosKevin
+        { "Factory", false }, // FactoryInteract -> JoeHatesPollution
+        { "Trucks", false }, // Truckfire -> JoeWhatTrucks
+        { "Church", false }, // ChurchInteract -> JoeChurch
+        { "Farm", false }, // Obtained when you finish Wise Joe's quests
+        { "DirtHoles", false }, // DirtHoles -> JoeWhyDirt
+        { "Pigs", false }, // PigInteract -> JoeWhyPigs
+        { "Chairs", false } // ChairGod -> JoeWhatTheChair
     };
 }
