@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Main.Scripts
@@ -11,6 +12,18 @@ namespace Main.Scripts
 
         public static event Action OnWaterWellInteract;
         
+        // After exhausting ALL events, witness ending cutscene
+        public static Dictionary<String, Boolean> GameEvents = new()
+        {
+            { "Kevin", false }, // KevinsComeback -> JoeWhosKevin
+            { "Factory", false }, // FactoryInteract -> JoeHatesPollution
+            { "Trucks", false }, // Truckfire -> JoeWhatTrucks
+            { "Church", false }, // ChurchInteract -> JoeChurch
+            { "Farm", false }, // Obtained when you finish Wise Joe's quests
+            { "DirtHoles", false }, // DirtHoles -> JoeWhyDirt
+            { "Pigs", false }, // PigInteract -> JoeWhyPigs
+            { "Chairs", false } // ChairGod -> JoeWhatTheChair
+        };
         
         public static void InvokeToolEquip(GameObject tool)
         {

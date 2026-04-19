@@ -25,6 +25,7 @@ public class PlayerStatManager : MonoBehaviour
 
         Instance = this;
         DebugMoney();
+        DebugScript.BetterDebug("PlayTime: " +  playTime);
     }
 
     // DEBUG

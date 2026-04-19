@@ -1,17 +1,15 @@
 using System;
 using UnityEngine;
 
-public class WorldCanvasRotator : MonoBehaviour
+// (Unused)
+public class Rotator : MonoBehaviour
 {
-    private GameObject playerObject;
-
-    private void Awake()
-    {
-        playerObject = GameObject.FindGameObjectWithTag("Player");
-    }
-
+    [SerializeField] private GameObject _gameObject;
+    [SerializeField] private Vector3 directionOfRotation = Vector3.up;
+    [SerializeField] private float speed = 1f;
+    
     private void FixedUpdate()
     {
-        gameObject.transform.LookAt(playerObject.transform);
+        _gameObject.transform.Rotate(directionOfRotation, 1f * speed);
     }
 }

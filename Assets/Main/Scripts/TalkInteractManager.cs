@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TalkInteractManager : MonoBehaviour
 {
+    [SerializeField] private String GameEvent;
     private DialogueComponent dialogueComponent;
     private Interaction interactionScript;
 
@@ -11,10 +12,18 @@ public class TalkInteractManager : MonoBehaviour
     {
         dialogueComponent = GetComponent<DialogueComponent>();
         interactionScript = GetComponent<Interaction>();
+        
+        // Subscribe to dialogue event
+        dialogueComponent.OnDialogueStart += SendGameEvent;
     }
 
     public void SetDialogue(Dialogue dialogue)
     {
         dialogueComponent.dialogue = dialogue;
+    }
+
+    private void SendGameEvent()
+    {
+        Events.GameEvents[GameEvent] = true;
     }
 }

@@ -80,9 +80,9 @@ public static class Dictionaries
         { FertilizerTypeEnum.ADEQUATE_QUALITY, 1.2f},
         { FertilizerTypeEnum.HIGH_QUALITY, 2f}
     };
-
-    // After exhausting ALL events, witness ending cutscene
-    public static Dictionary<String, Boolean> GameEvents = new()
+    
+    // true for when you listened to Wise Joe talk these events
+    public static Dictionary<String, Boolean> WiseJoeTalks = new()
     {
         { "Kevin", false }, // KevinsComeback -> JoeWhosKevin
         { "Factory", false }, // FactoryInteract -> JoeHatesPollution
@@ -91,6 +91,8 @@ public static class Dictionaries
         { "Farm", false }, // Obtained when you finish Wise Joe's quests
         { "DirtHoles", false }, // DirtHoles -> JoeWhyDirt
         { "Pigs", false }, // PigInteract -> JoeWhyPigs
-        { "Chairs", false } // ChairGod -> JoeWhatTheChair
+        { "Chairs", false }, // ChairGod -> JoeWhatTheChair
+        { "Empty", false},
+        
     };
 }

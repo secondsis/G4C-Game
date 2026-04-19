@@ -10,66 +10,43 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d44279b3fc34cb5a05798cced51db58, type: 3}
-  m_Name: JoeWhosKevin
+  m_Name: JoeWhatTheChair
   m_EditorClassIdentifier: Assembly-CSharp::Main.Scripts.Dialogue
   lines:
   - type: 0
+    speaker: Joey
+    text: What the heck is going on in the house??
+    choices: []
+    choiceActionIds: []
+    rewardIds: []
+  - type: 0
     speaker: Wise Joe
-    text: I ain't feeling too good..
+    text: You mean the chairs?
+    choices: []
+    choiceActionIds: []
+    rewardIds: []
+  - type: 0
+    speaker: Wise Joe
+    text: 'Well, ever since you left those many years ago, I sold the furniture and
+      TV set. '
     choices: []
     choiceActionIds: []
     rewardIds: []
   - type: 0
     speaker: Joey
-    text: AAAAAAAAA
+    text: What... do you do without a TV?
     choices: []
     choiceActionIds: []
     rewardIds: []
   - type: 0
-    speaker: Wise Kevin
-    text: It is me, the wisest of kevuns>!!!
-    choices: []
-    choiceActionIds: []
-    rewardIds: []
-  - type: 0
-    speaker: Invisible Kevin
-    text: And the invisiblest of kevuns>!!!
-    choices: []
-    choiceActionIds: []
-    rewardIds: []
-  - type: 0
-    speaker: Disembodied Voice of Kevin
-    text: And the 'ookiest of kevuns>!!!
-    choices: []
-    choiceActionIds: []
-    rewardIds: []
-  - type: 0
-    speaker: ??? Kevin
-    text: And the mysteriousest of kevuns>!!!
-    choices: []
-    choiceActionIds: []
-    rewardIds: []
-  - type: 0
-    speaker: Joey
-    text: bruh ur just making words up
-    choices: []
-    choiceActionIds: []
-    rewardIds: []
-  - type: 0
-    speaker: Kevin
-    text: yup
+    speaker: Wise Joe
+    text: 'Talk to neighbors, work on the farm, or have a good sit. '
     choices: []
     choiceActionIds: []
     rewardIds: []
   - type: 0
     speaker: 
-    text: Magical mist causes Kevin to fade away~
-    choices: []
-    choiceActionIds: []
-    rewardIds: []
-  - type: 0
-    speaker: 
-    text: (never gonna) SAY GOODBYEEEEEEE
+    text: Ngl kinda suspicious...
     choices: []
     choiceActionIds: []
     rewardIds: []

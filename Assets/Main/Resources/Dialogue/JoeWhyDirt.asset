@@ -10,66 +10,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d44279b3fc34cb5a05798cced51db58, type: 3}
-  m_Name: JoeWhosKevin
+  m_Name: JoeWhyDirt
   m_EditorClassIdentifier: Assembly-CSharp::Main.Scripts.Dialogue
   lines:
   - type: 0
+    speaker: Joey
+    text: Why are there a bunch of dirt piles?
+    choices: []
+    choiceActionIds: []
+    rewardIds: []
+  - type: 0
     speaker: Wise Joe
-    text: I ain't feeling too good..
+    text: Some cult preparing for doomsday
     choices: []
     choiceActionIds: []
     rewardIds: []
   - type: 0
     speaker: Joey
-    text: AAAAAAAAA
+    text: What
     choices: []
     choiceActionIds: []
     rewardIds: []
   - type: 0
-    speaker: Wise Kevin
-    text: It is me, the wisest of kevuns>!!!
-    choices: []
-    choiceActionIds: []
-    rewardIds: []
-  - type: 0
-    speaker: Invisible Kevin
-    text: And the invisiblest of kevuns>!!!
-    choices: []
-    choiceActionIds: []
-    rewardIds: []
-  - type: 0
-    speaker: Disembodied Voice of Kevin
-    text: And the 'ookiest of kevuns>!!!
-    choices: []
-    choiceActionIds: []
-    rewardIds: []
-  - type: 0
-    speaker: ??? Kevin
-    text: And the mysteriousest of kevuns>!!!
+    speaker: Wise Joe
+    text: Yeah
     choices: []
     choiceActionIds: []
     rewardIds: []
   - type: 0
     speaker: Joey
-    text: bruh ur just making words up
+    text: '[Does not believe it]'
     choices: []
     choiceActionIds: []
     rewardIds: []
   - type: 0
-    speaker: Kevin
-    text: yup
-    choices: []
-    choiceActionIds: []
-    rewardIds: []
-  - type: 0
-    speaker: 
-    text: Magical mist causes Kevin to fade away~
-    choices: []
-    choiceActionIds: []
-    rewardIds: []
-  - type: 0
-    speaker: 
-    text: (never gonna) SAY GOODBYEEEEEEE
+    speaker: Wise Joe
+    text: It's just the town garden. I decided to start it, of course.
     choices: []
     choiceActionIds: []
     rewardIds: []

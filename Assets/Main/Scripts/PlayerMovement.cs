@@ -197,7 +197,6 @@ public class PlayerMovement : MonoBehaviour
         
         if (canMove)
         {
-            // CANT FIGURE OUT WHY THE CAMERA ROTATES ON AN ANGLE LIKE A SLANTED CIRCLE
             deltaCamRotationX += Input.GetAxis("Mouse X") * lookSpeed;
             cameraPivot.rotation = Quaternion.Euler(0f, _originalCamRotation.y * deltaCamRotationX, 0f);
             DebugScript.BetterDebug(cameraPivot.rotation);
