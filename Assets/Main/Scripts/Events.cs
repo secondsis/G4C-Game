@@ -13,16 +13,17 @@ namespace Main.Scripts
         public static event Action OnWaterWellInteract;
         
         // After exhausting ALL events, witness ending cutscene
-        public static Dictionary<String, Boolean> GameEvents = new()
+        // {Name of Event}, {Corresponding Joe Talk}
+        public static Dictionary<String, String> GameEvents = new()
         {
-            { "Kevin", false }, // KevinsComeback -> JoeWhosKevin
-            { "Factory", false }, // FactoryInteract -> JoeHatesPollution
-            { "Trucks", false }, // Truckfire -> JoeWhatTrucks
-            { "Church", false }, // ChurchInteract -> JoeChurch
-            { "Farm", false }, // Obtained when you finish Wise Joe's quests
-            { "DirtHoles", false }, // DirtHoles -> JoeWhyDirt
-            { "Pigs", false }, // PigInteract -> JoeWhyPigs
-            { "Chairs", false } // ChairGod -> JoeWhatTheChair
+            { "Kevin", "Kevin?,Kevin" }, // KevinsComeback -> JoeWhosKevin
+            { "Factory", "Factory?,GotFactory" }, // FactoryInteract -> JoeHatesPollution
+            { "Trucks", "Trucks?,GotTrucks" }, // Truckfire -> JoeWhatTrucks
+            { "Church", "Church?,GotChurch" }, // ChurchInteract -> JoeChurch
+            { "Farm", "Farm?,GotFarm" }, // Obtained when you finish Wise Joe's quests
+            { "DirtHoles", "Dirt?,GotDirtHoles" }, // DirtHoles -> JoeWhyDirt
+            { "Pigs", "Pigs?,GotPigs" }, // PigInteract -> JoeWhyPigs
+            { "Chairs", "Chairs?,GotChair" } // ChairGod -> JoeWhatTheChair
         };
         
         public static void InvokeToolEquip(GameObject tool)

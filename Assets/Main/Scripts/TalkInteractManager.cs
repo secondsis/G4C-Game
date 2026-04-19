@@ -5,7 +5,7 @@ using UnityEngine;
 public class TalkInteractManager : MonoBehaviour
 {
     [SerializeField] private String GameEvent;
-    private DialogueComponent dialogueComponent;
+    public DialogueComponent dialogueComponent;
     private Interaction interactionScript;
 
     private void Awake()
@@ -24,6 +24,9 @@ public class TalkInteractManager : MonoBehaviour
 
     private void SendGameEvent()
     {
-        Events.GameEvents[GameEvent] = true;
+        string info = Events.GameEvents[GameEvent];
+        string option = info.Split(',')[0];
+        string dialogueName = info.Split(',')[1];
+        JoeInstance.Instance.AddGeneralChoice(option, dialogueName);
     }
 }

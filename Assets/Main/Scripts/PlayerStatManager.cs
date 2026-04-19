@@ -11,6 +11,8 @@ public class PlayerStatManager : MonoBehaviour
     
     // public int Level { get; private set; }
 
+    private bool farmEvent = false;
+
     private void Awake()
     {
         Money = PlayerPrefs.GetInt("Money");
@@ -68,6 +70,18 @@ public class PlayerStatManager : MonoBehaviour
             // NOT REaLLY ACCURATE
             playTime += 30;
         }
+
+        if (!farmEvent && Money >= 1000)
+        {
+            FarmGameEvent();
+        }
+    }
+
+    private void FarmGameEvent()
+    {
+        if (farmEvent) return;
+        farmEvent = true;
+        JoeInstance.Instance.AddGeneralChoice("Farm?", "GotFarm");
     }
 
     private void OnApplicationQuit()
