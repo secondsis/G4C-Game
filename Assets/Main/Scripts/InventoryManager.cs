@@ -68,6 +68,11 @@ public class InventoryManager : MonoBehaviour
         Instance = this;
     }
     
+    private void Start()
+    {
+        Instance.AddItem("watering-can", 1);
+    }
+    
     private void SetSellMenuBlockingTrue()
     {
         _sellMenuBlocking = true;

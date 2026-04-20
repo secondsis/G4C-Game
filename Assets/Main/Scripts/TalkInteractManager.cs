@@ -28,6 +28,9 @@ public class TalkInteractManager : MonoBehaviour
         string info = Events.GameEvents[GameEvent];
         string option = info.Split(',')[0];
         string dialogueName = info.Split(',')[1];
+        string joeTalkName = dialogueName.Split(',')[2];
+        // Check if player has already listened to event too
+        if (Dictionaries.WiseJoeTalks.ContainsKey(joeTalkName)) return;
         JoeInstance.Instance.AddGeneralChoice(option, dialogueName);
     }
 }

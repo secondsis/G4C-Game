@@ -16,7 +16,7 @@ public class DebugScript : MonoBehaviour
     
     private void Start()
     {
-        InventoryManager.Instance.AddItem("carrot-seed", 3);
+        InventoryManager.Instance.AddItem("watering-can", 1);
     }
 
     private void Update()

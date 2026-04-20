@@ -16,14 +16,14 @@ namespace Main.Scripts
         // {Name of Event}, {Corresponding Joe Talk}
         public static Dictionary<String, String> GameEvents = new()
         {
-            { "Kevin", "Kevin?,Kevin" }, // KevinsComeback -> JoeWhosKevin
-            { "Factory", "Factory?,GotFactory" }, // FactoryInteract -> JoeHatesPollution
-            { "Trucks", "Trucks?,GotTrucks" }, // Truckfire -> JoeWhatTrucks
-            { "Church", "Church?,GotChurch" }, // ChurchInteract -> JoeChurch
-            { "Farm", "Farm?,GotFarm" }, // Obtained when you finish Wise Joe's quests
-            { "DirtHoles", "Dirt?,GotDirtHoles" }, // DirtHoles -> JoeWhyDirt
-            { "Pigs", "Pigs?,GotPigs" }, // PigInteract -> JoeWhyPigs
-            { "Chairs", "Chairs?,GotChair" } // ChairGod -> JoeWhatTheChair
+            { "Kevin", "Kevin?,Kevin,Kevin" }, // KevinsComeback -> JoeWhosKevin
+            { "Factory", "Factory?,GotFactory,Factory" }, // FactoryInteract -> JoeHatesPollution
+            { "Trucks", "Trucks?,GotTrucks,Trucks" }, // Truckfire -> JoeWhatTrucks
+            { "Church", "Church?,GotChurch,Church" }, // ChurchInteract -> JoeChurch
+            { "Farm", "Farm?,GotFarm,Farm" }, // Obtained when you finish Wise Joe's quests
+            { "DirtHoles", "Dirt?,GotDirtHoles,DirtHoles" }, // DirtHoles -> JoeWhyDirt
+            { "Pigs", "Pigs?,GotPigs,Pigs" }, // PigInteract -> JoeWhyPigs
+            { "Chairs", "Chairs?,GotChairs,Chairs" } // ChairGod -> JoeWhatTheChair
         };
         
         public static void InvokeToolEquip(GameObject tool)

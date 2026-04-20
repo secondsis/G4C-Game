@@ -20,24 +20,24 @@ public class KonamiChecker : MonoBehaviour
         if (Time.time - lastInput > delayBetween)
         {
             currentInputs.Clear();
-            DebugScript.BetterDebug("cleared inputs");
+            // DebugScript.BetterDebug("cleared inputs");
         }
         
         if (Input.GetKeyDown(konamiSequence[nextIndex]))
         {
             lastInput = Time.time;
-            DebugScript.BetterDebug("Next KEY BAZOOGA");
+            // DebugScript.BetterDebug("Next KEY BAZOOGA");
             currentInputs.Add(konamiSequence[nextIndex]);
 
             if (currentInputs.Count == konamiSequence.Count)
             {
-                DebugScript.BetterDebug("Checking inputs");
+                // DebugScript.BetterDebug("Checking inputs");
                 // Check
                 foreach (KeyCode key in konamiSequence)
                 {
                     if (!currentInputs.Contains(key))
                     {
-                        DebugScript.BetterDebug("Failed sequence check");
+                        // DebugScript.BetterDebug("Failed sequence check");
                         currentInputs.Clear();
                         return;
                     }

@@ -26,14 +26,13 @@ public class PlayerStatManager : MonoBehaviour
         }
 
         Instance = this;
-        DebugMoney();
+        StartMoney();
         DebugScript.BetterDebug("PlayTime: " +  playTime);
     }
-
-    // DEBUG
-    public void DebugMoney()
+    
+    public void StartMoney()
     {
-        Money = 100;
+        Money = 5;
     }
 
     private void SaveStats()
@@ -71,7 +70,7 @@ public class PlayerStatManager : MonoBehaviour
             playTime += 30;
         }
 
-        if (!farmEvent && Money >= 1000)
+        if (!farmEvent && Money >= 100)
         {
             FarmGameEvent();
         }

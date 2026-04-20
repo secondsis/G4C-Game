@@ -54,6 +54,7 @@ public class JoeInstance : MonoBehaviour
 
     public void AddGeneralChoice(string choiceTitle, string choiceAction)
     {
+        if (GeneralTalk.lines[1].choices.Contains(choiceTitle)) return;
         GeneralTalk.lines[1].choices.Add(choiceTitle);
         GeneralTalk.lines[1].choiceActionIds.Add(choiceAction);
     }
