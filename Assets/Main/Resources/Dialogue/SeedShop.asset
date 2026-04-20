@@ -30,6 +30,6 @@ MonoBehaviour:
     - No
     - Yes
     choiceActionIds:
-    - DemoSeedShopNo
+    - SeedShopNo
     - OpenSeedShop
     rewardIds: []

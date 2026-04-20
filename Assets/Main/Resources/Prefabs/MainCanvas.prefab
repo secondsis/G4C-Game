@@ -3024,6 +3024,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7557106633089684861}
+  - component: {fileID: 8523108004928830615}
   m_Layer: 5
   m_Name: Currencies
   m_TagString: Untagged
@@ -3051,6 +3052,18 @@ RectTransform:
   m_AnchoredPosition: {x: -960.00006, y: 86.6651}
   m_SizeDelta: {x: 1920, y: 173.3302}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8523108004928830615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3082626916759772285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5243d156313a1fb3b2c6ac8358b2994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CurrencyDisplayer
 --- !u!1 &3295458319445669208
 GameObject:
   m_ObjectHideFlags: 0

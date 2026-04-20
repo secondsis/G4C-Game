@@ -21,7 +21,7 @@ public class DialogueComponent : MonoBehaviour
     public void StartDialogue()
     {
         Debug.Log("Start Dialogue from Component");
-        OnDialogueStart?.Invoke();
         _dialogueUI.StartDialogue(dialogue);
+        OnDialogueStart?.Invoke();
     }
 }

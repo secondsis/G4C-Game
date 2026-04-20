@@ -71,7 +71,7 @@ public class ShopFrontendManager : MonoBehaviour
             return;
         }
         // Set the name/pfp of the shop owner, and set the msg textugui
-        _profile.sprite = ShopOwnerDictionary[shopOwner];
+        // _profile.sprite = ShopOwnerDictionary[shopOwner];
         _shopDialogue.text = msg;
         _shopUI.SetActive(true);
         // Cursor.lockState = CursorLockMode.None;

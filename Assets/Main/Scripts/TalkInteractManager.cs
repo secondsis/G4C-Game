@@ -24,6 +24,7 @@ public class TalkInteractManager : MonoBehaviour
 
     private void SendGameEvent()
     {
+        if (String.IsNullOrEmpty(GameEvent)) return;
         string info = Events.GameEvents[GameEvent];
         string option = info.Split(',')[0];
         string dialogueName = info.Split(',')[1];

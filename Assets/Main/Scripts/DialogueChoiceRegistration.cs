@@ -36,7 +36,7 @@ public class DialogueChoiceRegistration : MonoBehaviour
 
     private void OpenSeedShop()
     {
-        ShopFrontendManager.OpenShop("Kevin", "Selling seeds is a tradition my family always carried.");
+        ShopFrontendManager.OpenShop("Shopkeeper", "I AM THE SEED GOD.");
     }
     
     // Gotta make functions for each "GameEvent"...
