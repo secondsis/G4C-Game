@@ -24,6 +24,8 @@ MonoBehaviour:
     text: Anything you need?
     choices:
     - Nothing
+    - Why empty?
     choiceActionIds:
     - Default
+    - GotEmpty
     rewardIds: []

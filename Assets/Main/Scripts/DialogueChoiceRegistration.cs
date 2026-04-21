@@ -41,71 +41,76 @@ public class DialogueChoiceRegistration : MonoBehaviour
     }
     
     // Gotta make functions for each "GameEvent"...
+    private void RegisterGameEvent(string dictionaryName, string dialogueName, string choiceTitle, string choiceAction)
+    {
+        Dictionaries.WiseJoeTalks[dictionaryName] = true;
+        bool listenedAll = true;
+        // Check if all dialogues have been listened to once
+        foreach (bool entry in Dictionaries.WiseJoeTalks.Values)
+        {
+            if (!entry)
+            {
+                listenedAll = false;
+                DebugScript.BetterDebug("Did not listen to all events.");
+                break;
+            }
+        }
+
+        if (listenedAll)
+        {
+            // ending scene is activatable
+            // After this talk with Joe, the screen will fade out and outro
+            // Invoke ending
+            DebugScript.BetterDebug("Listened to ALL events!");
+            EndingEnterer.Instance.StartEnding();
+        }
+        
+        DialogueUI.LaunchDialogue(dialogueName);
+        JoeInstance.Instance.RemoveGeneralChoice(choiceTitle, choiceAction);
+    }
 
     private void GotEmpty()
     {
-        Dictionaries.WiseJoeTalks["Empty"] = true;
-        // Check if all dialogues have been listened to once
-        
-        DialogueUI.LaunchDialogue("JoeWhyEmptyTown");
-        JoeInstance.Instance.RemoveGeneralChoice("Why empty?", "GotEmpty");
+        RegisterGameEvent("Empty", "JoeWhyEmptyTown", "Why empty?", "GotEmpty");
     }
 
     private void Kevin()
     {
-        Dictionaries.WiseJoeTalks["Kevin"] = true;
-        // Check if all dialogues have been listened to once
-        
-        DialogueUI.LaunchDialogue("JoeWhosKevin");
-        JoeInstance.Instance.RemoveGeneralChoice("Kevin?", "Kevin");
+        RegisterGameEvent("Kevin", "JoeWhosKevin", "Kevin?", "Kevin");
     }
     private void GotFactory()
     {
-        Dictionaries.WiseJoeTalks["Factory"] = true;
-        DialogueUI.LaunchDialogue("JoeHatesPollution");
-        JoeInstance.Instance.RemoveGeneralChoice("Factory?", "GotFactory");
+        RegisterGameEvent("Factory", "JoeHatesPollution", "Factory?", "GotFactory");
     }
     
     private void GotTrucks()
     {
-        Dictionaries.WiseJoeTalks["Trucks"] = true;
-        DialogueUI.LaunchDialogue("JoeWhatTrucks");
-        JoeInstance.Instance.RemoveGeneralChoice("Trucks?", "GotTrucks");
+        RegisterGameEvent("Trucks", "JoeWhatTrucks", "Trucks?", "GotTrucks");
     }
     
     private void GotChurch()
     {
-        Dictionaries.WiseJoeTalks["Church"] = true;
-        DialogueUI.LaunchDialogue("JoeChurch");
-        JoeInstance.Instance.RemoveGeneralChoice("Church?", "GotChurch");
+        RegisterGameEvent("Church", "JoeChurch", "Church?", "GotChurch");
     }
     
     // Farm is finished when player has $100
     private void GotFarm()
     {
-        Dictionaries.WiseJoeTalks["Farm"] = true;
-        DialogueUI.LaunchDialogue("JoeIFinished");
-        JoeInstance.Instance.RemoveGeneralChoice("Farm?", "GotFarm");
+        RegisterGameEvent("Farm", "JoeIFinished", "Farm?", "GotFarm");
     }
     
     private void GotDirtHoles()
     {
-        Dictionaries.WiseJoeTalks["DirtHoles"] = true;
-        DialogueUI.LaunchDialogue("JoeWhyDirt");
-        JoeInstance.Instance.RemoveGeneralChoice("Dirt?", "GotDirtHoles");
+        RegisterGameEvent("DirtHoles", "JoeWhyDirt", "Dirt?", "GotDirtHoles");
     }
     
     private void GotPigs()
     {
-        Dictionaries.WiseJoeTalks["Pigs"] = true;
-        DialogueUI.LaunchDialogue("JoeWhyPigs");
-        JoeInstance.Instance.RemoveGeneralChoice("Pigs?", "GotPigs");
+        RegisterGameEvent("Pigs", "JoeWhyPigs", "Pigs?", "GotPigs");
     }
     
     private void GotChairs()
     {
-        Dictionaries.WiseJoeTalks["Chairs"] = true;
-        DialogueUI.LaunchDialogue("JoeWhatTheChair");
-        JoeInstance.Instance.RemoveGeneralChoice("Chairs?", "GotChairs");
+        RegisterGameEvent("Chairs", "JoeWhatTheChair", "Chairs?", "GotChairs");
     }
 }

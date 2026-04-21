@@ -112,6 +112,7 @@ namespace Main.Scripts
                     });
                     button.GetComponent<Button>().onClick = newButtonEvent;
                     
+                    
                     // Set the text of this Option Button
                     button.Find("Text").GetComponent<TextMeshProUGUI>().text = choice;
                 }
