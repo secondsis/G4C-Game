@@ -30,7 +30,7 @@ public class TalkInteractManager : MonoBehaviour
         string dialogueName = info.Split(',')[1];
         string joeTalkName = info.Split(',')[2];
         // Check if player has already listened to event too
-        if (Dictionaries.WiseJoeTalks.ContainsKey(joeTalkName)) return;
+        if (Dictionaries.WiseJoeTalks[joeTalkName]) return;
         JoeInstance.Instance.AddGeneralChoice(option, dialogueName);
     }
 }

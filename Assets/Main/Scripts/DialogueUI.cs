@@ -67,8 +67,8 @@ namespace Main.Scripts
                 // REENABLE MOVEMENT
                 PlayerMovement.ToggleMovement(true);
                 G4CInputManager.RemoveInteract(InteractionType.DIALOGUE, OnInteract);
-                OnDialogueUIActiveChanged?.Invoke(false);
                 _dialogueActivity.gameObject.SetActive(false);
+                OnDialogueUIActiveChanged?.Invoke(false);
                 return;
             }
 

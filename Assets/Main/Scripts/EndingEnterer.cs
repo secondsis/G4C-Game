@@ -1,11 +1,13 @@
 using System;
 using Main.Scripts;
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class EndingEnterer : MonoBehaviour
 {
     public static EndingEnterer Instance;
+    [SerializeField] private AudioSource bgm;
     
     private Animator fadeAnimator;
     private AsyncOperation async;
@@ -56,6 +58,9 @@ public class EndingEnterer : MonoBehaviour
         
         // Fadeout
         fadeAnimator.Play("FadeOut");
+        
+        // Music fade
+        Tween.AudioVolume(bgm, 0.0f, 5.0f);
         
         // Load the scene
         AsyncOperation ao = SceneManager.LoadSceneAsync("Ending");
