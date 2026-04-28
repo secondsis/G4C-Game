@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Main/Scenes/Demo.unity
     guid: 9d6a5a5bbb1134e4cbd6dec20c7a4c47
   - enabled: 1
+    path: Assets/Main/Scenes/Introduction.unity
+    guid: 5f11a8b660d74f5168fe58764f80b7f0
+  - enabled: 1
     path: Assets/Main/Scenes/Konami.unity
     guid: 1a95a5f1833bb2286ae0d4e81d5fc367
   m_configObjects:

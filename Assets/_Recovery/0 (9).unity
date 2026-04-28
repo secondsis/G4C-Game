@@ -275,7 +275,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StoryManager
   manipulate: {fileID: 1676580037}
-  fadeOutAnim: {fileID: 169413871}
   sprites:
   - {fileID: 21300000, guid: be97f3c65699fe7fe9b1fcd90b8f19f0, type: 3}
   - {fileID: 21300000, guid: 88826f8924ea9531c965da6f10469767, type: 3}

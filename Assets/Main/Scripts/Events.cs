@@ -10,6 +10,8 @@ namespace Main.Scripts
         public static event Action OnToolUnequip;
         public static event Action OnToolUse;
 
+        public static event Action OnFadeNextSprite;
+
         public static event Action OnWaterWellInteract;
         
         // After exhausting ALL events, witness ending cutscene
@@ -49,6 +51,16 @@ namespace Main.Scripts
         public static void InvokeWaterWellInteract()
         {
             OnWaterWellInteract?.Invoke();
+        }
+        
+        public static void InvokeOnFadeNextSprite()
+        {
+            OnFadeNextSprite?.Invoke();
+        }
+        
+        public static void ClearAllOnFadeNextSprite()
+        {
+            OnFadeNextSprite = null;
         }
     }
 }
