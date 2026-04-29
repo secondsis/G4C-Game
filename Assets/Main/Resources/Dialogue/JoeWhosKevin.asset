@@ -32,6 +32,18 @@ MonoBehaviour:
     choiceActionIds: []
     rewardIds: []
   - type: 0
+    speaker: Joey
+    text: uhhh what where ru
+    choices: []
+    choiceActionIds: []
+    rewardIds: []
+  - type: 0
+    speaker: Kevin(?)
+    text: shh just go along with it
+    choices: []
+    choiceActionIds: []
+    rewardIds: []
+  - type: 0
     speaker: Invisible Kevin
     text: And the invisiblest of kevuns>!!!
     choices: []

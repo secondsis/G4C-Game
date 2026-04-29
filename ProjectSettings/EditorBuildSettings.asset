@@ -5,18 +5,21 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Main/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 0
-    path: Assets/Main/Scenes/TEST-SCROLL.unity
-    guid: da04ddad3b7e12044ab5332e95ac6b4b
-  - enabled: 0
-    path: Assets/Main/Scenes/Demo.unity
-    guid: 9d6a5a5bbb1134e4cbd6dec20c7a4c47
+  - enabled: 1
+    path: Assets/Main/Scenes/StartMenu.unity
+    guid: 2d64d81709edb22319b843a52065fbf8
   - enabled: 1
     path: Assets/Main/Scenes/Introduction.unity
     guid: 5f11a8b660d74f5168fe58764f80b7f0
+  - enabled: 1
+    path: Assets/Main/Scenes/Game.unity
+    guid: 5a4e5a851fce09d409ea351dad972329
+  - enabled: 1
+    path: Assets/Main/Scenes/Ending.unity
+    guid: fa9d2bfc6cc570c15ae8efab4eb75c24
+  - enabled: 1
+    path: Assets/Main/Scenes/Epilogue.unity
+    guid: 238d15740f7609abe9d72f74b1964280
   - enabled: 1
     path: Assets/Main/Scenes/Konami.unity
     guid: 1a95a5f1833bb2286ae0d4e81d5fc367

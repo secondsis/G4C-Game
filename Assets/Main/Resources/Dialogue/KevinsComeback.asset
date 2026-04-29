@@ -61,3 +61,15 @@ MonoBehaviour:
     choices: []
     choiceActionIds: []
     rewardIds: []
+  - type: 0
+    speaker: 
+    text: except he doesn't, ooOooo
+    choices: []
+    choiceActionIds: []
+    rewardIds: []
+  - type: 0
+    speaker: Camel
+    text: OOOOOOOOOOOOOOOOOOO
+    choices: []
+    choiceActionIds: []
+    rewardIds: []

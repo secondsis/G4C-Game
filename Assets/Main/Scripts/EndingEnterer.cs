@@ -63,8 +63,8 @@ public class EndingEnterer : MonoBehaviour
         Tween.AudioVolume(bgm, 0.0f, 5.0f);
         
         // Load the scene
-        AsyncOperation ao = SceneManager.LoadSceneAsync("Ending");
-        ao.allowSceneActivation = false;
+        async = SceneManager.LoadSceneAsync(3);
+        async.allowSceneActivation = false;
     }
 
     // call from fadeAnimator event. 
