@@ -48,3 +48,6 @@ Special shoutout to phthallo ✍️🔥 for the README formula (🙂🙂🙂🙂
 
 ## Notes
 It took me a while in the middle of the project to realize that I did not like working with 3D Unity games. This is the first time I am delving into 3D without skills in modeling. There are still some placeholders because I just have no direction to how I would create those buildings. I don't like where this project has ended up, but I don't want to continue pouring hours into this either. I originally made this for the G4C Challenge, but I could not finish in time while under the pressure of school. But I hope it may be at least a bit enjoyable for others to play. 
+
+## AI Usage
+Ew. No AI was used to make this project. I've only used it in ONE other project of mine, and I did NOT use it in this one, especially since I was going to submit it for a real game jam. Other than consulting it for 3D modeling and debugging (always in plain English, I'd hate to give it real code), no AI was used. Although unless you count the stinky Google Gemini that pops up every time you do a Google search, which like, please kill it. Actually I'll go try to remove it from my Google settings right now. 
