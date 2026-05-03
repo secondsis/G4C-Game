@@ -1,9 +1,9 @@
 # Terra Meadows 🌳
-A farming and interactive game where you play as Joey, just a guy who has returned to his small hometown from the city. 
-<br>
-Play it now on Web: https://secondsis.itch.io/terra-meadows 
-<br>
-Download a release: <github link pending...>
+A farming and interactive game made in Unity where you play as Joey, just a guy who has returned to his small hometown from the city. 
+<br><br>
+Play it now on Web: [itch.io Page](https://secondsis.itch.io/terra-meadows)
+<br><br>
+Download the release: [Linux Release](https://github.com/secondsis/G4C-Game/releases/tag/Linux-V1.0.0)
 
 ## About
 Be free from the constant busywork of the urban life by spending time farming on your father's land. After 6 or 7 (🤷🏼‍♀️ OMG THEY SAID THE THING THEY SAID-) years, you finally decide to revisit your home. Explore the happenings of town to discover its mysteries. Impress your father with your farming skills! Be aware of the guy in the woods... but also you need to meet him to progress the game. Have fun with finding him. You must explore all areas of town and interact with everything in order to unlock the ending. 
