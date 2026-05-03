@@ -20,6 +20,7 @@ Q - Inventory
 E - Interact
 
 ## Gameplay Notes
+* Please wait 4s after each frame of the Introduction scene before attempting to proceed by entering any key. Yes this is a fire way of boring you. I am so good at it. :imagine big thumbs up smiling face emoji image:
 * When you equip an item from the inventory, you also have to toggle it by clicking on the icon at the bottom. 
 * Always untoggle your watering can when harvesting a crop. 
 * The watering can needs precise aiming. Make sure your cursor is on the plot and not the plant itself. Spamming E may help. 
