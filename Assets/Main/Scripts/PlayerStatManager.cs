@@ -32,7 +32,7 @@ public class PlayerStatManager : MonoBehaviour
     
     public void StartMoney()
     {
-        Money = 95; // Remember this is 5
+        Money = 5; // Remember this is 5
     }
 
     private void SaveStats()

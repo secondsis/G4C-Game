@@ -88,7 +88,7 @@ Shader "Polytope Studio/ PT_Medieval Modular NPC Shader Toon"
 		
 
 		HLSLINCLUDE
-		#pragma target 4.5
+		#pragma target 4.0
 		#pragma prefer_hlslcc gles
 		// ensure rendering platforms toggle list is visible
 
